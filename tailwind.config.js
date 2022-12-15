@@ -5,6 +5,7 @@ module.exports = {
     "./pages/**/*.{jsx,js,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: { main: ["'Kumbh Sans', sans-serif"] },
@@ -20,7 +21,7 @@ module.exports = {
       silver: "#ecebff",
       "bubble-gum": "#ff77e9",
       bermuda: "#78dcca",
-      violet: "#9e7f66",
+      violet: "#5964E0",
       light_violet: "#939BF4",
       light_grey: "#F4F6F8",
       very_dark_blue: "#19202D",
