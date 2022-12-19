@@ -3,8 +3,8 @@ import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div className=" flex h-screen w-full justify-center bg-light_grey">
-      <div className="bg-light_grey dark:bg-midnight mobile:w-[375px] tablet:w-[768px] desktop:w-[1440px]">
+    <div className="flex h-screen justify-center overflow-y-auto bg-light_grey">
+      <div className="h-full bg-light_grey dark:bg-midnight mobile:w-full tablet:w-full desktop:w-[1440px]">
         {/* Navbar */}
         <Navbar />
         {/* Main Contents */}
