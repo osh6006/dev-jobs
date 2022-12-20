@@ -2,20 +2,20 @@ import DefaultButton from "../components/common/defaultButton";
 
 const Enter = () => {
   return (
-    <section className="h-full w-full items-center justify-center">
-      <form className="p-10">
-        <div className="desktop::grid-cols-2 table:grid-cols-2 mb-6 grid gap-6">
+    <section className="my-0 mx-auto w-full">
+      <form className="m-auto p-10 desktop:w-1/2">
+        <div className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div>
             <label
               htmlFor="name"
-              className="text-sm text-gray-900 mb-2 block font-medium dark:text-white"
+              className="text-sm  mb-2 block font-medium dark:text-white"
             >
               Your name
             </label>
             <input
               type="text"
               id="first_name"
-              className="bg-gray-50 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 dark:text-white"
+              className="bg-gray-50 border-gray-300   focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 dark:text-white"
               placeholder="John"
               required
             />
@@ -23,14 +23,14 @@ const Enter = () => {
           <div>
             <label
               htmlFor="company"
-              className="text-sm text-gray-900 mb-2 block font-medium dark:text-white"
+              className="  mb-2 block font-medium dark:text-white"
             >
               Company
             </label>
             <input
               type="text"
               id="company"
-              className="bg-gray-50 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 dark:text-white"
+              className="bg-gray-50 border-gray-300   focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 dark:text-white"
               placeholder="Flowbite"
               required
             />
@@ -38,14 +38,14 @@ const Enter = () => {
           <div>
             <label
               htmlFor="phone"
-              className="text-sm text-gray-900 mb-2 block font-medium dark:text-white"
+              className=" text-gray-900 mb-2 block font-medium dark:text-white"
             >
               Phone number
             </label>
             <input
               type="tel"
               id="phone"
-              className="bg-gray-50 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 dark:text-white"
+              className="bg-gray-50 border-gray-300 text-gray-900  focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 dark:text-white"
               placeholder="010-1234-5678"
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               required
@@ -55,7 +55,7 @@ const Enter = () => {
         <div className="mb-6">
           <label
             htmlFor="email"
-            className="text-sm text-gray-900 mb-2 block font-medium dark:text-white"
+            className="mb-2 block font-medium dark:text-white"
           >
             Email address
           </label>

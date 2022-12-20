@@ -1,4 +1,5 @@
-import DefaultButton from "../components/defaultButton";
+import Link from "next/link";
+import DefaultButton from "../components/common/defaultButton";
 
 const Login = () => {
   return (
@@ -30,26 +31,13 @@ const Login = () => {
             </div>
 
             <div className="mb-6 flex items-center justify-between">
-              <div className="form-group form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input border-gray-300 checked:bg-blue-600 checked:border-blue-600 float-left mt-1 mr-2 h-4 w-4 cursor-pointer appearance-none rounded-sm border bg-white bg-contain bg-center bg-no-repeat align-top transition duration-200 focus:outline-none"
-                  id="exampleCheck3"
-                  checked
-                />
-                <label
-                  className="form-check-label text-gray-800 inline-block"
-                  for="exampleCheck2"
-                >
-                  Remember me
-                </label>
-              </div>
-              <a
-                href="#!"
-                className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 transition duration-200 ease-in-out"
+              <div className="form-group form-check">계정이 없으신가요?</div>
+              <Link
+                href="/register"
+                className="text-violet transition duration-200 ease-in-out hover:text-violet focus:text-violet active:text-violet"
               >
-                Forgot password?
-              </a>
+                회원가입 하러 가기
+              </Link>
             </div>
 
             <DefaultButton
@@ -57,7 +45,7 @@ const Login = () => {
               className="bg-blue-600 text-sm hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 inline-block w-full rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
-              text="Sign in"
+              text="로그인"
             ></DefaultButton>
 
             <div className="before:border-gray-300 after:border-gray-300 my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t after:mt-0.5 after:flex-1 after:border-t">

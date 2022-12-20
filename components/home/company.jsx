@@ -1,4 +1,4 @@
-const CompanyItem = () => {
+const Company = () => {
   return (
     <>
       <div className="flex h-[228px] w-full cursor-pointer flex-col rounded-md bg-purple px-8">
@@ -17,4 +17,4 @@ const CompanyItem = () => {
   );
 };
 
-export default CompanyItem;
+export default Company;
