@@ -1,10 +1,10 @@
-import DefaultButton from "../components/defaultButton";
+import DefaultButton from "../components/common/defaultButton";
 
 const Enter = () => {
   return (
     <section className="h-full w-full items-center justify-center">
       <form className="p-10">
-        <div className="mb-6 grid gap-6 tablet:grid-cols-2">
+        <div className="desktop::grid-cols-2 table:grid-cols-2 mb-6 grid gap-6">
           <div>
             <label
               htmlFor="name"
