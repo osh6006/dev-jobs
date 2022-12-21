@@ -3,7 +3,7 @@ import DefaultButton from "../components/common/defaultButton";
 
 const Login = () => {
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <div className="flex h-screen w-full items-center justify-center">
       <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-10 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
         <div className="w-full ">
           <img
@@ -17,7 +17,7 @@ const Login = () => {
             <div className="mb-6">
               <input
                 type="text"
-                className="form-control m-0 block w-full rounded border border-solid border-midnight  bg-white bg-clip-padding px-4 py-2 font-bold text-violet transition ease-in-out focus:bg-white focus:outline-violet"
+                className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
                 placeholder="Email address"
               />
             </div>
@@ -25,16 +25,16 @@ const Login = () => {
             <div className="mb-6">
               <input
                 type="password"
-                className="form-control m-0 block w-full rounded border border-solid border-midnight bg-white  bg-clip-padding  px-4 py-2 font-bold font-normal text-violet transition ease-in-out focus:bg-white focus:outline-violet"
+                className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
                 placeholder="Password"
               />
             </div>
 
-            <div className="mb-6 flex items-center justify-between">
+            <div className="mb-6 flex items-center justify-between dark:text-white">
               <div className="form-group form-check">계정이 없으신가요?</div>
               <Link
                 href="/register"
-                className="text-violet transition duration-200 ease-in-out hover:text-violet focus:text-violet active:text-violet"
+                className="text-violet transition duration-200 ease-in-out hover:text-violet hover:underline focus:text-violet active:text-violet dark:text-light_violet"
               >
                 회원가입 하러 가기
               </Link>
@@ -48,7 +48,7 @@ const Login = () => {
               text="로그인"
             ></DefaultButton>
 
-            <div className="before:border-gray-300 after:border-gray-300 my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t after:mt-0.5 after:flex-1 after:border-t">
+            <div className="before:border-gray-300 after:border-gray-300 my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t after:mt-0.5 after:flex-1 after:border-t dark:text-white">
               <p className="mx-4 mb-0 text-center font-semibold">WELCOME</p>
             </div>
 
