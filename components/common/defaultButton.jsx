@@ -7,7 +7,7 @@ const DefaultButton = ({
   return (
     <button
       {...rest}
-      className={`h-[48px] w-full rounded-md font-bold bg-${color} text-white hover:bg-light_violet dark:bg-dark_grey dark:hover:bg-gray`}
+      className={`h-[48px] w-full rounded-md bg-${color} font-bold text-white transition-colors hover:bg-light_violet`}
     >
       {text}
     </button>

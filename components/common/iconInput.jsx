@@ -13,7 +13,7 @@ const IconInput = ({ type }) => {
       ) : null}
       <input
         placeholder="Enter desired job..."
-        class="focus:none h-full w-full rounded-lg  border-none pl-14 outline-none "
+        class="focus:none h-full w-full rounded-lg  border-none pl-14 text-h3 outline-none dark:bg-very_dark_blue"
       />
       <FilterIcon
         onClick={() => {
