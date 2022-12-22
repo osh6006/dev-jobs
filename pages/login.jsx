@@ -1,7 +1,22 @@
+import { ErrorMessage } from "@hookform/error-message";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 import DefaultButton from "../components/common/defaultButton";
+import Input from "../components/common/input";
 
 const Login = () => {
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  console.log(watch());
+
+  const onValid = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-10 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
@@ -13,20 +28,46 @@ const Login = () => {
           />
         </div>
         <div className="w-full desktop:w-1/2">
-          <form>
+          <form onSubmit={handleSubmit(onValid)}>
             <div className="mb-6">
-              <input
-                type="text"
-                className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
-                placeholder="Email address"
+              <Input
+                name="email"
+                register={register("email", {
+                  required: "⛔ 이메일을 입력해 주세요",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "⛔ 이메일 형식이 맞지 않습니다.",
+                  },
+                  // maxLength: {
+                  //   value: 20,
+                  //   message: "이 필드는 20자 이상 사용할 수 없습니다.",
+                  // },
+                })}
+                placeholder="12341@example.com"
+              />
+              <ErrorMessage
+                className="mt-2 flex text-warning"
+                errors={errors}
+                name="email"
+                as="p"
               />
             </div>
 
             <div className="mb-6">
-              <input
+              <Input
+                name="password"
+                register={register("password", {
+                  required: "⛔ 비밀번호를 입력해 주세요",
+                })}
                 type="password"
-                className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
                 placeholder="Password"
+              />
+              <ErrorMessage
+                className="mt-2 text-warning"
+                errors={errors}
+                name="password"
+                as="p"
               />
             </div>
 

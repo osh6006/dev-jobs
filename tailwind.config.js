@@ -20,6 +20,7 @@ module.exports = {
       tahiti: "#3ab7bf",
       silver: "#ecebff",
       "bubble-gum": "#ff77e9",
+      warning: "#ff3e38",
       bermuda: "#78dcca",
       violet: "#5964E0",
       light_violet: "#939BF4",
