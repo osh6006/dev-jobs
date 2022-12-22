@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import DefaultButton from "../components/common/defaultButton";
-import Input from "../components/common/input";
+import Input from "components/common/input";
+import DefaultButton from "components/common/defaultButton";
 
 const Enter = () => {
   const {

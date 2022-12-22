@@ -1,6 +1,7 @@
+import Company from "components/home/company";
+import SearchBar from "components/home/searchbar";
 import Link from "next/link";
-import Company from "../components/home/company";
-import SearchBar from "../components/home/searchbar";
+
 import data from "../public/data.json";
 
 export default function Home() {

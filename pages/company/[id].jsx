@@ -1,5 +1,5 @@
-import DefaultButton from "../../components/common/defaultButton";
-import SecondaryButton from "../../components/common/secondaryButton";
+import DefaultButton from "components/common/defaultButton";
+import SecondaryButton from "components/common/secondaryButton";
 
 const CompanyDetail = ({ companyDetail }) => {
   return (
