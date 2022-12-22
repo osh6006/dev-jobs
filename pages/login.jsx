@@ -61,7 +61,7 @@ const Login = () => {
                   required: "⛔ 비밀번호를 입력해 주세요",
                 })}
                 type="password"
-                placeholder="Password"
+                placeholder="•••••••••"
               />
               <ErrorMessage
                 className="mt-2 text-warning"

@@ -1,9 +1,23 @@
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import DefaultButton from "../components/common/defaultButton";
+import Input from "../components/common/input";
 
 const Enter = () => {
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onValid = (data) => {};
   return (
     <section className="my-0 mx-auto w-full">
-      <form className="m-auto my-5 rounded-xl bg-white p-10 dark:bg-very_dark_blue desktop:w-[95%]">
+      <form
+        onSubmit={handleSubmit(onValid)}
+        className="m-auto my-5 rounded-xl bg-white p-10 dark:bg-very_dark_blue desktop:w-[95%]"
+      >
         <div className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div>
             <label
@@ -12,12 +26,26 @@ const Enter = () => {
             >
               Your name
             </label>
-            <input
-              type="text"
-              id="first_name"
-              className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
-              placeholder="John"
-              required
+            <Input
+              name="name"
+              register={register("name", {
+                required: "⛔ 이름을 입력해 주세요",
+                pattern: {
+                  value: /^[가-힣a-zA-Z]+$/,
+                  message: "⛔ 이름 형식이 맞지 않습니다.",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
+                },
+              })}
+              placeholder="Your name"
+            />
+            <ErrorMessage
+              className="mt-2 flex text-warning"
+              errors={errors}
+              name="name"
+              as="p"
             />
           </div>
           <div>
@@ -27,12 +55,22 @@ const Enter = () => {
             >
               Company
             </label>
-            <input
-              type="text"
-              id="company"
-              className=" block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
-              placeholder="Flowbite"
-              required
+            <Input
+              name="company"
+              register={register("company", {
+                required: "⛔ 회사 이름을 입력해 주세요",
+                maxLength: {
+                  value: 20,
+                  message: "이 필드는 20자 이상 사용할 수 없습니다.",
+                },
+              })}
+              placeholder="KakaO"
+            />
+            <ErrorMessage
+              className="mt-2 flex text-warning"
+              errors={errors}
+              name="company"
+              as="p"
             />
           </div>
           <div>
@@ -42,13 +80,26 @@ const Enter = () => {
             >
               Phone number
             </label>
-            <input
-              type="tel"
-              id="phone"
-              className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
+            <Input
+              name="phone"
+              register={register("phone", {
+                required: "⛔ 전화번호를 입력해 주세요",
+                maxLength: {
+                  value: 20,
+                  message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
+                },
+                pattern: {
+                  value: /[0-9]{3}-[0-9]{4}-[0-9]{4}/,
+                  message: "⛔ 전화번호 형식이 맞지 않습니다.",
+                },
+              })}
               placeholder="010-1234-5678"
-              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-              required
+            />
+            <ErrorMessage
+              className="mt-2 flex text-warning"
+              errors={errors}
+              name="phone"
+              as="p"
             />
           </div>
         </div>
@@ -59,12 +110,27 @@ const Enter = () => {
           >
             Email address
           </label>
-          <input
-            type="email"
-            id="email"
-            className="block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
-            placeholder="john.doe@company.com"
-            required
+          <Input
+            name="email"
+            register={register("email", {
+              required: "⛔ 이메일을 입력해 주세요",
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "⛔ 이메일 형식이 맞지 않습니다.",
+              },
+              maxLength: {
+                value: 20,
+                message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
+              },
+            })}
+            placeholder="12341@example.com"
+          />
+          <ErrorMessage
+            className="mt-2 flex text-warning"
+            errors={errors}
+            name="email"
+            as="p"
           />
         </div>
         <div className="mb-6">
@@ -74,12 +140,29 @@ const Enter = () => {
           >
             Password
           </label>
-          <input
+          <Input
+            name="password"
+            register={register("password", {
+              required: "⛔ 비밀번호를 입력해 주세요",
+              pattern: {
+                value:
+                  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/,
+                message:
+                  "⛔ 비밀번호는 8글자이상 문자, 숫자, 특수문자가 포함되어야 합니다.",
+              },
+              maxLength: {
+                value: 20,
+                message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
+              },
+            })}
             type="password"
-            id="password"
-            className="  block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
             placeholder="•••••••••"
-            required
+          />
+          <ErrorMessage
+            className="mt-2 text-warning"
+            errors={errors}
+            name="password"
+            as="p"
           />
         </div>
         <div className="mb-6">
@@ -89,22 +172,33 @@ const Enter = () => {
           >
             Confirm password
           </label>
-          <input
+          <Input
+            name="confirm_password"
+            register={register("confirm_password", {
+              required: "⛔ 비밀번호를 확인을 입력해 주세요",
+              validate: (value) => {
+                if (value !== password.value)
+                  return "⛔ 비밀번호가 일치하지 않습니다.";
+              },
+            })}
             type="password"
-            id="confirm_password"
-            className=" block w-full rounded-lg border p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
             placeholder="•••••••••"
-            required
+          />
+          <ErrorMessage
+            className="mt-2 text-warning"
+            errors={errors}
+            name="confirm_password"
+            as="p"
           />
         </div>
         <div className="mb-6 flex items-center">
           <div className="flex h-5 items-center">
             <input
-              id="remember"
+              id="isCEO"
               type="checkbox"
               value=""
               className="focus:ring-3 h-4 w-4 rounded border border-violet bg-dark_grey accent-violet focus:ring-violet dark:border-violet dark:bg-violet dark:ring-offset-violet dark:focus:ring-violet"
-              required
+              {...register("isCEO")}
             />
           </div>
           <label
