@@ -4,7 +4,7 @@ import FilterIcon from "../../public/assets/mobile/icon-filter.svg";
 
 const IconInput = ({ type }) => {
   return (
-    <div class="relative flex h-full w-full items-center justify-end">
+    <div className="relative flex h-full w-full items-center justify-end">
       {type && type === "search" ? (
         <SearchLogo className="absolute left-5 w-10" />
       ) : null}

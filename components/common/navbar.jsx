@@ -3,7 +3,7 @@ import { useState } from "react";
 import Logo from "../../public/assets/desktop/logo.svg";
 import DefaultButton from "./defaultButton";
 import Switch from "./switch";
-const Navbar = () => {
+const Navbar = ({ isDark, setIsDark }) => {
   const [isLogin, setIsLgoin] = useState(false);
   return (
     <>
@@ -18,7 +18,7 @@ const Navbar = () => {
                 <DefaultButton text="로그인" color="metal" />
               </Link>
             )}
-            <Switch />
+            <Switch isDark={isDark} setIsDark={setIsDark} />
           </div>
         </div>
         {isLogin ? null : (
