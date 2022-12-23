@@ -5,7 +5,6 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   const [isDark, setIsDark] = useState(null);
   useEffect(() => {
-    console.log(JSON.parse(window.localStorage.getItem("isDark")));
     if (JSON.parse(window.localStorage.getItem("isDark"))) {
       setIsDark(true);
     } else {

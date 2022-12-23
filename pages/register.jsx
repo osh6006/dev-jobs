@@ -11,7 +11,9 @@ const Enter = () => {
     formState: { errors },
   } = useForm();
 
-  const onValid = (data) => {};
+  const onValid = (data) => {
+    console.log(data);
+  };
   return (
     <section className="my-0 mx-auto w-full">
       <form
@@ -20,13 +22,8 @@ const Enter = () => {
       >
         <div className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div>
-            <label
-              htmlFor="name"
-              className="mb-2 block font-bold text-light_violet"
-            >
-              Your name
-            </label>
             <Input
+              label="Your Name"
               name="name"
               register={register("name", {
                 required: "⛔ 이름을 입력해 주세요",
@@ -49,13 +46,8 @@ const Enter = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="company"
-              className="  mb-2 block font-bold text-light_violet"
-            >
-              Company
-            </label>
             <Input
+              label="company"
               name="company"
               register={register("company", {
                 required: "⛔ 회사 이름을 입력해 주세요",
@@ -74,13 +66,8 @@ const Enter = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="phone"
-              className="mb-2 block font-bold text-light_violet"
-            >
-              Phone number
-            </label>
             <Input
+              label="Phone number"
               name="phone"
               register={register("phone", {
                 required: "⛔ 전화번호를 입력해 주세요",
@@ -104,13 +91,8 @@ const Enter = () => {
           </div>
         </div>
         <div className="mb-6">
-          <label
-            htmlFor="email"
-            className="mb-2 block font-bold text-light_violet"
-          >
-            Email address
-          </label>
           <Input
+            label="Email address"
             name="email"
             register={register("email", {
               required: "⛔ 이메일을 입력해 주세요",
@@ -134,13 +116,8 @@ const Enter = () => {
           />
         </div>
         <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="mb-2 block font-bold text-light_violet"
-          >
-            Password
-          </label>
           <Input
+            label="Password"
             name="password"
             register={register("password", {
               required: "⛔ 비밀번호를 입력해 주세요",
@@ -166,13 +143,8 @@ const Enter = () => {
           />
         </div>
         <div className="mb-6">
-          <label
-            htmlFor="confirm_password"
-            className="mb-2 block font-bold text-light_violet"
-          >
-            Confirm password
-          </label>
           <Input
+            label="Confirm password"
             name="confirm_password"
             register={register("confirm_password", {
               required: "⛔ 비밀번호를 확인을 입력해 주세요",
@@ -196,23 +168,16 @@ const Enter = () => {
             <input
               id="isCEO"
               type="checkbox"
-              value=""
+              name="isCEO"
               className="focus:ring-3 h-4 w-4 rounded border border-violet bg-dark_grey accent-violet focus:ring-violet dark:border-violet dark:bg-violet dark:ring-offset-violet dark:focus:ring-violet"
               {...register("isCEO")}
             />
           </div>
           <label
-            htmlFor="remember"
-            className="text-sm text-gray-900 ml-2 font-medium dark:text-white "
+            htmlFor="isCEO"
+            className="text-sm text-gray-900 ml-2 font-bold capitalize text-violet dark:text-light_violet"
           >
-            I agree with the{" "}
-            <a
-              href="#"
-              className="text-blue-600 dark:text-blue-500 hover:underline"
-            >
-              terms and conditions
-            </a>
-            .
+            are you CEO?
           </label>
         </div>
         <DefaultButton type="submit" text="Register">

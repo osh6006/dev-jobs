@@ -3,25 +3,46 @@ import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
 import useMutation from "libs/client/useMutation";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const [enter, { loading, data, errror }] = useMutation("/api/users/enter");
+  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    setError,
+    clearErrors,
+  } = useForm({ criteriaMode: "all" });
 
   const onValid = (formData) => {
     enter(formData);
   };
 
-  console.log(loading, data, errror);
+  const router = useRouter();
+  useEffect(() => {
+    if (data?.ok) {
+      router.push("/");
+    } else {
+      if (data?.message?.length > 0) {
+        setError("server", {
+          types: "server",
+          message: data?.message,
+        });
+
+        setTimeout(() => {
+          delete errors.server;
+        }, 2000);
+      }
+    }
+  }, [data, router, setError]);
+
+  console.log(errors);
 
   return (
-    <div className="my-10 flex  w-full items-baseline justify-center overflow-hidden">
+    <div className="my-10 flex h-fit w-full items-baseline justify-center overflow-hidden">
       <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-10 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
         <div className="w-full">
           <img
@@ -34,6 +55,7 @@ const Login = () => {
           <form onSubmit={handleSubmit(onValid)}>
             <div className="mb-6">
               <Input
+                label=""
                 name="email"
                 register={register("email", {
                   required: "⛔ 이메일을 입력해 주세요",
@@ -42,10 +64,6 @@ const Login = () => {
                       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                     message: "⛔ 이메일 형식이 맞지 않습니다.",
                   },
-                  // maxLength: {
-                  //   value: 20,
-                  //   message: "이 필드는 20자 이상 사용할 수 없습니다.",
-                  // },
                 })}
                 placeholder="12341@example.com"
               />
@@ -59,6 +77,7 @@ const Login = () => {
 
             <div className="mb-6">
               <Input
+                label=""
                 name="password"
                 register={register("password", {
                   required: "⛔ 비밀번호를 입력해 주세요",
@@ -70,6 +89,12 @@ const Login = () => {
                 className="mt-2 text-warning"
                 errors={errors}
                 name="password"
+                as="p"
+              />
+              <ErrorMessage
+                className="mt-2 text-warning"
+                errors={errors}
+                name="server"
                 as="p"
               />
             </div>
@@ -89,7 +114,7 @@ const Login = () => {
               className="bg-blue-600 text-sm hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 inline-block w-full rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
-              text="로그인"
+              text={loading ? "로딩중" : "로그인"}
             ></DefaultButton>
 
             <div className="before:border-gray-300 after:border-gray-300 my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t after:mt-0.5 after:flex-1 after:border-t dark:text-white">

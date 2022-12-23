@@ -1,25 +1,29 @@
 import client from "libs/server/client";
 import withHandler from "libs/server/withHandler";
+import { withApiSession } from "libs/server/withSession";
 
 async function handler(req, res) {
+  console.log(req.session);
   const { email, password } = req.body;
   if (email) {
-    let user = await client.devJobsUser.findUnique({
+    const user = await client.devJobsUser.findUnique({
       where: {
         email,
-        password,
       },
     });
-
-    console.log(user);
-
-    // if (user) {
-    //   if (password === user.pass) {
-    //   }
-    // } else {
-    // }
+    if (user && user.password === password) {
+      req.session.user = {
+        id: user?.id,
+      };
+      await req.session.save();
+      return res.json({ ok: true });
+    } else {
+      return res.json({
+        ok: false,
+        message: "⛔ 아이디 혹은 비밀번호가 일치하지 않습니다.",
+      });
+    }
   }
-  res.status(200).end();
 }
 
-export default withHandler("POST", handler);
+export default withApiSession(withHandler("POST", handler));
