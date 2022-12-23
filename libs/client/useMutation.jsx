@@ -22,6 +22,8 @@ const useMutation = (url) => {
       .finally(() => setLoading(false));
   }
 
+  console.log(data);
+
   return [mutation, { loading, data, error }];
 };
 

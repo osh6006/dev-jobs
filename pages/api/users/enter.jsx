@@ -3,7 +3,6 @@ import withHandler from "libs/server/withHandler";
 import { withApiSession } from "libs/server/withSession";
 
 async function handler(req, res) {
-  console.log(req.session);
   const { email, password } = req.body;
   if (email) {
     const user = await client.devJobsUser.findUnique({

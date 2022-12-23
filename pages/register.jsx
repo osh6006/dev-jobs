@@ -2,18 +2,42 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Input from "components/common/input";
 import DefaultButton from "components/common/defaultButton";
+import useMutation from "libs/client/useMutation";
 
 const Enter = () => {
+  const [regist, { loading, data, error }] = useMutation("/api/users/register");
+  const [emailCheck, { emailLoading, emailData, emailError }] = useMutation(
+    "/api/users/emailCheck"
+  );
+
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
 
   const onValid = (data) => {
     console.log(data);
+    regist(data);
   };
+
+  const onCheck = async (email) => {
+    const test = await fetch("/api/users/emailCheck", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((response) => response.json().catch(() => {}))
+      .then((json) => json)
+      .catch((error) => setError(error));
+
+    return (await test?.ok) || "⛔ 이미 존재하는 아이디 입니다.";
+  };
+
+  console.log(emailData);
+
   return (
     <section className="my-0 mx-auto w-full">
       <form
@@ -102,9 +126,10 @@ const Enter = () => {
                 message: "⛔ 이메일 형식이 맞지 않습니다.",
               },
               maxLength: {
-                value: 20,
-                message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
+                value: 30,
+                message: "⛔ 이 필드는 30자 이상 사용할 수 없습니다.",
               },
+              validate: onCheck,
             })}
             placeholder="12341@example.com"
           />
@@ -180,9 +205,7 @@ const Enter = () => {
             are you CEO?
           </label>
         </div>
-        <DefaultButton type="submit" text="Register">
-          Submit
-        </DefaultButton>
+        <DefaultButton type="submit" text={loading ? "로딩중" : "가입하기"} />
       </form>
     </section>
   );
