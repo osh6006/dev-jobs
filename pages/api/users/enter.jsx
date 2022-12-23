@@ -2,7 +2,7 @@ import client from "libs/server/client";
 import withHandler from "libs/server/withHandler";
 
 async function handler(req, res) {
-  const { password, email } = req.body();
+  const { email, password } = req.body;
   if (email) {
     let user = await client.devJobsUser.findUnique({
       where: {

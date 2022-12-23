@@ -21,7 +21,7 @@ const Login = () => {
   console.log(loading, data, errror);
 
   return (
-    <div className="my-10 flex h-screen w-full items-center justify-center overflow-hidden">
+    <div className="my-10 flex  w-full items-baseline justify-center overflow-hidden">
       <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-10 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
         <div className="w-full">
           <img
