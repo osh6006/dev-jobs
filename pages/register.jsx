@@ -3,40 +3,71 @@ import { ErrorMessage } from "@hookform/error-message";
 import Input from "components/common/input";
 import DefaultButton from "components/common/defaultButton";
 import useMutation from "libs/client/useMutation";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Enter = () => {
   const [regist, { loading, data, error }] = useMutation("/api/users/register");
-  const [emailCheck, { emailLoading, emailData, emailError }] = useMutation(
-    "/api/users/emailCheck"
-  );
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
   const onValid = (data) => {
-    console.log(data);
     regist(data);
   };
 
-  const onCheck = async (email) => {
-    const test = await fetch("/api/users/emailCheck", {
+  const onEmailCheck = async (data) => {
+    const isCheck = await fetch("/api/users/check", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ type: "email", data }),
     })
       .then((response) => response.json().catch(() => {}))
       .then((json) => json)
       .catch((error) => setError(error));
 
-    return (await test?.ok) || "⛔ 이미 존재하는 아이디 입니다.";
+    return (await isCheck?.ok) || "⛔ 이미 존재하는 이메일 입니다.";
   };
 
-  console.log(emailData);
+  const onPhoneCheck = async (data) => {
+    const isCheck = await fetch("/api/users/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ type: "phone", data }),
+    })
+      .then((response) => response.json().catch(() => {}))
+      .then((json) => json)
+      .catch((error) => setError(error));
+
+    return (await isCheck?.ok) || "⛔ 이미 존재하는 핸드폰 번호 입니다.";
+  };
+
+  const router = useRouter();
+  useEffect(() => {
+    if (data?.ok) {
+      alert("가입에 성공하셨습니다. 로그인을 해보세요 !");
+      router.push("/login");
+    } else {
+      if (data?.message?.length > 0) {
+        setError("server", {
+          types: "server",
+          message: data?.message,
+        });
+
+        setTimeout(() => {
+          delete errors.server;
+        }, 2000);
+      }
+    }
+  }, [data, router, setError]);
 
   return (
     <section className="my-0 mx-auto w-full">
@@ -101,8 +132,9 @@ const Enter = () => {
                 },
                 pattern: {
                   value: /[0-9]{3}-[0-9]{4}-[0-9]{4}/,
-                  message: "⛔ 전화번호 형식이 맞지 않습니다.",
+                  message: `⛔ 전화번호 형식이 맞지 않습니다. \n ex) 010-1234-5678`,
                 },
+                validate: onPhoneCheck,
               })}
               placeholder="010-1234-5678"
             />
@@ -129,7 +161,7 @@ const Enter = () => {
                 value: 30,
                 message: "⛔ 이 필드는 30자 이상 사용할 수 없습니다.",
               },
-              validate: onCheck,
+              validate: onEmailCheck,
             })}
             placeholder="12341@example.com"
           />
@@ -185,6 +217,12 @@ const Enter = () => {
             className="mt-2 text-warning"
             errors={errors}
             name="confirm_password"
+            as="p"
+          />
+          <ErrorMessage
+            className="mt-2 text-warning"
+            errors={errors}
+            name="server"
             as="p"
           />
         </div>
