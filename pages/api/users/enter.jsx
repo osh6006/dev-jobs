@@ -29,4 +29,6 @@ async function handler(req, res) {
   }
 }
 
-export default withApiSession(withHandler("POST", handler));
+export default withApiSession(
+  withHandler({ method: "POST", handler, isPrivate: false })
+);
