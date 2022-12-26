@@ -12,24 +12,72 @@ datasource db {
 }
 
 model DevJobsUser {
-  id        Int      @id @default(autoincrement())
-  phone     String   @unique
-  email     String   @unique
-  password  String
-  name      String
-  company   String
-  isCEO     Boolean
-  avator    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int          @id @default(autoincrement())
+  phone       String       @unique
+  email       String       @unique
+  password    String
+  name        String
+  company     String
+  isCEO       Boolean
+  avator      String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  CompanyInfo CompanyInfo?
 }
 
 model CompanyInfo {
+  id            Int           @id @default(autoincrement())
+  phone         String?       @unique
+  email         String?       @unique
+  name          String
+  logo          String?
+  position      String
+  contract      String
+  website       String
+  apply         String
+  description   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Requirements  Requirements?
+  Role          Role?
+  user          DevJobsUser   @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
+  devJobsUserId Int           @unique
+}
+
+model Requirements {
+  id                Int                 @id @default(autoincrement())
+  content           String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  companyInfo       CompanyInfo         @relation(fields: [companyInfoId], references: [id], onDelete: Cascade)
+  companyInfoId     Int                 @unique
+  RequirementsItems RequirementsItems[]
+}
+
+model RequirementsItems {
+  id             Int          @id @default(autoincrement())
+  msg            String
+  requrements    Requirements @relation(fields: [requirementsId], references: [id], onDelete: Cascade)
+  requirementsId Int          @unique
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Role {
+  id            Int         @id @default(autoincrement())
+  content       String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  companyInfo   CompanyInfo @relation(fields: [companyInfoId], references: [id], onDelete: Cascade)
+  companyInfoId Int         @unique
+  RoleItems     RoleItems[]
+}
+
+model RoleItems {
   id        Int      @id @default(autoincrement())
-  phone     String?  @unique
-  email     String?  @unique
-  name      String
-  avator    String?
+  msg       String
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId    Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
