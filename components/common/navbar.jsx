@@ -1,5 +1,6 @@
 import useUser from "libs/client/useUser";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import Logo from "../../public/assets/desktop/logo.svg";
 import DefaultButton from "./defaultButton";
@@ -9,18 +10,18 @@ import Switch from "./switch";
 const Navbar = ({ isDark, setIsDark }) => {
   const user = useUser();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(!open);
   };
 
   const handleMenuOne = () => {
-    console.log("asdf");
     setOpen(false);
   };
 
   const handleMenuTwo = () => {
-    console.log("asdffd");
+    router.push("/profile");
     setOpen(false);
   };
 
@@ -32,6 +33,14 @@ const Navbar = ({ isDark, setIsDark }) => {
             <Logo />
           </Link>
           <div className="flex space-x-4 ">
+            {user?.profile.isCEO ? (
+              <Link
+                href="/company/myCompany"
+                className="hidden w-20 tablet:block"
+              >
+                <DefaultButton text="나의 기업" color="metal" />
+              </Link>
+            ) : null}
             {user ? (
               <div className="hidden tablet:block">
                 <Dropdown

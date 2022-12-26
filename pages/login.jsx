@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
+import useMoveLogin from "libs/client/useMoveLogin";
 import useMutation from "libs/client/useMutation";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +9,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
+  useMoveLogin("/");
   const [enter, { loading, data, error }] = useMutation("/api/users/enter");
   const {
     register,

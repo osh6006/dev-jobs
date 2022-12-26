@@ -6,7 +6,7 @@ const Dropdown = ({ onClick, open, menu, text }) => {
         className="relative flex w-full cursor-pointer items-center justify-center rounded-md bg-violet px-5 py-3 font-bold text-white transition-colors hover:bg-light_violet"
       >
         <p className="mr-3 select-none uppercase">{text}</p>
-        {open ? (
+        {open && open ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -37,7 +37,7 @@ const Dropdown = ({ onClick, open, menu, text }) => {
             />
           </svg>
         )}
-        {open ? (
+        {open && open ? (
           <div className="absolute z-20 m-0 mt-36 w-full rounded-sm border border-none font-normal ">
             {menu.map((menuItem, index) => (
               <div
