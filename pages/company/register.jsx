@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { COUNTRIES, POSITIONS, TIMETYPES } from "public/options";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import notLogo from "../../public/notlogo.png";
 
 const CompanyRegister = () => {
   useCEO();
@@ -26,6 +27,7 @@ const CompanyRegister = () => {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -82,6 +84,15 @@ const CompanyRegister = () => {
     }
   }, [data, router, setError]);
 
+  // logo Preview
+  const [logoPreview, setLogoPreview] = useState(null);
+  const logo = watch("logo");
+  useEffect(() => {
+    if (logo && logo.length > 0) {
+      const file = logo[0];
+      setLogoPreview(URL.createObjectURL(file));
+    }
+  }, [logo]);
   return (
     <section className="my-0 mx-auto w-full p-10">
       <h1 className="text-h1 font-bold text-violet">기업 등록</h1>
@@ -92,7 +103,7 @@ const CompanyRegister = () => {
         <section className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div className="mb-6">
             <h3 className="font-bold text-violet dark:text-light_violet">
-              회사 로고 사진 선택
+              회사 로고 선택
             </h3>
             <label
               htmlFor="logo"
@@ -130,7 +141,30 @@ const CompanyRegister = () => {
               />
             </div>
           </div>
-          <div>로고 미리보기</div>
+          <div>
+            <h3 className="font-bold text-violet dark:text-light_violet">
+              로고 미리보기{" "}
+              <span className=" block text-center text-warning tablet:inline tablet:text-start">
+                * 로고는 배경이 없는 것을 넣어주세요
+              </span>
+            </h3>
+            <div className="flex h-full w-full items-center justify-center p-5">
+              <div
+                className="rounded-3xl p-10"
+                style={{ background: colorObj.color }}
+              >
+                {logoPreview ? (
+                  <img
+                    src={logoPreview}
+                    alt="logoPreview"
+                    className="h-full w-full"
+                  />
+                ) : (
+                  <img src={notLogo} alt="notlogo" className="h-full w-full" />
+                )}
+              </div>
+            </div>
+          </div>
           <div>
             <Input
               label="회사 명"
@@ -243,9 +277,9 @@ const CompanyRegister = () => {
           <div>
             <Selectbox
               name="position"
-              label="시간 범위"
+              label="경력"
               register={register("position", {
-                required: "⛔ 시간을 선택해 주세요",
+                required: "⛔ 경력을 선택해 주세요",
               })}
               optmsg="시간 범위를"
               option={POSITIONS}
@@ -267,7 +301,7 @@ const CompanyRegister = () => {
             })}
             placeholder=""
             row={5}
-            label="회사 설명"
+            label="회사 소개"
           />
           <ErrorMessage
             className="mt-2 flex text-warning"
