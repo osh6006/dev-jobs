@@ -33,7 +33,7 @@ const Navbar = ({ isDark, setIsDark }) => {
             <Logo />
           </Link>
           <div className="flex space-x-4 ">
-            {user?.profile.isCEO ? (
+            {user?.profile?.isCEO ? (
               <Link
                 href="/company/myCompany"
                 className="hidden w-20 tablet:block"
@@ -41,11 +41,11 @@ const Navbar = ({ isDark, setIsDark }) => {
                 <DefaultButton text="나의 기업" color="metal" />
               </Link>
             ) : null}
-            {user ? (
+            {user && user ? (
               <div className="hidden tablet:block">
                 <Dropdown
                   onClick={handleOpen}
-                  text={user.profile.name}
+                  text={user?.profile?.name}
                   open={open}
                   menu={[
                     <button onClick={handleMenuOne}>로그아웃</button>,

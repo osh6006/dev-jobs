@@ -72,10 +72,11 @@ const Enter = () => {
   }, [data, router, setError]);
 
   return (
-    <section className="my-0 mx-auto w-full">
+    <section className="my-0 mx-auto w-full p-10">
+      <h1 className="text-h1 font-bold text-violet">회원 가입</h1>
       <form
         onSubmit={handleSubmit(onValid)}
-        className="m-auto my-5 rounded-xl bg-white p-10 dark:bg-very_dark_blue desktop:w-[95%]"
+        className="m-auto my-5 rounded-xl bg-white p-10 dark:bg-very_dark_blue "
       >
         <div className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div>
