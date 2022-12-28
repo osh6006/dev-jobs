@@ -27,10 +27,12 @@ model DevJobsUser {
 
 model CompanyInfo {
   id            Int           @id @default(autoincrement())
-  phone         String?       @unique
-  email         String?       @unique
+  phone         String        @unique
+  email         String        @unique
   name          String
   logo          String?
+  logoBgColor   String
+  location      String
   position      String
   contract      String
   website       String

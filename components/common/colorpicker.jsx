@@ -20,12 +20,13 @@ const Colorpicker = ({ name, colorObj, register, setColorObj }) => {
         로고 배경
       </label>
       <input
+        readOnly
         name={name}
         value={colorObj.color}
         id={name}
         {...register}
         onChange={(e) => handleColorChange(e.target.value)}
-        className="focus:none w-full rounded-lg border border-violet p-2.5 outline-none dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
+        className=" focus:none w-full rounded-lg border border-violet p-2.5 outline-none dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
       />
       {colorObj.displayColorPicker ? (
         <div className="mt-5">

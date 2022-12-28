@@ -2,27 +2,32 @@ import { ErrorMessage } from "@hookform/error-message";
 import Colorpicker from "components/common/colorpicker";
 import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
+import InputItems from "components/common/inputItems";
 import Selectbox from "components/common/selectbox";
 import Textarea from "components/common/textarea";
 import useCEO from "libs/client/ceo/useCEO";
 import useMutation from "libs/client/useMutation";
+import useUser from "libs/client/useUser";
 import { useRouter } from "next/router";
 import { COUNTRIES, POSITIONS, TIMETYPES } from "public/options";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import notLogo from "../../public/notlogo.png";
 
 const CompanyRegister = () => {
   useCEO();
+  const user = useUser();
+  const [requireItems, setRequireItems] = useState([]);
+  const [roleItems, setRoleItems] = useState([]);
 
   const [colorObj, setColorObj] = useState({
     displayColorPicker: true,
-    color: "#ffbb00",
+    color: "#132034",
   });
 
   const [regist, { loading, data, error }] = useMutation(
     "/api/company/companyRegister"
   );
+
   const {
     register,
     handleSubmit,
@@ -30,10 +35,6 @@ const CompanyRegister = () => {
     watch,
     formState: { errors },
   } = useForm({ mode: "onChange" });
-
-  const onValid = (data) => {
-    console.log(data);
-  };
 
   const onEmailCheck = async (data) => {
     const isCheck = await fetch("/api/users/check", {
@@ -87,12 +88,38 @@ const CompanyRegister = () => {
   // logo Preview
   const [logoPreview, setLogoPreview] = useState(null);
   const logo = watch("logo");
+
   useEffect(() => {
     if (logo && logo.length > 0) {
       const file = logo[0];
       setLogoPreview(URL.createObjectURL(file));
     }
   }, [logo]);
+
+  // Submit Form
+  const onValid = async (data) => {
+    console.log(data);
+    if (data.logo && data.logo.length > 0 && user.profile.email) {
+      const cloudflareRequest = await fetch(`/api/files`);
+      const { id, uploadURL } = await cloudflareRequest.json();
+      const form = new FormData();
+      form.append("file", logo[0], user?.profile?.email);
+      const {
+        request: { reqId },
+      } = await (
+        await fetch(uploadURL, {
+          method: "POST",
+          body: form,
+        })
+      ).json();
+
+      // Save Company Data
+
+      return;
+    } else {
+    }
+  };
+
   return (
     <section className="my-0 mx-auto w-full p-10">
       <h1 className="text-h1 font-bold text-violet">기업 등록</h1>
@@ -103,7 +130,7 @@ const CompanyRegister = () => {
         <section className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div className="mb-6">
             <h3 className="font-bold text-violet dark:text-light_violet">
-              회사 로고 선택
+              로고 이미지
             </h3>
             <label
               htmlFor="logo"
@@ -145,27 +172,27 @@ const CompanyRegister = () => {
             <h3 className="font-bold text-violet dark:text-light_violet">
               로고 미리보기{" "}
               <span className=" block text-center text-warning tablet:inline tablet:text-start">
-                * 로고는 배경이 없는 것을 넣어주세요
+                * 로고는 가급적 배경이 없는 것을 넣어주세요
               </span>
             </h3>
             <div className="flex h-full w-full items-center justify-center p-5">
               <div
-                className="rounded-3xl p-10"
+                className="flex max-h-96 items-center justify-center rounded-3xl p-10"
                 style={{ background: colorObj.color }}
               >
                 {logoPreview ? (
                   <img
                     src={logoPreview}
                     alt="logoPreview"
-                    className="h-full w-full"
+                    className="max-h-96"
                   />
                 ) : (
-                  <img src={notLogo} alt="notlogo" className="h-full w-full" />
+                  <img src="/notlogo.png" alt="notlogo" className="max-h-96" />
                 )}
               </div>
             </div>
           </div>
-          <div>
+          <div className="mt-10 tablet:mt-0">
             <Input
               label="회사 명"
               name="company"
@@ -299,7 +326,7 @@ const CompanyRegister = () => {
             register={register("description", {
               required: "⛔ 회사 설명을 입력해 주세요",
             })}
-            placeholder=""
+            placeholder="회사 설명"
             row={5}
             label="회사 소개"
           />
@@ -310,8 +337,61 @@ const CompanyRegister = () => {
             as="p"
           />
         </div>
-        <div className="mb-6"></div>
-        <div className="mb-6 flex items-center">
+        <hr className="my-6 h-2 text-violet" />
+        <div className="">
+          <h3 className="mb-3 font-bold text-violet dark:text-light_violet">
+            우대 사항
+          </h3>
+          <Textarea
+            name="requirements"
+            register={register("requirements", {
+              required: "⛔ 우대 사항을 입력해 주세요",
+            })}
+            placeholder="우리가 원하는 인재상은 기술을 통해 문제를 해결하는 것에 열정적이었으면 좋겠습니다. 그리고..."
+            row={3}
+            label="우대 사항 설명"
+          />
+          <ErrorMessage
+            className="mt-2 flex text-warning"
+            errors={errors}
+            name="requirements"
+            as="p"
+          />
+        </div>
+        <div className="mb-6">
+          <h3 className="mb-3 font-bold text-violet dark:text-light_violet">
+            우대 사항 항목
+          </h3>
+          <InputItems items={requireItems} setItems={setRequireItems} />
+        </div>
+        <hr className="my-6 h-2 text-violet" />
+        <div>
+          <h3 className="mb-3 font-bold text-violet dark:text-light_violet">
+            지원자 역할
+          </h3>
+          <Textarea
+            name="roles"
+            register={register("roles", {
+              required: "⛔ 요구 사항을 입력해 주세요",
+            })}
+            placeholder="우리가 원하는 인재상은 기술을 통해 문제를 해결하는 것에 열정적이었으면 좋겠습니다. 그리고..."
+            row={3}
+            label="지원자 역할 요약"
+          />
+          <ErrorMessage
+            className="mt-2 flex text-warning"
+            errors={errors}
+            name="roles"
+            as="p"
+          />
+        </div>
+        <div className="mt-6">
+          <h3 className="mb-3 font-bold text-violet dark:text-light_violet">
+            지원자 역할 항목
+          </h3>
+          <InputItems items={roleItems} setItems={setRoleItems} />
+        </div>
+        <div className=" flex items-center">
           <div className="flex h-5 items-center">
             <input
               id="isCEO"

@@ -20,6 +20,8 @@ export const POSITIONS = [
   { name: "경력", value: "경력" },
 ];
 
+export const REQUIREMENTS = [];
+
 export const PICKERCOLORS = [
   "#ea9310",
   "#e54b24",
