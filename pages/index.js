@@ -8,7 +8,7 @@ export default function Home() {
   const user = useUser();
   const { data } = useSWR("/api/company/getCompany");
   return (
-    <div className="h-full">
+    <div className="">
       <div className="-mt-12 w-full space-y-14 p-10 tablet:-mt-20">
         <SearchBar />
         <section className="grid w-full gap-10 tablet:grid-cols-2 desktop:grid-cols-3">

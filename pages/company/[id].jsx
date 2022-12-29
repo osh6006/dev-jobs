@@ -1,18 +1,30 @@
 import DefaultButton from "components/common/defaultButton";
 import SecondaryButton from "components/common/secondaryButton";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { timeAgoKo } from "public/options";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { format, register } from "timeago.js";
 
-const CompanyDetail = ({ companyDetail }) => {
+const CompanyDetail = () => {
   const router = useRouter();
   console.log(router.query);
   const { data } = useSWR(
     router.query.id ? `/api/company/${router.query.id}` : null
   );
+  const [days, setDays] = useState("");
+  console.log(data);
+
+  useEffect(() => {
+    const createdDay = data?.company?.createdAt;
+    register("ko-locale", timeAgoKo);
+    setDays(format(new Date(createdDay), "ko-locale"));
+  }, [data]);
   return (
-    <div className="h-screen">
+    <div>
       <section className=" w-full px-5 tablet:px-10">
-        <div className="mt-1 flex w-full flex-col items-center rounded-xl bg-white dark:bg-very_dark_blue tablet:-mt-10 tablet:flex-row tablet:items-center tablet:justify-between">
+        <div className="items-cen ter mt-1 flex w-full flex-col rounded-xl bg-white dark:bg-very_dark_blue tablet:-mt-10 tablet:flex-row tablet:items-center tablet:justify-between">
           <div className="flex flex-col items-center tablet:flex-row tablet:space-x-5">
             <img
               className="-mt-5 aspect-square rounded-xl tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none"
@@ -20,13 +32,15 @@ const CompanyDetail = ({ companyDetail }) => {
             />
             <div className="tablet:space-y-1">
               <div className="mt-4 text-h3 font-bold capitalize dark:text-white">
-                Scoot
+                {data?.company?.name}
               </div>
-              <div className="mt-3 text-gray">12</div>
+              <div className="mt-3 text-gray">{data?.company?.website}</div>
             </div>
           </div>
           <div className="mt-4 mb-8 tablet:m-0 tablet:mr-10">
-            <SecondaryButton text="Company Site" />
+            <Link href={data ? data?.company?.website : "#"}>
+              <SecondaryButton text="Company Site" />
+            </Link>
           </div>
         </div>
 
@@ -34,13 +48,13 @@ const CompanyDetail = ({ companyDetail }) => {
           <div className="tablet:flex tablet:items-center tablet:justify-between">
             <div className="space-y-2">
               <h4 className=" text-dark_grey tablet:text-h3 ">
-                1ago - part time
+                {`${days && days} - ${data?.company?.contract}`}
               </h4>
               <h3 className="text-h3 font-bold capitalize dark:text-white tablet:text-h2">
-                senior software engineer
+                {data?.company?.position}
               </h3>
               <h4 className="font-bold capitalize text-violet">
-                united kingdom
+                {data?.company?.location}
               </h4>
             </div>
             <div className="mt-10 tablet:m-0 tablet:mr-10 tablet:w-32 tablet:rounded-md">
@@ -48,11 +62,38 @@ const CompanyDetail = ({ companyDetail }) => {
             </div>
           </div>
           <p className="mt-10 break-words text-dark_grey ">
-            asdflasdflksadfljsaldfjlsdfjlsasdfsdfdsfdsfdsfdsfdsfdsdsfsdfdsfldsjfldjdksdlfdsjfldsjljalsdjfsdfdkdjfksldkdjsidsdfdsfdsflkasdflkasjfdjsdjfksdafljksdalflsadjfljsdaflkjsdaklfdslkjfslkjfldskjljklkjslkdjfjlksafjlkasdfjlkdsa
+            {data?.company?.description}
           </p>
+          <h1 className="mt-10 break-words text-h2 font-bold dark:text-white ">
+            Requirements
+          </h1>
+          <p className="mt-10 break-words text-dark_grey ">
+            {data?.company?.requirements?.contents}
+          </p>
+          <ul className="mt-10 list-disc break-words px-5 text-dark_grey">
+            {data?.company?.requirements?.items?.map((element, i) => (
+              <li className="" key={i}>
+                {element}
+              </li>
+            ))}
+          </ul>
+
+          <h1 className="mt-10 break-words text-h2 font-bold dark:text-white ">
+            What You Will Do
+          </h1>
+          <p className="mt-10 break-words text-dark_grey ">
+            {data?.company?.roles?.contents}
+          </p>
+          <ul className="mt-10 list-decimal break-words px-5 text-dark_grey">
+            {data?.company?.requirements?.items?.map((element, i) => (
+              <li className="" key={i}>
+                {element}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
-      <footer className="mt-20 w-full rounded-md bg-white p-5 dark:bg-very_dark_blue tablet:absolute tablet:bottom-0 tablet:left-0 tablet:m-0 tablet:flex tablet:justify-center ">
+      <footer className="mt-10 w-full  bg-white p-5 dark:bg-very_dark_blue tablet:left-0  tablet:flex tablet:justify-center ">
         <div className="tablet:flex tablet:w-full tablet:max-w-[1440px] tablet:justify-between tablet:px-10 tablet:py-5">
           <div className="hidden tablet:block">
             <h2 className="text-h2 font-bold capitalize dark:text-white ">

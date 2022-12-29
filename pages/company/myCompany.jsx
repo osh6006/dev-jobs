@@ -7,7 +7,7 @@ const MyCompany = () => {
   useCEO();
   const company = useMyCompany();
   return (
-    <div className="h-screen p-10">
+    <div className="h-2/3">
       {company ? (
         ""
       ) : (
