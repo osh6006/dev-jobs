@@ -25,6 +25,11 @@ const Navbar = ({ isDark, setIsDark }) => {
     setOpen(false);
   };
 
+  const handleMenuThree = () => {
+    router.push(user?.profile?.isCEO ? "/company/myCompany" : "/");
+    setOpen(false);
+  };
+
   return (
     <>
       <div className="h-[163px] w-full space-y-5 bg-cover bg-no-repeat px-5 py-10 mobile:bg-[url('/assets/mobile/bg-pattern-header.svg')] tablet:bg-[url('/assets/tablet/bg-pattern-header.svg')] tablet:px-10 desktop:bg-[url('/assets/desktop/bg-pattern-header.svg')]">
@@ -33,14 +38,11 @@ const Navbar = ({ isDark, setIsDark }) => {
             <Logo />
           </Link>
           <div className="flex space-x-4 ">
-            {user?.profile?.isCEO ? (
-              <Link
-                href="/company/myCompany"
-                className="hidden w-20 tablet:block"
-              >
+            {/* {user?.profile?.isCEO ? (
+              <Link href="/company/myCompany" className="hidden tablet:block">
                 <DefaultButton text="나의 기업" color="metal" />
               </Link>
-            ) : null}
+            ) : null} */}
             {user && user ? (
               <div className="hidden tablet:block">
                 <Dropdown
@@ -50,6 +52,13 @@ const Navbar = ({ isDark, setIsDark }) => {
                   menu={[
                     <button onClick={handleMenuOne}>로그아웃</button>,
                     <button onClick={handleMenuTwo}>프로필</button>,
+                    user?.profile?.isCEO ? (
+                      <button onClick={handleMenuThree}>내 회사 관리</button>
+                    ) : (
+                      <button onClick={handleMenuThree}>
+                        내가 지원한 회사
+                      </button>
+                    ),
                   ]}
                 />
               </div>

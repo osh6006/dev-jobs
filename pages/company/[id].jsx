@@ -97,10 +97,10 @@ const CompanyDetail = () => {
         <div className="tablet:flex tablet:w-full tablet:max-w-[1440px] tablet:justify-between tablet:px-10 tablet:py-5">
           <div className="hidden tablet:block">
             <h2 className="text-h2 font-bold capitalize dark:text-white ">
-              senior software engineer
+              {data?.company?.position}
             </h2>
             <h3 className="text-h3 capitalize text-dark_grey">
-              so digital inc.
+              {data?.company?.name}
             </h3>
           </div>
           <div className="w-full tablet:w-32">

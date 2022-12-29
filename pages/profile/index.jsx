@@ -1,8 +1,5 @@
-import useMoveLogin from "libs/client/useMoveLogin";
-
 const Profile = () => {
-  useMoveLogin("/profile");
-  return <div>Profile</div>;
+  return <div className="h-screen p-10">Profile</div>;
 };
 
 export default Profile;

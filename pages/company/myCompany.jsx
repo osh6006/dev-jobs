@@ -1,15 +1,27 @@
 import DefaultButton from "components/common/defaultButton";
-import useCEO from "libs/client/ceo/useCEO";
-import useMyCompany from "libs/client/ceo/useMyCompany";
+import useUser from "libs/client/useUser";
 import Link from "next/link";
+import { timeAgoKo } from "public/options";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { format, register } from "timeago.js";
 
 const MyCompany = () => {
-  useCEO();
-  const company = useMyCompany();
+  const user = useUser();
+  const { data } = useSWR(user ? `/api/company/${user.profile.id}` : null);
+  const [days, setDays] = useState("");
+
+  useEffect(() => {
+    const createdDay = data?.company?.createdAt;
+    register("ko-locale", timeAgoKo);
+    setDays(format(new Date(createdDay), "ko-locale"));
+  }, [data]);
   return (
-    <div className="h-2/3">
-      {company ? (
-        ""
+    <div className="my-0 mx-auto h-screen p-10">
+      {data ? (
+        <>
+          <h1 className="text-h2 font-bold text-violet">양식 목록</h1>
+        </>
       ) : (
         <div className="flex h-full flex-col items-center justify-center space-y-5">
           <h2 className="text-center text-h2 font-bold text-dark_grey dark:text-white">
