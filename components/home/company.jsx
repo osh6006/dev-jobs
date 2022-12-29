@@ -1,4 +1,7 @@
-const Company = () => {
+import useUser from "libs/client/useUser";
+import { useEffect } from "react";
+
+const Company = (props) => {
   return (
     <>
       <div className="flex h-[228px] w-full cursor-pointer flex-col rounded-xl bg-white px-8 transition-transform hover:scale-110 dark:bg-very_dark_blue">

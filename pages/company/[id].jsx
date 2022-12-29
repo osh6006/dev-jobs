@@ -1,7 +1,14 @@
 import DefaultButton from "components/common/defaultButton";
 import SecondaryButton from "components/common/secondaryButton";
+import { useRouter } from "next/router";
+import useSWR from "swr";
 
 const CompanyDetail = ({ companyDetail }) => {
+  const router = useRouter();
+  console.log(router.query);
+  const { data } = useSWR(
+    router.query.id ? `/api/company/${router.query.id}` : null
+  );
   return (
     <div className="h-screen">
       <section className=" w-full px-5 tablet:px-10">

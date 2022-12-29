@@ -69,8 +69,8 @@ const CompanyRegister = () => {
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
-      alert("가입에 성공하셨습니다. 로그인을 해보세요 !");
-      router.push("/login");
+      alert("회사 등록에 성공하셨습니다!");
+      router.push("/company/myCompany");
     } else {
       if (data?.message?.length > 0) {
         setError("server", {
@@ -101,11 +101,11 @@ const CompanyRegister = () => {
     console.log(data);
     if (data.logo && data.logo.length > 0 && user.profile.email) {
       const cloudflareRequest = await fetch(`/api/files`);
-      const { id, uploadURL } = await cloudflareRequest.json();
+      const { uploadURL } = await cloudflareRequest.json();
       const form = new FormData();
       form.append("file", logo[0], user?.profile?.email);
       const {
-        request: { reqId },
+        request: { id },
       } = await (
         await fetch(uploadURL, {
           method: "POST",
@@ -113,11 +113,24 @@ const CompanyRegister = () => {
         })
       ).json();
 
-      // Save Company Data
-
+      data.logo = id;
       return;
     } else {
+      data.logo = process.env.NEXT_PUBLIC_NOT_LOGO_ID;
     }
+
+    // Save Company Data
+    data.requirements = {
+      contents: data.requirements,
+      items: [...requireItems],
+    };
+    data.roles = {
+      contents: data.roles,
+      items: [...roleItems],
+    };
+
+    console.log(data);
+    regist(data);
   };
 
   return (
@@ -318,6 +331,26 @@ const CompanyRegister = () => {
               as="p"
             />
           </div>
+          <div>
+            <Input
+              label="회사 홈페이지"
+              name="website"
+              register={register("website", {
+                required: "⛔ 회사 홈페이지를 입력해 주세요.",
+                pattern: {
+                  value: /(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/,
+                  message: `⛔ 전화번호 형식이 맞지 않습니다. \n ex) 010-1234-5678`,
+                },
+              })}
+              placeholder="https://www.example.com"
+            />
+            <ErrorMessage
+              className="mt-2 flex text-warning"
+              errors={errors}
+              name="website"
+              as="p"
+            />
+          </div>
         </section>
 
         <div className="mb-6">
@@ -359,7 +392,7 @@ const CompanyRegister = () => {
           />
         </div>
         <div className="mb-6">
-          <h3 className="mb-3 font-bold text-violet dark:text-light_violet">
+          <h3 className="my-3 font-bold text-violet dark:text-light_violet">
             우대 사항 항목
           </h3>
           <InputItems items={requireItems} setItems={setRequireItems} />
@@ -374,7 +407,7 @@ const CompanyRegister = () => {
             register={register("roles", {
               required: "⛔ 요구 사항을 입력해 주세요",
             })}
-            placeholder="우리가 원하는 인재상은 기술을 통해 문제를 해결하는 것에 열정적이었으면 좋겠습니다. 그리고..."
+            placeholder="지원자는 우리 회사에서 XXX 일을 맡게 될 예정입니다."
             row={3}
             label="지원자 역할 요약"
           />

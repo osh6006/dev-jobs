@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import useMoveLogin from "libs/client/useMoveLogin";
 
 const Enter = () => {
-  useMoveLogin("/");
   const [regist, { loading, data, error }] = useMutation("/api/users/register");
 
   const {
