@@ -38,11 +38,11 @@ const Dropdown = ({ onClick, open, menu, text }) => {
           </svg>
         )}
         {open && open ? (
-          <div className="absolute z-20 mt-52 mr-12 w-full rounded-sm border border-none font-normal tablet:w-[150px] ">
+          <div className="absolute z-20 mt-52 w-full rounded-sm border border-none font-normal tablet:mr-12 tablet:w-[150px] ">
             {menu.map((menuItem, index) => (
               <div
                 key={index}
-                className="menu-item w-full rounded-sm bg-violet px-3 py-3 text-right hover:bg-light_violet"
+                className="menu-item w-full rounded-sm bg-violet px-3 py-3 text-center hover:bg-light_violet tablet:text-right"
               >
                 {menuItem}
               </div>

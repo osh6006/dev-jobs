@@ -79,6 +79,11 @@ const Navbar = ({ isDark, setIsDark }) => {
               menu={[
                 <button onClick={handleMenuOne}>로그아웃</button>,
                 <button onClick={handleMenuTwo}>프로필</button>,
+                user?.profile?.isCEO ? (
+                  <button onClick={handleMenuThree}>내 회사 관리</button>
+                ) : (
+                  <button onClick={handleMenuThree}>내가 지원한 회사</button>
+                ),
               ]}
             />
           </div>
