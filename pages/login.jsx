@@ -1,24 +1,25 @@
 import { ErrorMessage } from "@hookform/error-message";
 import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
-import { UserContext } from "libs/client/Context";
-import useMoveLogin from "libs/client/useMoveLogin";
+import useMove from "libs/client/useMove";
 import useMutation from "libs/client/useMutation";
+import useUser from "libs/client/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  useMoveLogin("/");
-  const user = useContext(UserContext);
+  useMove("/");
+  const user = useUser();
   const [enter, { loading, data, error }] = useMutation("/api/users/enter");
+  const [serverMsg, setServerMsg] = useState(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-  } = useForm({ criteriaMode: "all" });
+  } = useForm();
 
   const onValid = (formData) => {
     enter(formData);
@@ -27,15 +28,15 @@ const Login = () => {
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
-      useMoveLogin("/");
+      router.reload();
     } else {
       if (data?.message?.length > 0) {
-        alert("비밀번호가 일치하지 않습니다.");
+        setServerMsg(data?.message);
+      } else {
+        setServerMsg(null);
       }
     }
-  }, [data, router, setError]);
-
-  console.log(user);
+  }, [data, router, user]);
 
   return (
     <div className="flex h-fit w-full items-baseline justify-center overflow-hidden">
@@ -93,6 +94,7 @@ const Login = () => {
                 name="server"
                 as="p"
               />
+              <div className="mt-2 text-warning">{serverMsg && serverMsg}</div>
             </div>
 
             <div className="mb-6 flex items-center justify-between dark:text-white">

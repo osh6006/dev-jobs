@@ -1,20 +1,18 @@
-import { UserContext } from "libs/client/Context";
+import useUser from "libs/client/useUser";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Logo from "../../public/assets/desktop/logo.svg";
 import DefaultButton from "./defaultButton";
 import Dropdown from "./dropdown";
 import Switch from "./switch";
 
 const Navbar = ({ isDark, setIsDark }) => {
-  const user = useContext(UserContext);
+  const user = useUser();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(!open);
   };
-
-  console.log(user);
 
   return (
     <>
