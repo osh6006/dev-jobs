@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Dropdown = ({ onClick, open, menu, text }) => {
   return (
     <>
@@ -38,14 +40,15 @@ const Dropdown = ({ onClick, open, menu, text }) => {
           </svg>
         )}
         {open && open ? (
-          <div className="absolute z-20 mt-52 w-full rounded-sm border border-none font-normal tablet:mr-12 tablet:w-[150px] ">
+          <div className="absolute z-20 mt-52 flex w-full flex-col rounded-sm border border-none font-normal tablet:mr-12 tablet:w-[150px] ">
             {menu.map((menuItem, index) => (
-              <div
+              <Link
                 key={index}
-                className="menu-item w-full rounded-sm bg-violet px-3 py-3 text-center hover:bg-light_violet tablet:text-right"
+                href={menuItem.href}
+                className="menu-item w-full rounded-sm border-b-2 border-dark_grey bg-violet px-3 py-3 text-center hover:bg-light_violet tablet:text-right"
               >
-                {menuItem}
-              </div>
+                {menuItem.name}
+              </Link>
             ))}
           </div>
         ) : null}

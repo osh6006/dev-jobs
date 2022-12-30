@@ -1,33 +1,17 @@
-import useUser from "libs/client/useUser";
+import { UserContext } from "libs/client/Context";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Logo from "../../public/assets/desktop/logo.svg";
 import DefaultButton from "./defaultButton";
 import Dropdown from "./dropdown";
 import Switch from "./switch";
 
 const Navbar = ({ isDark, setIsDark }) => {
-  const user = useUser();
+  const user = useContext(UserContext);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
 
   const handleOpen = () => {
     setOpen(!open);
-  };
-
-  const handleMenuOne = () => {
-    setOpen(false);
-  };
-
-  const handleMenuTwo = () => {
-    router.push("/profile");
-    setOpen(false);
-  };
-
-  const handleMenuThree = () => {
-    router.push(user?.profile?.isCEO ? "/company/myCompany" : "/");
-    setOpen(false);
   };
 
   console.log(user);
@@ -40,27 +24,18 @@ const Navbar = ({ isDark, setIsDark }) => {
             <Logo />
           </Link>
           <div className="flex space-x-4 ">
-            {/* {user?.profile?.isCEO ? (
-              <Link href="/company/myCompany" className="hidden tablet:block">
-                <DefaultButton text="나의 기업" color="metal" />
-              </Link>
-            ) : null} */}
             {user ? (
               <div className="hidden tablet:block">
                 <Dropdown
                   onClick={handleOpen}
-                  text={user && user?.profile?.name}
+                  text={user?.profile?.name}
                   open={open}
                   menu={[
-                    <button onClick={handleMenuOne}>로그아웃</button>,
-                    <button onClick={handleMenuTwo}>프로필</button>,
-                    user?.profile?.isCEO ? (
-                      <button onClick={handleMenuThree}>내 기업 관리</button>
-                    ) : (
-                      <button onClick={handleMenuThree}>
-                        내가 지원한 회사
-                      </button>
-                    ),
+                    { href: "/api/users/logout", name: "로그아웃" },
+                    { href: "/profile", name: "프로필" },
+                    user?.profile?.isCEO
+                      ? { href: "/company/myCompany", name: "내 기업 관리" }
+                      : { href: "/", name: "내가 지원한 회사" },
                   ]}
                 />
               </div>
@@ -79,13 +54,11 @@ const Navbar = ({ isDark, setIsDark }) => {
               text={user?.profile?.name}
               open={open}
               menu={[
-                <button onClick={handleMenuOne}>로그아웃</button>,
-                <button onClick={handleMenuTwo}>프로필</button>,
-                user?.profile?.isCEO ? (
-                  <button onClick={handleMenuThree}>내 회사 관리</button>
-                ) : (
-                  <button onClick={handleMenuThree}>내가 지원한 회사</button>
-                ),
+                { href: "/api/users/logout", name: "로그아웃" },
+                { href: "/profile", name: "프로필" },
+                user?.profile?.isCEO
+                  ? { href: "/company/myCompany", name: "내 기업 관리" }
+                  : { href: "/", name: "내가 지원한 회사" },
               ]}
             />
           </div>

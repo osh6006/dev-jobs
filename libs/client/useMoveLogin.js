@@ -12,7 +12,7 @@ const useMoveLogin = (url) => {
     } else {
       router.replace(url);
     }
-  }, [router]);
+  }, []);
 };
 
 export default useMoveLogin;

@@ -60,3 +60,9 @@ export const timeAgoKo = (number, index) => {
     ["%s년 전", "%s년 후"],
   ][index];
 };
+
+export const userMenu = [
+  { href: "/api/users/logout", name: "로그아웃" },
+  { href: "/profile", name: "프로필" },
+  { href: "/api/users/logout", name: "로그아웃" },
+];
