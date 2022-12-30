@@ -3,13 +3,15 @@ import client from "libs/server/client";
 import { withApiSession } from "libs/server/withSession";
 
 async function handler(req, res) {
-  const profile = await client.devJobsUser.findUnique({
-    where: { id: req.session.user?.id },
-  });
-  res.json({
-    ok: true,
-    profile,
-  });
+  try {
+    const profile = await client.devJobsUser.findUnique({
+      where: { id: req.session.user?.id },
+    });
+    res.json({
+      ok: true,
+      profile,
+    });
+  } catch (error) {}
 }
 
 export default withApiSession(

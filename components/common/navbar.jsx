@@ -30,6 +30,8 @@ const Navbar = ({ isDark, setIsDark }) => {
     setOpen(false);
   };
 
+  console.log(user);
+
   return (
     <>
       <div className="h-[163px] w-full space-y-5 bg-cover bg-no-repeat px-5 py-10 mobile:bg-[url('/assets/mobile/bg-pattern-header.svg')] tablet:bg-[url('/assets/tablet/bg-pattern-header.svg')] tablet:px-10 desktop:bg-[url('/assets/desktop/bg-pattern-header.svg')]">
@@ -43,17 +45,17 @@ const Navbar = ({ isDark, setIsDark }) => {
                 <DefaultButton text="나의 기업" color="metal" />
               </Link>
             ) : null} */}
-            {user && user ? (
+            {user ? (
               <div className="hidden tablet:block">
                 <Dropdown
                   onClick={handleOpen}
-                  text={user?.profile?.name}
+                  text={user && user?.profile?.name}
                   open={open}
                   menu={[
                     <button onClick={handleMenuOne}>로그아웃</button>,
                     <button onClick={handleMenuTwo}>프로필</button>,
                     user?.profile?.isCEO ? (
-                      <button onClick={handleMenuThree}>내 회사 관리</button>
+                      <button onClick={handleMenuThree}>내 기업 관리</button>
                     ) : (
                       <button onClick={handleMenuThree}>
                         내가 지원한 회사
@@ -74,7 +76,7 @@ const Navbar = ({ isDark, setIsDark }) => {
           <div className="block tablet:hidden">
             <Dropdown
               onClick={handleOpen}
-              text={user.profile.name}
+              text={user?.profile?.name}
               open={open}
               menu={[
                 <button onClick={handleMenuOne}>로그아웃</button>,

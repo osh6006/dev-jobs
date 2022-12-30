@@ -1,4 +1,5 @@
 import DefaultButton from "components/common/defaultButton";
+import Layout from "components/common/layout";
 import useUser from "libs/client/useUser";
 import Link from "next/link";
 import { timeAgoKo } from "public/options";
@@ -17,10 +18,10 @@ const MyCompany = () => {
     setDays(format(new Date(createdDay), "ko-locale"));
   }, [data]);
   return (
-    <div className="my-0 mx-auto h-screen p-10">
+    <div>
       {data ? (
         <>
-          <h1 className="text-h2 font-bold text-violet">양식 목록</h1>
+          <h1 className="text-h2 font-bold text-violet">등록한 채용 공고</h1>
         </>
       ) : (
         <div className="flex h-full flex-col items-center justify-center space-y-5">
