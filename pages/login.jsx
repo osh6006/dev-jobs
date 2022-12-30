@@ -44,8 +44,8 @@ const Login = () => {
   console.log(errors);
 
   return (
-    <div className="my-10 flex h-fit w-full items-baseline justify-center overflow-hidden">
-      <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-10 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
+    <div className="flex h-fit w-full items-baseline justify-center overflow-hidden">
+      <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-5 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
         <div className="w-full">
           <img
             src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
