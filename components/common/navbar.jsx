@@ -10,6 +10,7 @@ const Navbar = ({ isDark, setIsDark }) => {
   const user = useUser();
   const [open, setOpen] = useState(false);
 
+  console.log(user);
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -22,7 +23,7 @@ const Navbar = ({ isDark, setIsDark }) => {
             <Logo />
           </Link>
           <div className="flex space-x-4 ">
-            {user ? (
+            {user?.ok ? (
               <div className="hidden tablet:block">
                 <Dropdown
                   onClick={handleOpen}
@@ -45,7 +46,7 @@ const Navbar = ({ isDark, setIsDark }) => {
             <Switch isDark={isDark} setIsDark={setIsDark} />
           </div>
         </div>
-        {user ? (
+        {user?.ok ? (
           <div className="block tablet:hidden">
             <Dropdown
               onClick={handleOpen}

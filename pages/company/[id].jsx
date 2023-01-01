@@ -9,7 +9,6 @@ import { format, register } from "timeago.js";
 
 const CompanyDetail = () => {
   const router = useRouter();
-  console.log(router.query);
   const { data } = useSWR(
     router.query.id ? `/api/company/${router.query.id}` : null
   );
@@ -23,10 +22,13 @@ const CompanyDetail = () => {
   }, [data]);
   return (
     <div>
-      <section className="w-full px-5 tablet:px-10">
+      <section className="w-full px-5 tablet:px-0">
         <div className="mt-1 flex w-full flex-col items-center rounded-xl  bg-white dark:bg-very_dark_blue tablet:-mt-10 tablet:flex-row tablet:items-center tablet:justify-between">
           <div className="flex flex-col items-center tablet:flex-row tablet:space-x-5">
-            <div className={`bg-[${data?.company?.logoBgColor}]`}>
+            <div
+              style={{ backgroundColor: data?.company?.logoBgColor }}
+              // className={`bg-[${data?.company?.logoBgColor}]`}
+            >
               <img
                 className="-mt-5 aspect-square h-20 w-20 rounded-xl text-center tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
                 src={

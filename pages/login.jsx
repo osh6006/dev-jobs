@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Login = () => {
-  useMove("/");
+const Login = ({ ssrdata }) => {
+  // useMove("/");
   const user = useUser();
   const [enter, { loading, data, error }] = useMutation("/api/users/enter");
   const [serverMsg, setServerMsg] = useState(null);
@@ -163,6 +163,25 @@ const Login = () => {
     </div>
   );
 };
+
+// SSR
+export async function getServerSideProps(context) {
+  // 외부 API로 데이터 가져오기
+  const res = await fetch("http://localhost:3000/api/users/me");
+  const data = await res.json();
+  if (data.ok) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
 
 {
   /* <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --> */

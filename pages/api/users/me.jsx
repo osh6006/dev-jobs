@@ -11,7 +11,11 @@ async function handler(req, res) {
       ok: true,
       profile,
     });
-  } catch (error) {}
+  } catch (error) {
+    res.json({
+      ok: false,
+    });
+  }
 }
 
 export default withApiSession(
