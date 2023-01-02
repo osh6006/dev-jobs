@@ -10,7 +10,7 @@ import useMove from "libs/client/useMove";
 
 const Enter = () => {
   useMove("/");
-  const [regist, { loading, data, error }] = useMutation("/api/users/register");
+  const [regist, { loading, data }] = useMutation("/api/users/register");
   const {
     register,
     handleSubmit,
