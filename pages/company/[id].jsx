@@ -35,7 +35,7 @@ const CompanyDetail = () => {
           </div>
           <div className="mt-4 mb-8 tablet:m-0 tablet:mr-10">
             <Link href={data ? data?.company?.website : "#"}>
-              <SecondaryButton text="Company Site" />
+              <SecondaryButton text="회사 홈페이지" />
             </Link>
           </div>
         </div>
@@ -54,7 +54,7 @@ const CompanyDetail = () => {
               </h4>
             </div>
             <div className="mt-10 tablet:m-0 tablet:mr-10 tablet:w-32 tablet:rounded-md">
-              <DefaultButton text="Apply Now" />
+              <DefaultButton text="지원 하기" />
             </div>
           </div>
           <p className="mt-10 break-words text-h3 text-dark_grey">
@@ -100,7 +100,7 @@ const CompanyDetail = () => {
             </h3>
           </div>
           <div className="w-full tablet:w-32">
-            <DefaultButton text="Apply Now" />
+            <DefaultButton text="지원 하기" />
           </div>
         </div>
       </footer>
