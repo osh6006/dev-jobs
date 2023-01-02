@@ -6,7 +6,7 @@ const Edit = () => {
   const user = useUser();
   return (
     <>
-      {user?.profile?.isCEO ? (
+      {false ? (
         <CeoUserEdit user={user?.profile} />
       ) : (
         <GeneralUserEdit user={user?.profile} />

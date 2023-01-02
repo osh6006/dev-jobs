@@ -3,7 +3,9 @@ import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
 import Loading from "components/common/loading";
 import { onEmailCheck, onPhoneCheck } from "libs/client/forms";
-import useUser from "libs/client/useUser";
+import useMutation from "libs/client/useMutation";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const GeneralUserEdit = ({ user }) => {
@@ -11,11 +13,34 @@ const GeneralUserEdit = ({ user }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: "onChange" });
+  } = useForm({
+    values: {
+      name: user?.name,
+      company: user?.company,
+      phone: user?.phone,
+      email: user?.email,
+      isCEO: user?.isCEO,
+    },
+  });
+  const [update, { loading, data }] = useMutation("/api/users/editProfile");
 
   const onValid = data => {
-    // regist(data);
+    const newData = { ...data };
+    newData.id = user?.id;
+    console.log(newData);
+    update(newData);
   };
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data?.ok) {
+      alert("프로필을 업데이트 하였습니다.");
+      router.push("/profile");
+    } else {
+      if (data?.message?.length > 0) {
+      }
+    }
+  }, [data, router]);
   return (
     <>
       <section>
@@ -28,7 +53,6 @@ const GeneralUserEdit = ({ user }) => {
               <Input
                 label="Your Name"
                 name="name"
-                value={user?.name}
                 register={register("name", {
                   required: "⛔ 이름을 입력해 주세요",
                   pattern: {
@@ -53,7 +77,6 @@ const GeneralUserEdit = ({ user }) => {
               <Input
                 label="company"
                 name="company"
-                value={user?.company}
                 register={register("company", {
                   required: "⛔ 회사 이름을 입력해 주세요",
                   maxLength: {
@@ -74,7 +97,6 @@ const GeneralUserEdit = ({ user }) => {
               <Input
                 label="Phone number"
                 name="phone"
-                value={user?.phone}
                 register={register("phone", {
                   required: "⛔ 전화번호를 입력해 주세요",
                   maxLength: {
@@ -101,7 +123,6 @@ const GeneralUserEdit = ({ user }) => {
             <Input
               label="Email address"
               name="email"
-              value={user?.email}
               register={register("email", {
                 required: "⛔ 이메일을 입력해 주세요",
                 pattern: {
@@ -128,7 +149,6 @@ const GeneralUserEdit = ({ user }) => {
             <div className="flex h-5 items-center">
               <input
                 id="isCEO"
-                checked={user?.isCEO}
                 type="checkbox"
                 name="isCEO"
                 className="focus:ring-3 h-4 w-4 rounded border border-violet bg-dark_grey accent-violet focus:ring-violet dark:border-violet dark:bg-violet dark:ring-offset-violet dark:focus:ring-violet"
@@ -144,7 +164,7 @@ const GeneralUserEdit = ({ user }) => {
           </div>
           <DefaultButton
             type="submit"
-            text={false ? <Loading color="white" /> : "수정하기"}
+            text={loading ? <Loading color="white" /> : "수정하기"}
           />
         </form>
       </section>
