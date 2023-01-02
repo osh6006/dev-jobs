@@ -4,6 +4,7 @@ const Input = ({
   register,
   type,
   placeholder = "something write",
+  value,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const Input = ({
         id={name}
         {...register}
         type={type}
+        value={value}
         className="block w-full rounded-lg border border-dark_grey p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
         placeholder={placeholder}
       />

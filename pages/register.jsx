@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Loading from "components/common/loading";
 import useMove from "libs/client/useMove";
+import { onEmailCheck, onPhoneCheck } from "libs/client/forms";
 
 const Enter = () => {
   useMove("/");
@@ -20,36 +21,6 @@ const Enter = () => {
 
   const onValid = data => {
     regist(data);
-  };
-
-  const onEmailCheck = async data => {
-    const isCheck = await fetch("/api/users/check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ type: "email", data }),
-    })
-      .then(response => response.json().catch(() => {}))
-      .then(json => json)
-      .catch(error => setError(error));
-
-    return (await isCheck?.ok) || "⛔ 이미 존재하는 이메일 입니다.";
-  };
-
-  const onPhoneCheck = async data => {
-    const isCheck = await fetch("/api/users/check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ type: "phone", data }),
-    })
-      .then(response => response.json().catch(() => {}))
-      .then(json => json)
-      .catch(error => setError(error));
-
-    return (await isCheck?.ok) || "⛔ 이미 존재하는 핸드폰 번호 입니다.";
   };
 
   const router = useRouter();
@@ -76,7 +47,7 @@ const Enter = () => {
       <h1 className="text-h2  font-bold text-violet">회원 가입</h1>
       <form
         onSubmit={handleSubmit(onValid)}
-        className="m-auto my-5 rounded-xl bg-white p-10 dark:bg-very_dark_blue "
+        className="m-auto my-5 rounded-xl bg-white p-10 shadow-md dark:bg-very_dark_blue"
       >
         <div className="mb-6 grid gap-6 tablet:grid-cols-2 desktop:grid-cols-2">
           <div>
