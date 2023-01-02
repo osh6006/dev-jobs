@@ -17,12 +17,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <SWRConfig
       value={{
-        fetcher: (url) => fetch(url).then((response) => response.json()),
+        fetcher: url => fetch(url).then(response => response.json()),
       }}
     >
       <div className={isDark ? "dark  h-screen" : "h-screen"}>
         <div className="flex h-full justify-center overflow-y-auto bg-light_grey dark:bg-midnight">
-          <div className="h-full bg-light_grey dark:bg-midnight mobile:w-full tablet:w-full desktop:w-[1440px]">
+          <div className="container h-full bg-light_grey dark:bg-midnight mobile:w-full tablet:w-full desktop:w-[1440px]">
             {/* Navbar */}
             <Navbar isDark={isDark} setIsDark={setIsDark} />
             {/* Main Contents */}
