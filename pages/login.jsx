@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  useMove("/");
+  useMove({ url: "/", isPrivate: false });
   const user = useUser();
   const [enter, { loading, data }] = useMutation("/api/users/enter");
   const [serverMsg, setServerMsg] = useState(null);
@@ -40,8 +40,8 @@ const Login = () => {
   }, [data, router, user]);
 
   return (
-    <div className="flex h-fit w-full items-baseline justify-center overflow-hidden">
-      <section className="desktop:space-x-15 flex w-full items-center justify-center space-y-10 p-5 mobile:flex-col tablet:w-4/5 desktop:w-2/3 desktop:flex-row">
+    <div className="flex h-full w-full items-baseline justify-center overflow-hidden desktop:h-[calc(100vh/2)] desktop:p-20">
+      <section className="flex w-full items-center justify-center space-y-10 p-5 mobile:flex-col tablet:w-4/5 desktop:w-4/5 desktop:flex-row desktop:space-x-20">
         <div className="w-full">
           <img
             src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
@@ -49,7 +49,7 @@ const Login = () => {
             alt="Phone image"
           />
         </div>
-        <div className="w-full desktop:w-1/2">
+        <div className="w-full desktop:w-4/5">
           <form onSubmit={handleSubmit(onValid)}>
             <div className="mb-6">
               <Input

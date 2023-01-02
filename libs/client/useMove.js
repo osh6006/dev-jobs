@@ -2,16 +2,25 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useUser from "./useUser";
 
-const useMove = url => {
+const useMove = ({ url, isPrivate }) => {
   const user = useUser();
   const router = useRouter();
 
+  console.log(url, isPrivate);
+
   useEffect(() => {
-    // 유저가 존재하면 이동
-    if (user?.ok) {
-      router.replace(url);
+    if (isPrivate) {
+      if (!user?.ok) {
+        router.replace(url);
+      } else {
+        return;
+      }
     } else {
-      return;
+      if (user?.ok) {
+        router.replace(url);
+      } else {
+        return;
+      }
     }
   }, [router, user]);
 };

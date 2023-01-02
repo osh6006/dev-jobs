@@ -10,7 +10,7 @@ import useMove from "libs/client/useMove";
 import { onEmailCheck, onPhoneCheck } from "libs/client/forms";
 
 const Enter = () => {
-  useMove("/");
+  useMove({ url: "/", isPrivate: false });
   const [regist, { loading, data }] = useMutation("/api/users/register");
   const {
     register,

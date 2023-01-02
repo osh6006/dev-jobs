@@ -16,7 +16,7 @@ const Navbar = ({ isDark, setIsDark }) => {
   return (
     <>
       <div className="h-[163px] w-full space-y-5 bg-cover bg-no-repeat px-5 py-10 mobile:bg-[url('/assets/mobile/bg-pattern-header.svg')] tablet:bg-[url('/assets/tablet/bg-pattern-header.svg')] tablet:px-10 desktop:bg-[url('/assets/desktop/bg-pattern-header.svg')]">
-        <div className="flex w-full items-start justify-between ">
+        <div className="flex w-full items-start justify-between desktop:px-24">
           <Link href="/" className="cursor">
             <Logo />
           </Link>

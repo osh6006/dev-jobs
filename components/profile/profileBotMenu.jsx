@@ -4,7 +4,7 @@ const ProfileBotMenu = () => {
   return (
     <div className="flex w-full cursor-pointer flex-col items-center justify-between ">
       <Link
-        href={`/users/resume`}
+        href={`/profile/resume`}
         className="mb-6 flex w-4/5 select-none  justify-between rounded-xl border-2 py-4 px-3 font-bold hover:border-light_violet hover:text-light_violet tablet:w-6/12"
       >
         <span>내 이력서</span>

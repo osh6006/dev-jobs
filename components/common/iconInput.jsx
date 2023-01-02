@@ -2,7 +2,7 @@ import SearchLogo from "../../public/assets/desktop/icon-search.svg";
 import LocationLogo from "../../public/assets/desktop/icon-location.svg";
 import FilterIcon from "../../public/assets/mobile/icon-filter.svg";
 
-const IconInput = ({ type }) => {
+const IconInput = ({ type, placeholder = "직종" }) => {
   return (
     <div className="relative flex h-full w-full items-center justify-end">
       {type && type === "search" ? (
@@ -12,7 +12,7 @@ const IconInput = ({ type }) => {
         <LocationLogo className="absolute left-5 w-10" />
       ) : null}
       <input
-        placeholder="Enter desired job..."
+        placeholder={placeholder}
         className="focus:none h-full w-full rounded-lg  border-none pl-14 text-h3 outline-none dark:bg-very_dark_blue"
       />
       <FilterIcon

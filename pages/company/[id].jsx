@@ -24,7 +24,7 @@ const CompanyDetail = () => {
       ) : (
         <>
           <section className="w-full px-5 tablet:px-0">
-            <div className="mt-1 flex w-full flex-col items-center rounded-xl  bg-white dark:bg-very_dark_blue tablet:-mt-10 tablet:flex-row tablet:items-center tablet:justify-between">
+            <div className="mt-1 flex w-full flex-col items-center rounded-xl  bg-white dark:bg-very_dark_blue tablet:-mt-20 tablet:flex-row tablet:items-center tablet:justify-between">
               <div className="flex flex-col items-center tablet:flex-row tablet:space-x-5">
                 <div style={{ backgroundColor: data?.company?.logoBgColor }}>
                   <img
