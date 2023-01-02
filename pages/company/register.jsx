@@ -36,7 +36,7 @@ const CompanyRegister = () => {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const onEmailCheck = async (data) => {
+  const onEmailCheck = async data => {
     const isCheck = await fetch("/api/users/check", {
       method: "POST",
       headers: {
@@ -44,14 +44,14 @@ const CompanyRegister = () => {
       },
       body: JSON.stringify({ type: "email", data }),
     })
-      .then((response) => response.json().catch(() => {}))
-      .then((json) => json)
-      .catch((error) => setError(error));
+      .then(response => response.json().catch(() => {}))
+      .then(json => json)
+      .catch(error => setError(error));
 
     return (await isCheck?.ok) || "⛔ 이미 존재하는 이메일 입니다.";
   };
 
-  const onPhoneCheck = async (data) => {
+  const onPhoneCheck = async data => {
     const isCheck = await fetch("/api/users/check", {
       method: "POST",
       headers: {
@@ -59,9 +59,9 @@ const CompanyRegister = () => {
       },
       body: JSON.stringify({ type: "phone", data }),
     })
-      .then((response) => response.json().catch(() => {}))
-      .then((json) => json)
-      .catch((error) => setError(error));
+      .then(response => response.json().catch(() => {}))
+      .then(json => json)
+      .catch(error => setError(error));
 
     return (await isCheck?.ok) || "⛔ 이미 존재하는 핸드폰 번호 입니다.";
   };
@@ -97,7 +97,7 @@ const CompanyRegister = () => {
   }, [logo]);
 
   // Submit Form
-  const onValid = async (data) => {
+  const onValid = async data => {
     console.log(data);
     if (data.logo && data.logo.length > 0 && user.profile.email) {
       const cloudflareRequest = await fetch(`/api/files`);
@@ -418,13 +418,13 @@ const CompanyRegister = () => {
             as="p"
           />
         </div>
-        <div className="mt-6">
+        <div className="my-6">
           <h3 className="mb-3 font-bold text-violet dark:text-light_violet">
             지원자 역할 항목
           </h3>
           <InputItems items={roleItems} setItems={setRoleItems} />
         </div>
-        <div className=" flex items-center">
+        {/* <div className=" flex items-center">
           <div className="flex h-5 items-center">
             <input
               id="isCEO"
@@ -440,7 +440,7 @@ const CompanyRegister = () => {
           >
             are you CEO?
           </label>
-        </div>
+        </div> */}
         <DefaultButton type="submit" text={loading ? "로딩중" : "등록하기"} />
       </form>
     </section>

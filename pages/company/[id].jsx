@@ -1,34 +1,23 @@
 import DefaultButton from "components/common/defaultButton";
 import SecondaryButton from "components/common/secondaryButton";
+import useDays from "libs/client/useDays";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { timeAgoKo } from "public/options";
-import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { format, register } from "timeago.js";
 
 const CompanyDetail = () => {
   const router = useRouter();
   const { data } = useSWR(
     router.query.id ? `/api/company/${router.query.id}` : null
   );
-  const [days, setDays] = useState("");
-  console.log(data);
+  const days = useDays(data?.company?.createdAt);
 
-  useEffect(() => {
-    const createdDay = data?.company?.createdAt;
-    register("ko-locale", timeAgoKo);
-    setDays(format(new Date(createdDay), "ko-locale"));
-  }, [data]);
   return (
     <div>
       <section className="w-full px-5 tablet:px-0">
         <div className="mt-1 flex w-full flex-col items-center rounded-xl  bg-white dark:bg-very_dark_blue tablet:-mt-10 tablet:flex-row tablet:items-center tablet:justify-between">
           <div className="flex flex-col items-center tablet:flex-row tablet:space-x-5">
-            <div
-              style={{ backgroundColor: data?.company?.logoBgColor }}
-              // className={`bg-[${data?.company?.logoBgColor}]`}
-            >
+            <div style={{ backgroundColor: data?.company?.logoBgColor }}>
               <img
                 className="-mt-5 aspect-square h-20 w-20 rounded-xl text-center tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
                 src={

@@ -4,20 +4,20 @@ import useUser from "libs/client/useUser";
 import Link from "next/link";
 import useSWR from "swr";
 
-const MyCompany = () => {
+const MyApplyCompany = () => {
   const user = useUser();
   const { data } = useSWR(
     user ? `/api/company/myCompany/${user.profile.id}` : null
   );
 
   return (
-    <div>
-      {data ? (
+    <>
+      {data && data?.company?.length > 0 ? (
         <>
           <h1 className="mb-14 text-h2 font-bold text-violet">
-            등록한 채용 공고
+            내가 지원한 회사
           </h1>
-          <section className="grid w-full gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
+          <section className="grid gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
             {data?.company?.map(element => (
               <Link key={element?.id} href={`company/${element?.id}`}>
                 <Company companyInfo={element} />
@@ -45,17 +45,17 @@ const MyCompany = () => {
           </section>
         </>
       ) : (
-        <div className="flex h-[calc(100vh*1/2)] flex-col items-center justify-center space-y-5">
+        <div className="flex h-[calc(100vh*1/2)] flex-col items-center justify-center space-y-12">
           <h2 className="text-center text-h2 font-bold text-dark_grey dark:text-white">
-            아직 기업을 등록하지 않았어요 등록하러 가볼까요?
+            아직 지원한 회사가 없어요 지원하러 가볼까요?
           </h2>
-          <Link href="/company/register" className="w-32">
-            <DefaultButton text="등록 하러 가기" />
+          <Link href="/" className="w-32">
+            <DefaultButton text="지원 하러 가기" />
           </Link>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
-export default MyCompany;
+export default MyApplyCompany;

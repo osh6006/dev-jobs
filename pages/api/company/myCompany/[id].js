@@ -4,9 +4,12 @@ import { withApiSession } from "libs/server/withSession";
 
 async function handler(req, res) {
   const { id } = req.query;
-  const company = await client.companyInfo.findUnique({
+  const company = await client.companyInfo.findMany({
     where: {
-      id: +id.toString(),
+      devJobsUserId: +id.toString(),
+    },
+    orderBy: {
+      updatedAt: "desc",
     },
   });
   res.json({

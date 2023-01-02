@@ -7,8 +7,9 @@ generator client {
 
 datasource db {
   provider     = "mysql"
-  relationMode = "prisma"
   url          = env("DATABASE_URL")
+  relationMode = "prisma"
+
 }
 
 model DevJobsUser {
@@ -41,46 +42,7 @@ model CompanyInfo {
   requirements  Json?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  // Requirements  Requirements?
-  // Role          Role?
   user          DevJobsUser @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
-  devJobsUserId Int         @unique
+  devJobsUserId Int         
+  @@index([devJobsUserId])
 }
-
-// model Requirements {
-//   id                Int                 @id @default(autoincrement())
-//   content           String
-//   createdAt         DateTime            @default(now())
-//   updatedAt         DateTime            @updatedAt
-//   companyInfo       CompanyInfo         @relation(fields: [companyInfoId], references: [id], onDelete: Cascade)
-//   companyInfoId     Int                 @unique
-//   RequirementsItems RequirementsItems[]
-// }
-
-// model RequirementsItems {
-//   id             Int          @id @default(autoincrement())
-//   msg            String
-//   requrements    Requirements @relation(fields: [requirementsId], references: [id], onDelete: Cascade)
-//   requirementsId Int          @unique
-//   createdAt      DateTime     @default(now())
-//   updatedAt      DateTime     @updatedAt
-// }
-
-// model Role {
-//   id            Int         @id @default(autoincrement())
-//   content       String
-//   createdAt     DateTime    @default(now())
-//   updatedAt     DateTime    @updatedAt
-//   companyInfo   CompanyInfo @relation(fields: [companyInfoId], references: [id], onDelete: Cascade)
-//   companyInfoId Int         @unique
-//   RoleItems     RoleItems[]
-// }
-
-// model RoleItems {
-//   id        Int      @id @default(autoincrement())
-//   msg       String
-//   role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
-//   roleId    Int      @unique
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }

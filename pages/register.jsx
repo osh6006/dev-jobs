@@ -17,11 +17,11 @@ const Enter = () => {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const onValid = (data) => {
+  const onValid = data => {
     regist(data);
   };
 
-  const onEmailCheck = async (data) => {
+  const onEmailCheck = async data => {
     const isCheck = await fetch("/api/users/check", {
       method: "POST",
       headers: {
@@ -29,14 +29,14 @@ const Enter = () => {
       },
       body: JSON.stringify({ type: "email", data }),
     })
-      .then((response) => response.json().catch(() => {}))
-      .then((json) => json)
-      .catch((error) => setError(error));
+      .then(response => response.json().catch(() => {}))
+      .then(json => json)
+      .catch(error => setError(error));
 
     return (await isCheck?.ok) || "⛔ 이미 존재하는 이메일 입니다.";
   };
 
-  const onPhoneCheck = async (data) => {
+  const onPhoneCheck = async data => {
     const isCheck = await fetch("/api/users/check", {
       method: "POST",
       headers: {
@@ -44,9 +44,9 @@ const Enter = () => {
       },
       body: JSON.stringify({ type: "phone", data }),
     })
-      .then((response) => response.json().catch(() => {}))
-      .then((json) => json)
-      .catch((error) => setError(error));
+      .then(response => response.json().catch(() => {}))
+      .then(json => json)
+      .catch(error => setError(error));
 
     return (await isCheck?.ok) || "⛔ 이미 존재하는 핸드폰 번호 입니다.";
   };
@@ -207,7 +207,7 @@ const Enter = () => {
             name="confirm_password"
             register={register("confirm_password", {
               required: "⛔ 비밀번호를 확인을 입력해 주세요",
-              validate: (value) => {
+              validate: value => {
                 if (value !== password.value)
                   return "⛔ 비밀번호가 일치하지 않습니다.";
               },

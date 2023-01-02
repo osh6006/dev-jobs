@@ -9,8 +9,6 @@ import Switch from "./switch";
 const Navbar = ({ isDark, setIsDark }) => {
   const user = useUser();
   const [open, setOpen] = useState(false);
-
-  console.log(user);
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -34,7 +32,10 @@ const Navbar = ({ isDark, setIsDark }) => {
                     { href: "/profile", name: "프로필" },
                     user?.profile?.isCEO
                       ? { href: "/company/myCompany", name: "내 기업 관리" }
-                      : { href: "/", name: "내가 지원한 회사" },
+                      : {
+                          href: "/company/myApplyCompany",
+                          name: "내가 지원한 회사",
+                        },
                   ]}
                 />
               </div>
