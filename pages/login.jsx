@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
+import Loading from "components/common/loading";
 import useMove from "libs/client/useMove";
 import useMutation from "libs/client/useMutation";
 import useUser from "libs/client/useUser";
@@ -112,7 +113,7 @@ const Login = () => {
               className="bg-blue-600 text-sm hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 inline-block w-full rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
-              text={loading ? "로딩중" : "로그인"}
+              text={loading ? <Loading color="white" /> : "로그인"}
             ></DefaultButton>
 
             <div className="before:border-gray-300 after:border-gray-300 my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t after:mt-0.5 after:flex-1 after:border-t dark:text-white">

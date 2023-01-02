@@ -5,11 +5,12 @@ import DefaultButton from "components/common/defaultButton";
 import useMutation from "libs/client/useMutation";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import useMoveLogin from "libs/client/useMoveLogin";
+import Loading from "components/common/loading";
+import useMove from "libs/client/useMove";
 
 const Enter = () => {
+  useMove("/");
   const [regist, { loading, data, error }] = useMutation("/api/users/register");
-
   const {
     register,
     handleSubmit,
@@ -245,7 +246,10 @@ const Enter = () => {
             are you CEO?
           </label>
         </div>
-        <DefaultButton type="submit" text={loading ? "로딩중" : "가입하기"} />
+        <DefaultButton
+          type="submit"
+          text={loading ? <Loading color="white" /> : "가입하기"}
+        />
       </form>
     </section>
   );

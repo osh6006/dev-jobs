@@ -1,7 +1,12 @@
+import Link from "next/link";
+
 const ProfileTopMenu = () => {
   return (
     <div className="flex w-6/12 justify-center space-x-10 py-4">
-      <div className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors hover:text-light_violet">
+      <Link
+        href={`/company/myApplyCompany`}
+        className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors hover:text-light_violet "
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -19,8 +24,11 @@ const ProfileTopMenu = () => {
         <span className="hidden select-none text-h3 font-semibold desktop:block">
           관심 회사
         </span>
-      </div>
-      <div className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors  hover:text-light_violet">
+      </Link>
+      <Link
+        href={`/profile/edit`}
+        className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors  hover:text-light_violet"
+      >
         <span className="text-xl block font-bold  uppercase tracking-wide   ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,8 +48,11 @@ const ProfileTopMenu = () => {
         <span className="hidden select-none text-h3 font-semibold desktop:block">
           프로필 수정
         </span>
-      </div>
-      <div className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors hover:text-light_violet">
+      </Link>
+      <Link
+        href={`users/leave`}
+        className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors hover:text-light_violet"
+      >
         <span className="block font-bold tracking-wide">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +72,7 @@ const ProfileTopMenu = () => {
         <span className="hidden select-none text-h3 font-semibold desktop:block">
           회원 탈퇴
         </span>
-      </div>
+      </Link>
     </div>
   );
 };
