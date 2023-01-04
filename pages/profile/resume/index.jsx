@@ -1,27 +1,30 @@
 import DefaultButton from "components/common/defaultButton";
+import ResumeItem from "components/profile/resume/resumeItem";
 import useGeneralMove from "libs/client/useGeneralMove";
 import useUser from "libs/client/useUser";
 import Link from "next/link";
+import useSWR from "swr";
 
 const Resume = () => {
-  const user = useUser();
   useGeneralMove();
+  const user = useUser();
+  const { data } = useSWR(user ? `/api/users/resume/${user.profile.id}` : null);
 
   return (
     <section className="h-full">
-      {false ? (
+      {data ? (
         <>
           <h1 className="mb-14 text-h2 font-bold text-violet">
-            등록한 채용 공고
+            내 이력서 목록
           </h1>
           <section className="grid w-full gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
-            {data?.company?.map(element => (
-              <Link key={element?.id} href={`company/${element?.id}`}>
-                <Company companyInfo={element} />
+            {data?.resume?.map((element, i) => (
+              <Link key={element?.id} href={`/profile/resume/${element?.id}`}>
+                <ResumeItem resumeInfo={element} index={i + 1} />
               </Link>
             ))}
             <Link
-              href={`/company/register`}
+              href={`/profile/resume/register`}
               className="flex h-[228px] w-full cursor-pointer flex-col items-center justify-center rounded-xl bg-white px-8 text-violet shadow-lg transition-transform hover:scale-110 hover:text-light_violet dark:bg-very_dark_blue"
             >
               <svg
