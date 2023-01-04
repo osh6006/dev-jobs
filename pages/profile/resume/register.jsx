@@ -36,7 +36,9 @@ const RriteResume = () => {
   const [links, setLinks] = useState([]);
 
   const onValid = data => {
-    console.log(data);
+    if (skills.length > 0 && links.length > 0) {
+      console.log(data);
+    }
   };
 
   return (
@@ -132,9 +134,17 @@ const RriteResume = () => {
         <hr className="mb-6 text-violet" />
         <div className="mb-6">
           <Textarea
-            name="indroduce"
-            register={register("indroduce", {
+            name="introduction"
+            register={register("introduction", {
               required: "⛔ 자기소개를 입력해 주세요",
+              minLength: {
+                value: 10,
+                message: "자기소개는 최소 100자 이상 500자 이하여야 합니다.", // JS only: <p>error message</p> TS only support string
+              },
+              maxLength: {
+                value: 500,
+                message: "자기소개는 최소 100자 이상 500자 이하여야 합니다.", // JS only: <p>error message</p> TS only support string
+              },
             })}
             placeholder="자기 소개를 입력해 주세요"
             row={4}
@@ -143,7 +153,7 @@ const RriteResume = () => {
           <ErrorMessage
             className="mt-2 flex text-warning"
             errors={errors}
-            name="indroduce"
+            name="introduction"
             as="p"
           />
         </div>
@@ -156,7 +166,7 @@ const RriteResume = () => {
                 required: "⛔ 학교 이름을 입력해 주세요",
                 pattern: {
                   value: /^[가-힣a-zA-Z]+$/,
-                  message: "⛔ 이름 형식이 맞지 않습니다.",
+                  message: "⛔ 이름 형식이 맞지 않습니다. 띄어쓰기 불가",
                 },
                 maxLength: {
                   value: 20,
@@ -245,7 +255,7 @@ const RriteResume = () => {
           <InputItems
             items={links}
             setItems={setLinks}
-            placeholder="포트폴리오나 깃허브 링크를 작성하시고 업로드 하세요!"
+            placeholder="포트폴리오나 깃허브 링크를 넣으세요"
           />
         </div>
 

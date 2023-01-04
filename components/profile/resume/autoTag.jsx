@@ -19,11 +19,11 @@ const AutoTag = ({ tags, setTags }) => {
     },
     [tags]
   );
-  console.log(tags);
 
   return (
     <div>
       <ReactTags
+        placeholderText="Java"
         ref={reactTags}
         tags={tags}
         suggestions={suggestions}

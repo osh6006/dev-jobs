@@ -9,7 +9,6 @@ datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
-
 }
 
 model DevJobsUser {
@@ -43,6 +42,23 @@ model CompanyInfo {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   user          DevJobsUser @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
-  devJobsUserId Int         
+  devJobsUserId Int
+
   @@index([devJobsUserId])
+}
+
+model Resume {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  phone        String   @unique
+  introduction String   @db.LongText
+  school       String
+  ability      String
+  career       Json?
+  certificate  Json?
+  skill        Json?
+  link         Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
