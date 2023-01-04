@@ -99,7 +99,6 @@ const CompanyRegister = () => {
 
   // Submit Form
   const onValid = async data => {
-    console.log(data);
     if (data.logo && data.logo.length > 0 && user.profile.email) {
       const cloudflareRequest = await fetch(`/api/files`);
       const { uploadURL } = await cloudflareRequest.json();

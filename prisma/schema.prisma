@@ -23,6 +23,7 @@ model DevJobsUser {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   CompanyInfo CompanyInfo[]
+  Resume      Resume[]
 }
 
 model CompanyInfo {
@@ -48,17 +49,21 @@ model CompanyInfo {
 }
 
 model Resume {
-  id           Int      @id @default(autoincrement())
-  name         String
-  email        String   @unique
-  phone        String   @unique
-  introduction String   @db.LongText
-  school       String
-  ability      String
-  career       Json?
-  certificate  Json?
-  skill        Json?
-  link         Json?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            Int         @id @default(autoincrement())
+  name          String
+  email         String      @unique
+  phone         String      @unique
+  introduction  String      @db.LongText
+  school        String
+  ability       String
+  career        Json?
+  certificate   Json?
+  skill         Json?
+  link          Json?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  user          DevJobsUser @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
+  devJobsUserId Int
+
+  @@index([devJobsUserId])
 }

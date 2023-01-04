@@ -1,0 +1,40 @@
+import withHandler from "libs/server/withHandler";
+import client from "libs/server/client";
+import { withApiSession } from "libs/server/withSession";
+
+async function handler(req, res) {
+  const upload = req.body;
+  const { user } = req.session;
+
+  await client.resume.create({
+    data: {
+      name: upload.name,
+      phone: upload.phone,
+      email: upload.email,
+      introduction: upload.introduction,
+      school: upload.school,
+      career: upload.career,
+      skill: upload.skill,
+      certificate: upload.certificate,
+      link: upload.link,
+      ability: upload.ability,
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  });
+
+  res.json({
+    ok: true,
+  });
+}
+
+export default withApiSession(
+  withHandler({
+    method: "POST",
+    handler,
+    isPrivate: true,
+  })
+);

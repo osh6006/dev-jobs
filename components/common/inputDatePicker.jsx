@@ -13,22 +13,38 @@ const InputDatePicker = ({ control, firstName, lastName }) => {
     name: firstName,
     control,
     rules: {
-      required: true,
-      validate: data => {
-        dayValidate(data);
-      },
+      // required: true,
+      // validate: data => {
+      //   dayValidate(data);
+      // },
     },
   });
   const lastField = useController({
     name: lastName,
     control,
     rules: {
-      required: true,
-      validate: data => {
-        dayValidate(data);
-      },
+      // required: true,
+      // validate: data => {
+      //   dayValidate(data);
+      // },
     },
   });
+
+  // 요일 반환
+  const getDayName = date => {
+    return date
+      .toLocaleDateString("ko-KR", {
+        weekday: "long",
+      })
+      .substr(0, 1);
+  };
+
+  // 날짜 비교시 년 월 일까지만 비교하게끔
+  const createDate = date => {
+    return new Date(
+      new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+    );
+  };
 
   return (
     <>
@@ -52,6 +68,13 @@ const InputDatePicker = ({ control, firstName, lastName }) => {
           showYearDropdown
           dropdownMode="select"
           isClearable={true}
+          dayClassName={date =>
+            getDayName(createDate(date)) === "토"
+              ? "saturday"
+              : getDayName(createDate(date)) === "일"
+              ? "sunday"
+              : undefined
+          }
         />
         <p className="my-2 text-warning">
           {firstField.fieldState.error ? "⛔ 날짜를 작성해 주세요" : ""}
@@ -81,6 +104,13 @@ const InputDatePicker = ({ control, firstName, lastName }) => {
           showYearDropdown
           dropdownMode="select"
           isClearable={true}
+          dayClassName={date =>
+            getDayName(createDate(date)) === "토"
+              ? "saturday"
+              : getDayName(createDate(date)) === "일"
+              ? "sunday"
+              : undefined
+          }
         />
         <p className="my-2 text-warning">
           {lastField.fieldState.error ? "⛔ 날짜를 작성해 주세요" : ""}

@@ -8,9 +8,11 @@ import Selectbox from "components/common/selectbox";
 import Textarea from "components/common/textarea";
 import AutoTag from "components/profile/resume/autoTag";
 import useGeneralMove from "libs/client/useGeneralMove";
+import useMutation from "libs/client/useMutation";
 import useUser from "libs/client/useUser";
+import { useRouter } from "next/router";
 import { SCHOOLOPTS } from "public/options";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const RriteResume = () => {
@@ -35,11 +37,34 @@ const RriteResume = () => {
   const [skills, setSkills] = useState([]);
   const [links, setLinks] = useState([]);
 
+  const [regist, { loading, data }] = useMutation("/api/users/resume/register");
+
   const onValid = data => {
-    if (skills.length > 0 && links.length > 0) {
-      console.log(data);
-    }
+    data.career = {
+      contents: [...careers],
+    };
+    data.certificate = {
+      contents: [...certificates],
+    };
+    data.skill = {
+      contents: [...skills],
+    };
+    data.link = {
+      contents: [...links],
+    };
+
+    regist(data);
   };
+
+  const router = useRouter();
+  useEffect(() => {
+    if (data?.ok) {
+      alert("이력서 등록에 성공하셨습니다.");
+      router.push("/profile/resume");
+    } else {
+      // alert("이력서 등록 실패!");
+    }
+  }, [data, router]);
 
   return (
     <div className="flex w-full flex-col">
@@ -184,10 +209,10 @@ const RriteResume = () => {
           </div>
           <div>
             <Selectbox
-              name="timeType"
-              label="시간 범위"
-              register={register("timeType", {
-                required: "⛔ 시간을 선택해 주세요",
+              name="ability"
+              label="최종 학력"
+              register={register("ability", {
+                required: "⛔ 최종 학력을 선택해 주세요",
               })}
               optmsg=""
               option={SCHOOLOPTS}
@@ -195,7 +220,7 @@ const RriteResume = () => {
             <ErrorMessage
               className="mt-2 flex text-warning"
               errors={errors}
-              name="timeType"
+              name="ability"
               as="p"
             />
           </div>
@@ -261,7 +286,7 @@ const RriteResume = () => {
 
         <DefaultButton
           type="submit"
-          text={false ? <Loading color="white" /> : "작성하기"}
+          text={loading ? <Loading color="white" /> : "작성하기"}
         />
       </form>
     </div>
