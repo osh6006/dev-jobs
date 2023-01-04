@@ -43,6 +43,9 @@ const GeneralUserEdit = ({ user }) => {
   }, [data, router]);
   return (
     <>
+      <h1 className="mb-14 text-center text-h2 font-bold text-violet tablet:text-start">
+        이력서 작성
+      </h1>
       <section>
         <form
           onSubmit={handleSubmit(onValid)}

@@ -3,6 +3,7 @@ import Colorpicker from "components/common/colorpicker";
 import DefaultButton from "components/common/defaultButton";
 import Input from "components/common/input";
 import InputItems from "components/common/inputItems";
+import Loading from "components/common/loading";
 import Selectbox from "components/common/selectbox";
 import Textarea from "components/common/textarea";
 import useCEO from "libs/client/ceo/useCEO";
@@ -24,7 +25,7 @@ const CompanyRegister = () => {
     color: "#132034",
   });
 
-  const [regist, { loading, data, error }] = useMutation(
+  const [regist, { loading, data }] = useMutation(
     "/api/company/companyRegister"
   );
 
@@ -441,7 +442,10 @@ const CompanyRegister = () => {
             are you CEO?
           </label>
         </div> */}
-        <DefaultButton type="submit" text={loading ? "로딩중" : "등록하기"} />
+        <DefaultButton
+          type="submit"
+          text={loading ? <Loading color="white" /> : "등록하기"}
+        />
       </form>
     </section>
   );

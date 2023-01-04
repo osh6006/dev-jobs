@@ -26,7 +26,7 @@ const ProfileTopMenu = () => {
         </span>
       </Link>
       <Link
-        href={`/profile/edit`}
+        href={`/profile/edit/`}
         className="flex cursor-pointer flex-col items-center gap-2 p-3 transition-colors  hover:text-light_violet"
       >
         <span className="text-xl block font-bold  uppercase tracking-wide   ">

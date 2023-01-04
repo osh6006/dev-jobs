@@ -1,12 +1,16 @@
 import ProfileBotMenu from "components/profile/profileBotMenu";
 import ProfileTopMenu from "components/profile/profileTopMenu";
+import useMove from "libs/client/useMove";
 import useUser from "libs/client/useUser";
 
 const Profile = () => {
   const user = useUser();
+  useMove({ url: "/", isPrivate: true });
   return (
     <div className="h-full w-full">
-      <h1 className="mb-14 text-h2 font-bold text-violet">프로필</h1>
+      <h1 className="mb-14 text-center text-h2 font-bold text-violet tablet:text-start">
+        프로필
+      </h1>
       <div className="flex flex-col items-center justify-center gap-5 shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"

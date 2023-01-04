@@ -6,21 +6,11 @@ const useMove = ({ url, isPrivate }) => {
   const user = useUser();
   const router = useRouter();
 
-  console.log(url, isPrivate);
-
   useEffect(() => {
     if (isPrivate) {
-      if (!user?.ok) {
-        router.replace(url);
-      } else {
-        return;
-      }
+      !user?.ok ? router?.replace(url) : null;
     } else {
-      if (user?.ok) {
-        router.replace(url);
-      } else {
-        return;
-      }
+      user?.ok ? router?.replace(url) : null;
     }
   }, [router, user]);
 };

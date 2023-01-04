@@ -66,3 +66,45 @@ export const userMenu = [
   { href: "/profile", name: "프로필" },
   { href: "/api/users/logout", name: "로그아웃" },
 ];
+
+export const SCHOOLOPTS = [
+  { name: "고졸", value: "고졸" },
+  { name: "2년제", value: "2년제" },
+  { name: "학사", value: "학사" },
+  { name: "석사", value: "석사" },
+  { name: "박사", value: "박사" },
+];
+
+export const COMPANYOPTS = [
+  { name: "1년 이하", value: "1년 이하" },
+  { name: "2년 이상", value: "2년 이하" },
+  { name: "3년 이하", value: "3년 이하" },
+  { name: "4년 이하", value: "4년 이하" },
+  { name: "5년 이상", value: "5년 이상" },
+];
+
+export const SKILLOPTS = [
+  { id: 1, name: "React" },
+  { id: 2, name: "Next.js" },
+  { id: 3, name: "CSS" },
+  { id: 4, name: "HTML" },
+  { id: 5, name: "Angular" },
+  { id: 6, name: "TailWindcss" },
+  { id: 7, name: "GraphGL" },
+  { id: 8, name: "Jest" },
+  { id: 9, name: "Koa" },
+  { id: 10, name: "NodeJS" },
+  { id: 11, name: "Express" },
+  { id: 12, name: "SpringFrameWork" },
+  { id: 13, name: "Ruby" },
+  { id: 14, name: "C++" },
+  { id: 15, name: "C#" },
+  { id: 16, name: "Java" },
+  { id: 18, name: "JavaScript" },
+  { id: 19, name: "Springboot" },
+  { id: 20, name: "Unity" },
+  { id: 21, name: "Android" },
+  { id: 22, name: "IOS" },
+  { id: 23, name: "MongoDB" },
+  { id: 24, name: "SQL" },
+];

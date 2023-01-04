@@ -17,8 +17,10 @@
     "next": "13.0.6",
     "react": "18.2.0",
     "react-color": "^2.19.3",
+    "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.41.0",
+    "react-tag-autocomplete": "^6.3.0",
     "recoil": "^0.7.6",
     "swr": "^2.0.0",
     "timeago.js": "^4.0.2"

@@ -1,12 +1,22 @@
 import { useRef } from "react";
 
-const InputItems = (props) => {
-  console.log(props);
+const InputItems = props => {
   const addInput = useRef(null);
 
   const handleAdd = () => {
     const value = addInput.current.value;
-    if (value !== "") {
+    if (value === "") return;
+    if (props.isDate) {
+      if (!props.firstDate || !props.lastDate) return;
+
+      const newValue = `${new Intl.DateTimeFormat("ko").format(
+        props.firstDate
+      )} ~ ${new Intl.DateTimeFormat("ko").format(props.lastDate)} ${value}`;
+      let newItems = [...props.items];
+      newItems.push(newValue);
+      props.setItems([...newItems]);
+      addInput.current.value = "";
+    } else {
       let newItems = [...props.items];
       newItems.push(value);
       props.setItems([...newItems]);
@@ -14,13 +24,13 @@ const InputItems = (props) => {
     }
   };
 
-  const handleDelete = (idx) => {
+  const handleDelete = idx => {
     console.log(idx);
     const newItems = [...props.items].filter((element, i) => idx !== i);
     props.setItems([...newItems]);
   };
 
-  const handleChange = (event) => {};
+  const handleChange = event => {};
 
   return (
     <div className="space-y-3">
@@ -29,11 +39,15 @@ const InputItems = (props) => {
         type="text"
         name="inputItems"
         id="inputItems"
-        placeholder="원하는 항목을 적고 아래의 +를 누르세요!"
+        placeholder={
+          props?.placeholder
+            ? props.placeholder
+            : "원하는 항목을 적고 아래의 +를 누르세요!"
+        }
         className="block w-full rounded-lg border border-dark_grey p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
       />
       {props?.items?.map((element, i) => (
-        <div className="flex items-center  space-x-4" key={i}>
+        <div className="flex items-center space-x-4" key={i}>
           <input
             readOnly
             value={element}
