@@ -8,7 +8,7 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      fontFamily: { main: ["'Kumbh Sans', sans-serif"] },
+      fontFamily: { main: ["'Jua','Kumbh Sans', sans-serif"] },
     },
     colors: {
       transparent: "transparent",
@@ -28,6 +28,7 @@ module.exports = {
       very_dark_blue: "#19202D",
       gray: "#9DAEC2",
       dark_grey: "#6E8098",
+      link: "#5B8930",
     },
     fontSize: {
       h1: ["28px", "34px"],

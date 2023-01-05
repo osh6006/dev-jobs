@@ -3,7 +3,7 @@ import useGeneralMove from "libs/client/useGeneralMove";
 const Edit = () => {
   useGeneralMove();
 
-  return <div>Enter</div>;
+  return <div>Edit</div>;
 };
 
 export default Edit;

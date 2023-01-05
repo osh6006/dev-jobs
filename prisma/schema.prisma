@@ -51,8 +51,8 @@ model CompanyInfo {
 model Resume {
   id            Int         @id @default(autoincrement())
   name          String
-  email         String      @unique
-  phone         String      @unique
+  email         String
+  phone         String
   introduction  String      @db.LongText
   school        String
   ability       String

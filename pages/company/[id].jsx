@@ -24,7 +24,7 @@ const CompanyDetail = () => {
       ) : (
         <>
           <section className="w-full px-5 tablet:px-0">
-            <div className="mt-1 flex w-full flex-col items-center rounded-xl  bg-white dark:bg-very_dark_blue tablet:-mt-20 tablet:flex-row tablet:items-center tablet:justify-between">
+            <div className="mt-1 flex w-full flex-col items-center rounded-xl bg-white  shadow-lg dark:bg-very_dark_blue tablet:-mt-20 tablet:flex-row tablet:items-center tablet:justify-between">
               <div className="flex flex-col items-center tablet:flex-row tablet:space-x-5">
                 <div style={{ backgroundColor: data?.company?.logoBgColor }}>
                   <img
@@ -49,7 +49,7 @@ const CompanyDetail = () => {
               </div>
             </div>
 
-            <div className="mt-4 rounded-md bg-white py-10 px-5 dark:bg-very_dark_blue">
+            <div className="mt-4 rounded-md bg-white py-10 px-5 shadow-lg dark:bg-very_dark_blue">
               <div className="tablet:flex tablet:items-center tablet:justify-between">
                 <div className="space-y-2">
                   <h4 className=" text-dark_grey tablet:text-h3 ">
@@ -98,7 +98,7 @@ const CompanyDetail = () => {
               </ul>
             </div>
           </section>
-          <footer className="mt-10 w-full  bg-white p-5 dark:bg-very_dark_blue tablet:left-0  tablet:flex tablet:justify-center ">
+          <footer className="mt-10 w-full bg-white  p-5 shadow-xl dark:bg-very_dark_blue tablet:left-0  tablet:flex tablet:justify-center ">
             <div className="tablet:flex tablet:w-full tablet:max-w-[1440px] tablet:justify-between tablet:px-10 tablet:py-5">
               <div className="hidden tablet:block">
                 <h2 className="text-h2 font-bold capitalize dark:text-white ">

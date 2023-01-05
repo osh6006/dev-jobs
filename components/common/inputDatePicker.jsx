@@ -4,8 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
 import { dayValidate } from "libs/client/utils";
 import { useState } from "react";
+import InputItems from "./inputItems";
 
-const InputDatePicker = ({ control, firstName, lastName }) => {
+const InputDatePicker = ({ control, firstName, lastName, items, setItems }) => {
   const [firstDate, setFirstDate] = useState(null);
   const [lastDate, setLastDate] = useState(null);
 
@@ -115,6 +116,16 @@ const InputDatePicker = ({ control, firstName, lastName }) => {
         <p className="my-2 text-warning">
           {lastField.fieldState.error ? "⛔ 날짜를 작성해 주세요" : ""}
         </p>
+      </div>
+      <div className="col-span-2 w-full">
+        <InputItems
+          items={items}
+          setItems={setItems}
+          placeholder="날짜를 쓰고 자격증 항목을 입력하세요 ex) 2023. 1. 24. ~ 2023. 2. 11. 정보처리기사 이와 같이 표시됩니다."
+          firstDate={firstDate}
+          lastDate={lastDate}
+          isDate={true}
+        />
       </div>
     </>
   );

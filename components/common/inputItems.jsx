@@ -7,7 +7,9 @@ const InputItems = props => {
     const value = addInput.current.value;
     if (value === "") return;
     if (props.isDate) {
-      if (!props.firstDate || !props.lastDate) return;
+      if (!props.firstDate || !props.lastDate) {
+        return;
+      }
 
       const newValue = `${new Intl.DateTimeFormat("ko").format(
         props.firstDate

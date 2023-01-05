@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+}
+
 /**
  * <div class="react-tags">
  *   <div class="react-tags__selected">
