@@ -18,6 +18,8 @@ async function handler(req, res) {
       certificate: upload.certificate,
       link: upload.link,
       ability: upload.ability,
+      hope: upload.hope,
+      title: upload.title,
       user: {
         connect: {
           id: user.id,

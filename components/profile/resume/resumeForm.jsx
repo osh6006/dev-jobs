@@ -9,7 +9,7 @@ import Textarea from "components/common/textarea";
 import useMutation from "libs/client/useMutation";
 import useUser from "libs/client/useUser";
 import { useRouter } from "next/router";
-import { SCHOOLOPTS } from "public/options";
+import { HOPEJOBS, SCHOOLOPTS } from "public/options";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import AutoTag from "./autoTag";
@@ -74,6 +74,26 @@ const ResumeForm = ({ edit }) => {
       >
         <div className="mb-4 text-warning">
           * 이름, 이메일, 휴대폰 번호는 프로필에서 수정이 가능합니다.
+        </div>
+        <div className="mb-4">
+          <Input
+            label="이력서 제목"
+            name="title"
+            register={register("title", {
+              required: "⛔ 이력서 제목을 입력해 주세요",
+              maxLength: {
+                value: 20,
+                message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
+              },
+            })}
+            placeholder="이력서 제목"
+          />
+          <ErrorMessage
+            className="mt-2 flex text-warning"
+            errors={errors}
+            name="title"
+            as="p"
+          />
         </div>
         <div className="mb-6 grid gap-4 tablet:grid-cols-2">
           <div>
@@ -152,6 +172,23 @@ const ResumeForm = ({ edit }) => {
               as="p"
             />
           </div>
+          <div>
+            <Selectbox
+              name="hope"
+              label="희망 직종"
+              register={register("hope", {
+                required: "⛔ 희망 직종을 선택해 주세요",
+              })}
+              optmsg=""
+              option={HOPEJOBS}
+            />
+            <ErrorMessage
+              className="mt-2 flex text-warning"
+              errors={errors}
+              name="hope"
+              as="p"
+            />
+          </div>
         </div>
         <hr className="mb-6 text-violet" />
         <div className="mb-6">
@@ -160,7 +197,7 @@ const ResumeForm = ({ edit }) => {
             register={register("introduction", {
               required: "⛔ 자기소개를 입력해 주세요",
               minLength: {
-                value: 10,
+                value: 100,
                 message: "자기소개는 최소 100자 이상 500자 이하여야 합니다.", // JS only: <p>error message</p> TS only support string
               },
               maxLength: {
@@ -236,14 +273,6 @@ const ResumeForm = ({ edit }) => {
               setItems={setCareer}
             />
           </div>
-          {/* <InputItems
-            items={careers}
-            setItems={setCareer}
-            placeholder="날짜를 쓰고 경력 항목을 입력하세요 ex) 2023. 1. 24. ~ 2023. 2. 11. 삼성전자 이와 같이 표시됩니다."
-            firstDate={getValues().firstCareerDate}
-            lastDate={getValues().lastCareerDate}
-            isDate={true}
-          /> */}
         </div>
         <div className="mb-6">
           <h3 className="my-3 font-bold text-violet dark:text-light_violet">
@@ -257,6 +286,7 @@ const ResumeForm = ({ edit }) => {
               lastName="lastCertifiDate"
               items={certificates}
               setItems={setCertificates}
+              solo={true}
             />
           </div>
         </div>

@@ -50,12 +50,14 @@ model CompanyInfo {
 
 model Resume {
   id            Int         @id @default(autoincrement())
+  title         String
   name          String
   email         String
   phone         String
   introduction  String      @db.LongText
   school        String
   ability       String
+  hope          String
   career        Json?
   certificate   Json?
   skill         Json?

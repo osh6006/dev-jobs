@@ -7,21 +7,19 @@ const CVDetail = ({ resumeInfo }) => {
       <section className="mb-10 grid w-full gap-4 rounded-3xl bg-white p-5 font-semibold text-midnight shadow-lg dark:bg-very_dark_blue dark:text-dark_grey tablet:grid-cols-2">
         <div className="w-full space-y-10">
           <div className="rounded-3xl border-2 border-violet p-5 text-center tablet:text-start">
-            <div className="flex flex-col items-center mobile:text-center tablet:flex-row tablet:space-x-11">
+            <div className="flex flex-col items-center mobile:text-center desktop:flex-row desktop:space-x-11">
               <div className="h-36 w-36 rounded-full bg-gray"></div>
               <div>
-                <div className="mb-3 mobile:mt-5 tablet:mb-2">이력서 제목</div>
-                <div className="mb-3 tablet:mb-2">{resumeInfo?.name}</div>
-                <div>희망 직업 선택</div>
+                <div className="mb-3 whitespace-nowrap mobile:mt-5 tablet:mb-2">
+                  {resumeInfo?.title}
+                </div>
+                <div className="mb-3 whitespace-nowrap tablet:mb-2">
+                  {resumeInfo?.name}
+                </div>
+                <div>희망 직업 - {resumeInfo?.hope}</div>
               </div>
             </div>
-            <div className="mt-5 ">
-              통계, 머신러닝 등 데이터와 관련된 많은 분야를 경험하였습니다.
-              전공인 통계학과에서 다양한 통계 이론과 데이터를 다루는 방법들에
-              대해 배울 수 있었습니다. 그러나 통계학 지식만 가지고 산업에
-              접목시키기엔 많은 부족함이 있다고 생각을 하여 머신러닝 분야에 대해
-              스스로 공부하였습니다.
-            </div>
+            <div className="mt-5 ">{resumeInfo?.introduction}</div>
             <div className="mt-5 flex flex-col text-violet desktop:flex-row">
               <span className="tablet:mr-10 ">{resumeInfo.email}</span>
               <span className="">{resumeInfo?.phone}</span>
@@ -82,8 +80,8 @@ const CVDetail = ({ resumeInfo }) => {
               {resumeInfo?.career?.contents?.map((element, i) => (
                 <>
                   <div
-                    className="my-3 text-h4 font-thin text-white"
-                    key={element}
+                    className="my-3 text-h4 font-semibold text-very_dark_blue dark:text-dark_grey"
+                    key={i}
                   >
                     {element}
                   </div>
@@ -91,13 +89,13 @@ const CVDetail = ({ resumeInfo }) => {
               ))}
             </div>
           </div>
-          <div className="rounded-3xl  border-2 border-violet p-5">
+          <div className="rounded-3xl  border-2  border-violet p-5">
             <div className="font-bold text-violet">자격증</div>
             <div>
               {resumeInfo?.certificate?.contents?.map((element, i) => (
                 <>
                   <div
-                    className="my-3 text-h4 font-thin text-white"
+                    className="my-3 text-h4 font-semibold text-very_dark_blue dark:text-dark_grey"
                     key={element}
                   >
                     {element}

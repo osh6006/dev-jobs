@@ -12,10 +12,17 @@ async function handler(req, res) {
       updatedAt: "desc",
     },
   });
-  res.json({
-    ok: true,
-    resume,
-  });
+
+  if (resume?.length > 0) {
+    res.json({
+      ok: true,
+      resume,
+    });
+  } else {
+    res.json({
+      ok: false,
+    });
+  }
 }
 
 export default withApiSession(

@@ -69,7 +69,7 @@ export const userMenu = [
 
 export const SCHOOLOPTS = [
   { name: "고졸", value: "고졸" },
-  { name: "2년제", value: "2년제" },
+  { name: "전문대", value: "전문대" },
   { name: "학사", value: "학사" },
   { name: "석사", value: "석사" },
   { name: "박사", value: "박사" },
@@ -107,4 +107,12 @@ export const SKILLOPTS = [
   { id: 22, name: "IOS" },
   { id: 23, name: "MongoDB" },
   { id: 24, name: "SQL" },
+];
+
+export const HOPEJOBS = [
+  { name: "프론트엔드 개발자 ", value: "프론트엔드 개발자 " },
+  { name: "백엔드 개발자", value: "백엔드 개발자" },
+  { name: "풀 스택 개발자", value: "풀 스택 개발자" },
+  { name: "웹 디자이너", value: "웹 디자이너" },
+  { name: "그래픽 디자이너", value: "그래픽 디자이너" },
 ];

@@ -5,22 +5,36 @@ const InputItems = props => {
 
   const handleAdd = () => {
     const value = addInput.current.value;
-    if (value === "") return;
-    if (props.isDate) {
-      if (!props.firstDate || !props.lastDate) {
-        return;
-      }
 
+    if (value === "") return;
+
+    // 날짜 사용하지 않음
+    if (!props.isDate) {
+      let newItems = [...props.items];
+      newItems.push(value);
+      props.setItems([...newItems]);
+      addInput.current.value = "";
+    }
+
+    // 날짜 1개 사용
+    if (props.solo && props.isDate) {
+      const newValue = `${new Intl.DateTimeFormat("ko").format(
+        props.firstDate
+      )} ${value}`;
+      let newItems = [...props.items];
+      newItems.push(newValue);
+      props.setItems([...newItems]);
+      addInput.current.value = "";
+    }
+
+    // 날짜 2개 사용
+    if (!props.solo && props.isDate) {
+      if (!props.firstDate || !props.lastDate) return;
       const newValue = `${new Intl.DateTimeFormat("ko").format(
         props.firstDate
       )} ~ ${new Intl.DateTimeFormat("ko").format(props.lastDate)} ${value}`;
       let newItems = [...props.items];
       newItems.push(newValue);
-      props.setItems([...newItems]);
-      addInput.current.value = "";
-    } else {
-      let newItems = [...props.items];
-      newItems.push(value);
       props.setItems([...newItems]);
       addInput.current.value = "";
     }

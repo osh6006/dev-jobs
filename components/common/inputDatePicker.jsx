@@ -2,11 +2,17 @@ import { useController } from "react-hook-form";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
-import { dayValidate } from "libs/client/utils";
 import { useState } from "react";
 import InputItems from "./inputItems";
 
-const InputDatePicker = ({ control, firstName, lastName, items, setItems }) => {
+const InputDatePicker = ({
+  control,
+  firstName,
+  lastName,
+  items,
+  setItems,
+  solo,
+}) => {
   const [firstDate, setFirstDate] = useState(null);
   const [lastDate, setLastDate] = useState(null);
 
@@ -82,49 +88,54 @@ const InputDatePicker = ({ control, firstName, lastName, items, setItems }) => {
         </p>
       </div>
       <div>
-        <ReactDatePicker
-          dateFormat="yyyy년 MM월 dd일"
-          placeholderText="마지막 날짜를 입력해 주세요"
-          className="block w-full rounded-lg border border-dark_grey p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
-          onChange={e => {
-            if (!firstDate) {
-              return;
-            } else {
-              lastField.field.onChange(e);
-              setLastDate(e);
-            }
-          }}
-          selected={lastField.field.value}
-          inputRef={lastField.field.ref}
-          locale={ko}
-          selectsEnd
-          minDate={firstDate && firstDate}
-          withPortal
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          isClearable={true}
-          dayClassName={date =>
-            getDayName(createDate(date)) === "토"
-              ? "saturday"
-              : getDayName(createDate(date)) === "일"
-              ? "sunday"
-              : undefined
-          }
-        />
-        <p className="my-2 text-warning">
-          {lastField.fieldState.error ? "⛔ 날짜를 작성해 주세요" : ""}
-        </p>
+        {solo ? null : (
+          <>
+            <ReactDatePicker
+              dateFormat="yyyy년 MM월 dd일"
+              placeholderText="마지막 날짜를 입력해 주세요"
+              className="block w-full rounded-lg border border-dark_grey p-2.5 focus:outline-none focus:ring-2 focus:ring-violet  dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
+              onChange={e => {
+                if (!firstDate) {
+                  return;
+                } else {
+                  lastField.field.onChange(e);
+                  setLastDate(e);
+                }
+              }}
+              selected={lastField.field.value}
+              inputRef={lastField.field.ref}
+              locale={ko}
+              selectsEnd
+              minDate={firstDate && firstDate}
+              withPortal
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              isClearable={true}
+              dayClassName={date =>
+                getDayName(createDate(date)) === "토"
+                  ? "saturday"
+                  : getDayName(createDate(date)) === "일"
+                  ? "sunday"
+                  : undefined
+              }
+            />
+            <p className="my-2 text-warning">
+              {lastField.fieldState.error ? "⛔ 날짜를 작성해 주세요" : ""}
+            </p>
+          </>
+        )}
       </div>
       <div className="col-span-2 w-full">
         <InputItems
           items={items}
           setItems={setItems}
-          placeholder="날짜를 쓰고 자격증 항목을 입력하세요 ex) 2023. 1. 24. ~ 2023. 2. 11. 정보처리기사 이와 같이 표시됩니다."
+          placeholder="날짜를 쓰고 자격증 항목을 입력하세요 ex) 2023. 2. 11. 정보처리기사 이와 같이 표시됩니다."
           firstDate={firstDate}
           lastDate={lastDate}
           isDate={true}
+          solo={solo}
         />
       </div>
     </>
