@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import AutoTag from "./autoTag";
 
-const ResumeForm = ({ edit }) => {
+const ResumeForm = ({ edit, resumeInfo }) => {
   const user = useUser();
   const {
     register,
@@ -28,6 +28,13 @@ const ResumeForm = ({ edit }) => {
       name: user?.profile?.name,
       email: user?.profile?.email,
       phone: user?.profile?.phone,
+      title: resumeInfo?.title,
+      hope: resumeInfo?.hope,
+      introduction: resumeInfo?.introduction,
+      school: resumeInfo?.school,
+      ability: resumeInfo?.ability,
+      hope: resumeInfo?.hope,
+      hope: resumeInfo?.hope,
     },
   });
 
@@ -52,20 +59,30 @@ const ResumeForm = ({ edit }) => {
       contents: [...links],
     };
 
+    data.id = (resumeInfo && resumeInfo.id) || 0;
+
     regist(data);
   };
-
-  console.log(getValues().lastCertifiDate, getValues().firstCertifiDate);
 
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
-      alert("이력서 등록에 성공하셨습니다.");
+      (edit && alert("이력서 수정에 성공하셨습니다.")) ||
+        alert("이력서 등록에 성공하셨습니다.");
       router.push("/profile/resume");
     } else {
       // alert("이력서 등록 실패!");
     }
   }, [data, router]);
+
+  useEffect(() => {
+    if (edit) {
+      setCareer(resumeInfo?.career?.contents);
+      setCertificates(resumeInfo?.certificate?.contents);
+      setSkills(resumeInfo?.skill?.contents);
+      setLinks(resumeInfo?.link?.contents);
+    }
+  }, [edit, resumeInfo]);
   return (
     <>
       <form
@@ -309,7 +326,13 @@ const ResumeForm = ({ edit }) => {
 
         <DefaultButton
           type="submit"
-          text={loading ? <Loading color="white" /> : "작성하기"}
+          text={
+            loading ? (
+              <Loading color="white" />
+            ) : (
+              (edit && "수정하기") || "작성하기"
+            )
+          }
         />
       </form>
     </>

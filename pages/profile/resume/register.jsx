@@ -1,7 +1,7 @@
 import ResumeForm from "components/profile/resume/resumeForm";
 import useGeneralMove from "libs/client/useGeneralMove";
 
-const RriteResume = () => {
+const WriteResume = () => {
   useGeneralMove();
 
   return (
@@ -9,9 +9,9 @@ const RriteResume = () => {
       <h1 className="mb-10 text-center text-h2 font-bold text-violet tablet:text-start">
         이력서 작성
       </h1>
-      <ResumeForm edit={false} />
+      <ResumeForm />
     </div>
   );
 };
 
-export default RriteResume;
+export default WriteResume;

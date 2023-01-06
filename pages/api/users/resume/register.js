@@ -6,8 +6,30 @@ async function handler(req, res) {
   const upload = req.body;
   const { user } = req.session;
 
-  await client.resume.create({
-    data: {
+  await client.resume.upsert({
+    where: {
+      id: upload.id,
+    },
+    create: {
+      name: upload.name,
+      phone: upload.phone,
+      email: upload.email,
+      introduction: upload.introduction,
+      school: upload.school,
+      career: upload.career,
+      skill: upload.skill,
+      certificate: upload.certificate,
+      link: upload.link,
+      ability: upload.ability,
+      hope: upload.hope,
+      title: upload.title,
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+    update: {
       name: upload.name,
       phone: upload.phone,
       email: upload.email,
