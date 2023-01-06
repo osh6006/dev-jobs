@@ -1,7 +1,9 @@
 import DefaultButton from "components/common/defaultButton";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ResumeForm from "./resumeForm";
+import useMutation from "libs/client/useMutation";
+import { useRouter } from "next/router";
 
 const CVDetail = ({ resumeInfo }) => {
   const [edit, setEdit] = useState(false);
@@ -9,8 +11,19 @@ const CVDetail = ({ resumeInfo }) => {
     setEdit(true);
   };
 
-  const handleDelete = () => {};
+  const [remove, { loading, data }] = useMutation("/api/users/resume/remove");
 
+  const handleDelete = () => {
+    remove(resumeInfo?.id);
+  };
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data?.ok) {
+      alert("데이터 삭제에 성공하셨습니다!");
+      router.replace("/profile/resume");
+    }
+  }, [data]);
   return (
     <>
       {edit ? (
