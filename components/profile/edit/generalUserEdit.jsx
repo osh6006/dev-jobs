@@ -7,6 +7,10 @@ import useMutation from "libs/client/useMutation";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import ModalContents from "components/common/modalContents";
+import usePopup from "libs/client/usePopup";
 
 const GeneralUserEdit = ({ user }) => {
   const {
@@ -24,6 +28,9 @@ const GeneralUserEdit = ({ user }) => {
   });
   const [update, { loading, data }] = useMutation("/api/users/editProfile");
 
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup("/profile");
+
   const onValid = data => {
     const newData = { ...data };
     newData.id = user?.id;
@@ -34,8 +41,8 @@ const GeneralUserEdit = ({ user }) => {
 
   useEffect(() => {
     if (data?.ok) {
-      alert("프로필을 업데이트 하였습니다.");
-      router.push("/profile");
+      setModalText("프로필을 업데이트 하였습니다.");
+      onModalOpen();
     } else {
       if (data?.message?.length > 0) {
       }
@@ -43,6 +50,9 @@ const GeneralUserEdit = ({ user }) => {
   }, [data, router]);
   return (
     <>
+      <Modal open={isModalOpen} onClose={onModalClose} center>
+        <ModalContents text={modalText} onClose={onModalClose} />
+      </Modal>
       <h1 className="mb-14 text-center text-h2 font-bold text-violet tablet:text-start">
         이력서 작성
       </h1>

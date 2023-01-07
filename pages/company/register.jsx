@@ -13,6 +13,10 @@ import { useRouter } from "next/router";
 import { COUNTRIES, POSITIONS, TIMETYPES } from "public/options";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import ModalContents from "components/common/modalContents";
+import usePopup from "libs/client/usePopup";
 
 const CompanyRegister = () => {
   useCEO();
@@ -67,11 +71,14 @@ const CompanyRegister = () => {
     return (await isCheck?.ok) || "⛔ 이미 존재하는 핸드폰 번호 입니다.";
   };
 
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup("/company/myCompany");
+
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
-      alert("회사 등록에 성공하셨습니다!");
-      router.push("/company/myCompany");
+      setModalText("회사 등록에 성공하셨습니다.");
+      onModalOpen();
     } else {
       if (data?.message?.length > 0) {
         setError("server", {
@@ -135,6 +142,9 @@ const CompanyRegister = () => {
 
   return (
     <section className="my-0 mx-auto w-full p-10">
+      <Modal open={isModalOpen} onClose={onModalClose} center>
+        <ModalContents text={modalText} onClose={onModalClose} />
+      </Modal>
       <h1 className="text-h1 font-bold text-violet">기업 등록</h1>
       <form
         onSubmit={handleSubmit(onValid)}

@@ -13,6 +13,10 @@ import { HOPEJOBS, SCHOOLOPTS } from "public/options";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import AutoTag from "./autoTag";
+import { Modal } from "react-responsive-modal";
+import ModalContents from "components/common/modalContents";
+import "react-responsive-modal/styles.css";
+import usePopup from "libs/client/usePopup";
 
 const ResumeForm = ({ edit, resumeInfo }) => {
   const user = useUser();
@@ -65,13 +69,22 @@ const ResumeForm = ({ edit, resumeInfo }) => {
   };
 
   const router = useRouter();
+
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup("/profile/resume");
+
   useEffect(() => {
     if (data?.ok) {
-      (edit && alert("이력서 수정에 성공하셨습니다.")) ||
-        alert("이력서 등록에 성공하셨습니다.");
-      router.push("/profile/resume");
+      if (edit) {
+        setModalText("이력서 수정에 성공하셨습니다.");
+        onModalOpen();
+      } else {
+        setModalText("이력서 등록에 성공하셨습니다.");
+        onModalOpen();
+      }
     } else {
-      // alert("이력서 등록 실패!");
+      setModalText("이력서 등록에 실패하셨습니다.");
+      onModalOpen();
     }
   }, [data, router]);
 
@@ -89,6 +102,9 @@ const ResumeForm = ({ edit, resumeInfo }) => {
         onSubmit={handleSubmit(onValid)}
         className="mb-10 w-full  rounded-xl bg-white p-10 shadow-lg dark:bg-very_dark_blue"
       >
+        <Modal open={isModalOpen} onClose={onModalClose} center>
+          <ModalContents text={modalText} onClose={onModalClose} />
+        </Modal>
         <div className="mb-4 text-warning">
           * 이름, 이메일, 휴대폰 번호는 프로필에서 수정이 가능합니다.
         </div>

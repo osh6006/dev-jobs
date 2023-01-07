@@ -8,6 +8,10 @@ import { useRouter } from "next/router";
 import Loading from "components/common/loading";
 import useMove from "libs/client/useMove";
 import { onEmailCheck, onPhoneCheck } from "libs/client/forms";
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import ModalContents from "components/common/modalContents";
+import usePopup from "libs/client/usePopup";
 
 const Enter = () => {
   useMove({ url: "/", isPrivate: false });
@@ -23,11 +27,14 @@ const Enter = () => {
     regist(data);
   };
 
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup("/login");
+
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
-      alert("가입에 성공하셨습니다. 로그인을 해보세요 !");
-      router.push("/login");
+      setModalText("가입에 성공하셨습니다.");
+      onModalOpen();
     } else {
       if (data?.message?.length > 0) {
         setError("server", {
@@ -44,6 +51,9 @@ const Enter = () => {
 
   return (
     <section className="w-full pb-5">
+      <Modal open={isModalOpen} onClose={onModalClose} center>
+        <ModalContents text={modalText} onClose={onModalClose} />
+      </Modal>
       <h1 className="text-h2  font-bold text-violet">회원 가입</h1>
       <form
         onSubmit={handleSubmit(onValid)}

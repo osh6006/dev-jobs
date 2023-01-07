@@ -1,9 +1,12 @@
 import DefaultButton from "components/common/defaultButton";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import ResumeForm from "./resumeForm";
 import useMutation from "libs/client/useMutation";
 import { useRouter } from "next/router";
+import usePopup from "libs/client/usePopup";
+import Modal from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import ModalContents from "components/common/modalContents";
 
 const CVDetail = ({ resumeInfo }) => {
   const [edit, setEdit] = useState(false);
@@ -13,19 +16,35 @@ const CVDetail = ({ resumeInfo }) => {
 
   const [remove, { loading, data }] = useMutation("/api/users/resume/remove");
 
+  const router = useRouter();
+
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup();
+
   const handleDelete = () => {
     remove(resumeInfo?.id);
   };
-  const router = useRouter();
 
   useEffect(() => {
     if (data?.ok) {
-      alert("데이터 삭제에 성공하셨습니다!");
       router.replace("/profile/resume");
     }
+    setModalText("정말로 이력서를 삭제 하시겠습니까?");
   }, [data]);
+
   return (
     <>
+      <Modal open={isModalOpen} onClose={onModalClose} center>
+        <ModalContents
+          text={modalText}
+          onClose={onModalClose}
+          isDelete={true}
+          exeFunction={handleDelete}
+        />
+      </Modal>
+      {/* <Modal open={isModalOpen} onClose={onModalClose} center>
+        <ModalContents text={modalText} onClose={onModalClose} />
+      </Modal> */}
       {edit ? (
         <div className="flex w-full flex-col">
           <h1 className="mb-10 text-center text-h2 font-bold text-violet tablet:text-start">
@@ -44,15 +63,17 @@ const CVDetail = ({ resumeInfo }) => {
                     <div className="mb-3 whitespace-nowrap mobile:mt-5 tablet:mb-2">
                       {resumeInfo?.title}
                     </div>
-                    <div className="mb-3 whitespace-nowrap tablet:mb-2">
+                    <div className="mb-3 whitespace-nowrap tablet:mb-2 ">
                       {resumeInfo?.name}
                     </div>
                     <div>희망 직업 - {resumeInfo?.hope}</div>
                   </div>
                 </div>
-                <div className="mt-5 ">{resumeInfo?.introduction}</div>
+                <div className="mt-5 break-words">
+                  {resumeInfo?.introduction}
+                </div>
                 <div className="mt-5 flex flex-col text-violet desktop:flex-row">
-                  <span className="tablet:mr-10 ">{resumeInfo.email}</span>
+                  <span className="tablet:mr-10 ">{resumeInfo?.email}</span>
                   <span className="">{resumeInfo?.phone}</span>
                 </div>
               </div>
@@ -143,7 +164,7 @@ const CVDetail = ({ resumeInfo }) => {
             <div className="col-span-2 space-y-3">
               <DefaultButton onClick={handleEdit} text="수정하기" />
               <DefaultButton
-                onClick={handleDelete}
+                onClick={onModalOpen}
                 color="warning"
                 text="삭제하기"
               />
