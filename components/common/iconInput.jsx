@@ -13,7 +13,7 @@ const IconInput = ({ type, placeholder = "직종" }) => {
       ) : null}
       <input
         placeholder={placeholder}
-        className="focus:none h-full w-full rounded-lg  border-none pl-14 text-h3 outline-none dark:bg-very_dark_blue"
+        className="focus:none h-full w-full rounded-lg  border-none pl-14 text-h3 outline-none dark:bg-very_dark_blue dark:text-gray"
       />
       <FilterIcon
         onClick={() => {
