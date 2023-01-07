@@ -31,7 +31,6 @@ const Profile = () => {
         </h1>
         <div className="flex w-full flex-col items-center justify-center pb-10 text-violet">
           <ProfileTopMenu isCeo={false} />
-          <ProfileBotMenu />
         </div>
       </div>
     </div>

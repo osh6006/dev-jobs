@@ -60,11 +60,11 @@ const CVDetail = ({ resumeInfo }) => {
                 <div className="font-bold text-violet">링크</div>
                 <div className="desktop:w-1/2">
                   {resumeInfo?.link?.contents?.map((element, i) => (
-                    <Link key={i} href={element}>
+                    <a target="_blank" rel="my_link" key={i} href={element}>
                       <div className="mt-2 text-link transition-colors hover:text-light_violet">
                         {element}
                       </div>
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
