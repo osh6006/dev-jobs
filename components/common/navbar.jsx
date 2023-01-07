@@ -41,7 +41,7 @@ const Navbar = ({ isDark, setIsDark }) => {
               </div>
             ) : (
               <Link href="/login" className="hidden w-20 tablet:block">
-                <DefaultButton text="로그인" color="metal" />
+                <DefaultButton text="로그인" />
               </Link>
             )}
             <Switch isDark={isDark} setIsDark={setIsDark} />

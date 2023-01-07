@@ -21,13 +21,13 @@ const SearchBar = () => {
             />
             <label
               htmlFor="default-checkbox"
-              className="flex text-h4 font-bold capitalize dark:text-white"
+              className="flex whitespace-nowrap text-h3 font-bold capitalize dark:text-white"
             >
               full time <span className="hidden desktop:block">&nbsp;only</span>
             </label>
           </div>
           <div className="w-2/5">
-            <DefaultButton type="submit" text="Search" />
+            <DefaultButton type="submit" text="Search" color="violet" />
           </div>
         </div>
       </div>
