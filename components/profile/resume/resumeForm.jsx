@@ -25,7 +25,6 @@ const ResumeForm = ({ edit, resumeInfo }) => {
     handleSubmit,
     formState: { errors },
     control,
-    getValues,
   } = useForm({
     mode: "onChange",
     values: {
@@ -47,7 +46,7 @@ const ResumeForm = ({ edit, resumeInfo }) => {
   const [skills, setSkills] = useState([]);
   const [links, setLinks] = useState([]);
 
-  const [regist, { loading, data }] = useMutation("/api/users/resume/register");
+  const [regist, { loading, data }] = useMutation("/api/users/resume/upsert");
 
   const onValid = data => {
     data.career = {

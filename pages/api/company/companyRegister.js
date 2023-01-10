@@ -8,8 +8,30 @@ async function handler(req, res) {
 
   console.log(upload);
 
-  await client.companyInfo.create({
-    data: {
+  await client.companyInfo.upsert({
+    where: {
+      id: upload.id,
+    },
+    create: {
+      phone: upload.phone,
+      email: upload.email,
+      name: upload.company,
+      logo: upload.logo,
+      logoBgColor: upload.logoColor,
+      location: upload.countries,
+      position: upload.position,
+      contract: upload.timeType,
+      website: upload.website,
+      description: upload.description,
+      roles: upload.roles,
+      requirements: upload.roles,
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+    update: {
       phone: upload.phone,
       email: upload.email,
       name: upload.company,

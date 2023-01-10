@@ -7,9 +7,10 @@ import usePopup from "libs/client/usePopup";
 import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import ModalContents from "components/common/modalContents";
+import useEdit from "libs/client/useEdit";
 
 const CVDetail = ({ resumeInfo }) => {
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useEdit();
   const handleEdit = () => {
     setEdit(true);
   };

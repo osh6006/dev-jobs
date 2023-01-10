@@ -2,10 +2,10 @@ import { PICKERCOLORS } from "public/options";
 import { TwitterPicker } from "react-color";
 
 const Colorpicker = ({ name, colorObj, register, setColorObj }) => {
-  const handleColorChange = (color) => {
+  const handleColorChange = color => {
     let updatedColorObj = {};
     updatedColorObj = { color: color.hex };
-    setColorObj((prev) => ({
+    setColorObj(prev => ({
       ...prev,
       ...updatedColorObj,
     }));
@@ -25,7 +25,7 @@ const Colorpicker = ({ name, colorObj, register, setColorObj }) => {
         value={colorObj.color}
         id={name}
         {...register}
-        onChange={(e) => handleColorChange(e.target.value)}
+        onChange={e => handleColorChange(e.target.value)}
         className=" focus:none w-full rounded-lg border border-violet p-2.5 outline-none dark:border-dark_grey dark:bg-very_dark_blue dark:text-white dark:placeholder-gray"
       />
       {colorObj.displayColorPicker ? (

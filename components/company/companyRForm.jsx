@@ -18,18 +18,33 @@ import DefaultButton from "components/common/defaultButton";
 import { COUNTRIES, POSITIONS, TIMETYPES } from "public/options";
 import Loading from "components/common/loading";
 
-const CompanyRForm = () => {
+const CompanyRForm = ({ edit, companyInfo }) => {
+  console.log(edit, companyInfo);
   const [regist, { loading, data }] = useMutation(
     "/api/company/companyRegister"
   );
-
   const {
     register,
     handleSubmit,
     setError,
     watch,
     formState: { errors },
-  } = useForm({ mode: "onChange" });
+  } = useForm({
+    mode: "onChange",
+    values: {
+      company: companyInfo?.name,
+      timeType: companyInfo?.contract,
+      description: companyInfo?.description,
+      phone: companyInfo?.phone,
+      email: companyInfo?.email,
+      location: companyInfo?.location,
+      position: companyInfo?.position,
+      website: companyInfo?.website,
+      roles: companyInfo?.roles?.contents,
+      requirements: companyInfo?.requirements?.contents,
+      countries: companyInfo?.location,
+    },
+  });
 
   const user = useUser();
   const router = useRouter();
@@ -73,13 +88,11 @@ const CompanyRForm = () => {
           body: form,
         })
       ).json();
-
       data.logo = id;
       return;
     } else {
       data.logo = process.env.NEXT_PUBLIC_NOT_LOGO_ID;
     }
-
     // Save Company Data
     data.requirements = {
       contents: data.requirements,
@@ -89,16 +102,22 @@ const CompanyRForm = () => {
       contents: data.roles,
       items: [...roleItems],
     };
-
     console.log(data);
+
+    data.id = (companyInfo && companyInfo.id) || 0;
     regist(data);
   };
 
   // regist success
   useEffect(() => {
     if (data?.ok) {
-      setModalText("회사 등록에 성공하셨습니다.");
-      onModalOpen();
+      if (edit) {
+        setModalText("수정에 성공하였습니다.");
+        onModalOpen();
+      } else {
+        setModalText("등록에 성공하셨습니다.");
+        onModalOpen();
+      }
     } else {
       if (data?.message?.length > 0) {
         setError("server", {
@@ -112,6 +131,17 @@ const CompanyRForm = () => {
       }
     }
   }, [data, router, setError]);
+
+  useEffect(() => {
+    if (edit) {
+      setRequireItems(companyInfo?.requirements.items);
+      setRoleItems(companyInfo?.roles.items);
+      setColorObj({
+        displayColorPicker: true,
+        color: companyInfo?.logoBgColor,
+      });
+    }
+  }, [edit, companyInfo]);
 
   return (
     <>
@@ -423,10 +453,36 @@ const CompanyRForm = () => {
             are you CEO?
           </label>
         </div> */}
-        <DefaultButton
-          type="submit"
-          text={loading ? <Loading color="white" /> : "등록하기"}
-        />
+
+        {edit ? (
+          <>
+            <div className=" grid grid-cols-2 gap-5">
+              <div>
+                <DefaultButton
+                  type="button"
+                  color="warning"
+                  text={"취소하기"}
+                  onClick={() => {
+                    console.log("cancel");
+                    router.replace(`/company/myCompany`);
+                  }}
+                />
+              </div>
+              <div>
+                <DefaultButton
+                  type="submit"
+                  color="edit"
+                  text={loading ? <Loading color="white" /> : "수정하기"}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <DefaultButton
+            type="submit"
+            text={loading ? <Loading color="white" /> : "등록하기"}
+          />
+        )}
       </form>
     </>
   );

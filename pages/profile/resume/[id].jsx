@@ -1,4 +1,3 @@
-import useDays from "libs/client/useDays";
 import useGeneralMove from "libs/client/useGeneralMove";
 import useUser from "libs/client/useUser";
 import { useRouter } from "next/router";
@@ -16,7 +15,6 @@ const ResumeDetail = () => {
   );
 
   const [selectedItem, setSelectedItem] = useState([]);
-  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     if (data && data?.resume?.length > 0) {
@@ -27,8 +25,6 @@ const ResumeDetail = () => {
     }
   }, [data]);
   console.log(selectedItem);
-
-  const days = useDays(data?.company?.createdAt);
 
   return (
     <>
