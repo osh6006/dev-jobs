@@ -19,7 +19,7 @@ const MyCompany = () => {
           </h1>
           <section className="grid w-full gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
             {data?.company?.map(element => (
-              <Link key={element?.id} href={`company/${element?.id}`}>
+              <Link key={element?.id} href={`/company/${element?.id}`}>
                 <Company companyInfo={element} />
               </Link>
             ))}

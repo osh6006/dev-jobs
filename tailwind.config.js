@@ -30,6 +30,8 @@ module.exports = {
       gray: "#9DAEC2",
       dark_grey: "#6E8098",
       link: "#5B8930",
+      edit: "#003171",
+      edit_light: "#1F4788",
     },
     fontSize: {
       h1: ["28px", "34px"],

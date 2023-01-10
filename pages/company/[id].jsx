@@ -62,8 +62,16 @@ const CompanyDetail = () => {
                     {data?.company?.location}
                   </h4>
                 </div>
-                <div className="mt-10 tablet:m-0 tablet:mr-10 tablet:w-32 tablet:rounded-md">
-                  <DefaultButton text="지원 하기" />
+                <div className="mt-10 grid grid-cols-3 gap-5 tablet:m-0 tablet:mr-10 tablet:rounded-md">
+                  <div className="tablet:w-20 desktop:w-32">
+                    <DefaultButton text="삭제 하기" color="warning" />
+                  </div>
+                  <div>
+                    <DefaultButton text="수정 하기 " color="edit" />
+                  </div>
+                  <div>
+                    <DefaultButton text="지원 하기" />
+                  </div>
                 </div>
               </div>
               <p className="mt-10 break-words text-h3 text-dark_grey">
