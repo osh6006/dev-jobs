@@ -147,18 +147,18 @@ const CompanyDetail = () => {
                       )}
                     </div>
                   </div>
-                  <p className="mt-10 break-words text-h3 text-dark_grey">
+                  <p className="mt-10 whitespace-pre-line break-words text-h3 leading-9 text-dark_grey">
                     {data?.company?.description}
                   </p>
                   <h1 className="mt-10 break-words text-h2 font-bold dark:text-white ">
                     Requirements
                   </h1>
-                  <p className="mt-10 break-words text-h3 text-dark_grey ">
+                  <p className="mt-10 whitespace-pre-line break-words text-h3 leading-9 text-dark_grey ">
                     {data?.company?.requirements?.contents}
                   </p>
-                  <ul className="mt-10 list-disc break-words px-5 text-h3 text-dark_grey marker:text-violet">
+                  <ul className="mt-10 list-disc space-y-5 break-words px-5 text-h3 text-dark_grey marker:text-violet">
                     {data?.company?.requirements?.items?.map((element, i) => (
-                      <li className="" key={i}>
+                      <li className="pl-5" key={i}>
                         {element}
                       </li>
                     ))}
@@ -166,12 +166,12 @@ const CompanyDetail = () => {
                   <h1 className="mt-10 break-words text-h2 font-bold dark:text-white ">
                     What You Will Do
                   </h1>
-                  <p className="mt-10 break-words text-h3 text-dark_grey ">
+                  <p className="mt-10 whitespace-pre-line break-words text-h3 leading-9 text-dark_grey ">
                     {data?.company?.roles?.contents}
                   </p>
-                  <ul className="mt-10 list-decimal break-words px-5 text-h3 text-dark_grey marker:text-violet">
+                  <ul className="mt-10 list-decimal space-y-5  break-words px-5 text-h3 text-dark_grey marker:text-violet">
                     {data?.company?.requirements?.items?.map((element, i) => (
-                      <li className="" key={i}>
+                      <li className="pl-5" key={i}>
                         {element}
                       </li>
                     ))}
