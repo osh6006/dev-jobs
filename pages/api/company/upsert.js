@@ -24,7 +24,7 @@ async function handler(req, res) {
       website: upload.website,
       description: upload.description,
       roles: upload.roles,
-      requirements: upload.roles,
+      requirements: upload.requirements,
       user: {
         connect: {
           id: user.id,
@@ -43,7 +43,7 @@ async function handler(req, res) {
       website: upload.website,
       description: upload.description,
       roles: upload.roles,
-      requirements: upload.roles,
+      requirements: upload.requirements,
       user: {
         connect: {
           id: user.id,

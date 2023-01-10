@@ -46,25 +46,27 @@ const ResumeForm = ({ edit, resumeInfo }) => {
   const [skills, setSkills] = useState([]);
   const [links, setLinks] = useState([]);
 
-  const [regist, { loading, data }] = useMutation("/api/users/resume/upsert");
+  const [regist, { loading, mutationData }] = useMutation(
+    "/api/users/resume/upsert"
+  );
 
-  const onValid = data => {
-    data.career = {
+  const onValid = formData => {
+    formData.career = {
       contents: [...careers],
     };
-    data.certificate = {
+    formData.certificate = {
       contents: [...certificates],
     };
-    data.skill = {
+    formData.skill = {
       contents: [...skills],
     };
-    data.link = {
+    formData.link = {
       contents: [...links],
     };
 
-    data.id = (resumeInfo && resumeInfo.id) || 0;
+    formData.id = (resumeInfo && resumeInfo.id) || 0;
 
-    regist(data);
+    regist(formData);
   };
 
   const router = useRouter();
@@ -73,7 +75,7 @@ const ResumeForm = ({ edit, resumeInfo }) => {
     usePopup("/profile/resume");
 
   useEffect(() => {
-    if (data?.ok) {
+    if (mutationData?.ok) {
       if (edit) {
         setModalText("이력서 수정에 성공하셨습니다.");
         onModalOpen();
@@ -85,7 +87,7 @@ const ResumeForm = ({ edit, resumeInfo }) => {
       setModalText("이력서 등록에 실패하셨습니다.");
       onModalOpen();
     }
-  }, [data, router]);
+  }, [mutationData, router]);
 
   useEffect(() => {
     if (edit) {

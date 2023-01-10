@@ -13,7 +13,13 @@ const ModalContents = ({
           <div className="text-h3">{text}</div>
           <div className="flex w-full gap-5">
             <DefaultButton text="취소" onClick={onClose} color="warning" />
-            <DefaultButton text="확인" onClick={exeFunction} />
+            <DefaultButton
+              text="확인"
+              onClick={() => {
+                onClose();
+                exeFunction();
+              }}
+            />
           </div>
         </div>
       ) : (

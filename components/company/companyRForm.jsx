@@ -20,8 +20,8 @@ import Loading from "components/common/loading";
 
 const CompanyRForm = ({ edit, companyInfo }) => {
   console.log(edit, companyInfo);
-  const [regist, { loading, data }] = useMutation(
-    "/api/company/companyRegister"
+  const [regist, { loading, mutationData }] = useMutation(
+    "/api/company/upsert"
   );
   const {
     register,
@@ -74,8 +74,8 @@ const CompanyRForm = ({ edit, companyInfo }) => {
   }, [logo]);
 
   // Submit Form
-  const onValid = async data => {
-    if (data.logo && data.logo.length > 0 && user.profile.email) {
+  const onValid = async formdata => {
+    if (formdata.logo && formdata.logo.length > 0 && user.profile.email) {
       const cloudflareRequest = await fetch(`/api/files`);
       const { uploadURL } = await cloudflareRequest.json();
       const form = new FormData();
@@ -88,29 +88,29 @@ const CompanyRForm = ({ edit, companyInfo }) => {
           body: form,
         })
       ).json();
-      data.logo = id;
+      formdata.logo = id;
       return;
     } else {
-      data.logo = process.env.NEXT_PUBLIC_NOT_LOGO_ID;
+      formdata.logo = process.env.NEXT_PUBLIC_NOT_LOGO_ID;
     }
     // Save Company Data
-    data.requirements = {
-      contents: data.requirements,
+    formdata.requirements = {
+      contents: formdata.requirements,
       items: [...requireItems],
     };
-    data.roles = {
-      contents: data.roles,
+    formdata.roles = {
+      contents: formdata.roles,
       items: [...roleItems],
     };
-    console.log(data);
+    console.log(formdata);
 
-    data.id = (companyInfo && companyInfo.id) || 0;
-    regist(data);
+    formdata.id = (companyInfo && companyInfo.id) || 0;
+    regist(formdata);
   };
 
   // regist success
   useEffect(() => {
-    if (data?.ok) {
+    if (mutationData?.ok) {
       if (edit) {
         setModalText("수정에 성공하였습니다.");
         onModalOpen();
@@ -119,10 +119,10 @@ const CompanyRForm = ({ edit, companyInfo }) => {
         onModalOpen();
       }
     } else {
-      if (data?.message?.length > 0) {
+      if (mutationData?.message?.length > 0) {
         setError("server", {
           types: "server",
-          message: data?.message,
+          message: mutationData?.message,
         });
 
         setTimeout(() => {
@@ -130,7 +130,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
         }, 2000);
       }
     }
-  }, [data, router, setError]);
+  }, [mutationData, router, setError]);
 
   useEffect(() => {
     if (edit) {
@@ -333,7 +333,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
               register={register("position", {
                 required: "⛔ 경력을 선택해 주세요",
               })}
-              optmsg="시간 범위를"
+              optmsg="경력을"
               option={POSITIONS}
             />
             <ErrorMessage

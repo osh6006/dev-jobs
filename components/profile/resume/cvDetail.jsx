@@ -15,7 +15,9 @@ const CVDetail = ({ resumeInfo }) => {
     setEdit(true);
   };
 
-  const [remove, { loading, data }] = useMutation("/api/users/resume/remove");
+  const [remove, { loading, mutationData }] = useMutation(
+    "/api/users/resume/remove"
+  );
 
   const router = useRouter();
 
@@ -27,11 +29,11 @@ const CVDetail = ({ resumeInfo }) => {
   };
 
   useEffect(() => {
-    if (data?.ok) {
+    if (mutationData?.ok) {
       router.replace("/profile/resume");
     }
     setModalText("정말로 이력서를 삭제 하시겠습니까?");
-  }, [data]);
+  }, [mutationData]);
 
   return (
     <>

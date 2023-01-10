@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 const Login = () => {
   useMove({ url: "/", isPrivate: false });
   const user = useUser();
-  const [enter, { loading, data }] = useMutation("/api/users/enter");
+  const [enter, { loading, mutationData }] = useMutation("/api/users/enter");
   const [serverMsg, setServerMsg] = useState(null);
 
   const {
@@ -28,16 +28,16 @@ const Login = () => {
 
   const router = useRouter();
   useEffect(() => {
-    if (data?.ok) {
+    if (mutationData?.ok) {
       router.reload();
     } else {
-      if (data?.message?.length > 0) {
-        setServerMsg(data?.message);
+      if (mutationData?.message?.length > 0) {
+        setServerMsg(mutationData?.message);
       } else {
         setServerMsg(null);
       }
     }
-  }, [data, router, user]);
+  }, [mutationData, router, user]);
 
   return (
     <div className="flex h-full w-full items-baseline justify-center overflow-hidden desktop:h-[calc(100vh/2)] desktop:p-20">
@@ -111,8 +111,8 @@ const Login = () => {
             <DefaultButton
               type="submit"
               className="bg-blue-600 text-sm hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 inline-block w-full rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="light"
+              mutationData-mdb-ripple="true"
+              mutationData-mdb-ripple-color="light"
               text={loading ? <Loading color="white" /> : "로그인"}
             ></DefaultButton>
 
@@ -124,8 +124,8 @@ const Login = () => {
               className="text-sm mb-3 flex w-full items-center justify-center rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
               href="#!"
               role="button"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="light"
+              mutationData-mdb-ripple="true"
+              mutationData-mdb-ripple-color="light"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -143,8 +143,8 @@ const Login = () => {
               className="text-sm flex w-full items-center justify-center rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
               href="#!"
               role="button"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="light"
+              mutationData-mdb-ripple="true"
+              mutationData-mdb-ripple-color="light"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -169,8 +169,8 @@ const Login = () => {
 // export async function getServerSideProps(context) {
 //   // 외부 API로 데이터 가져오기
 //   const res = await fetch("http://localhost:3000/api/users/me");
-//   const data = await res.json();
-//   if (data.ok) {
+//   const mutationData = await res.json();
+//   if (mutationData.ok) {
 //     return {
 //       redirect: {
 //         destination: "/",

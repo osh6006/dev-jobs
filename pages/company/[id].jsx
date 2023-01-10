@@ -4,11 +4,16 @@ import SecondaryButton from "components/common/secondaryButton";
 import CompanyRForm from "components/company/companyRForm";
 import useDays from "libs/client/useDays";
 import useEdit from "libs/client/useEdit";
+import useMutation from "libs/client/useMutation";
 import useUser from "libs/client/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import "react-responsive-modal/styles.css";
+import ModalContents from "components/common/modalContents";
+import Modal from "react-responsive-modal";
+import usePopup from "libs/client/usePopup";
 
 const CompanyDetail = () => {
   const router = useRouter();
@@ -18,8 +23,18 @@ const CompanyDetail = () => {
   );
   const days = useDays(data?.company?.createdAt);
   const user = useUser();
-  const [edit, setEdit, handleDelete, handleUpdate] = useEdit();
+  const [edit, setEdit] = useEdit();
   const [sameCEO, setSameCEO] = useState(false);
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup();
+
+  const [remove, { loading, mutationData }] = useMutation(
+    "/api/company/remove"
+  );
+
+  const handleDelete = () => {
+    remove(data?.company?.id);
+  };
 
   useEffect(() => {
     if (user?.profile?.id === data?.company?.devJobsUserId) {
@@ -27,8 +42,25 @@ const CompanyDetail = () => {
     }
   }, [data, user, sameCEO]);
 
+  useEffect(() => {
+    console.log(loading);
+    console.log(mutationData);
+    if (mutationData?.ok) {
+      router.replace("/company/myCompany");
+    }
+    setModalText("정말로 회사 정보를 삭제 하시겠습니까?");
+  }, [mutationData]);
+
   return (
     <div>
+      <Modal open={isModalOpen} onClose={onModalClose} center>
+        <ModalContents
+          text={modalText}
+          onClose={onModalClose}
+          isDelete={true}
+          exeFunction={handleDelete}
+        />
+      </Modal>
       {isLoading ? (
         <div className="mx-auto flex h-[calc(100vh/2)] w-full items-center justify-center">
           <div className="h-11 w-40">
@@ -97,14 +129,14 @@ const CompanyDetail = () => {
                             <DefaultButton
                               text="삭제 하기"
                               color="warning"
-                              onClick={handleDelete}
+                              onClick={onModalOpen}
                             />
                           </div>
                           <div>
                             <DefaultButton
                               text="수정 하기 "
                               color="edit"
-                              onClick={handleUpdate}
+                              onClick={setEdit}
                             />
                           </div>
                         </>

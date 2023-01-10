@@ -26,13 +26,15 @@ const GeneralUserEdit = ({ user }) => {
       isCEO: user?.isCEO,
     },
   });
-  const [update, { loading, data }] = useMutation("/api/users/editProfile");
+  const [update, { loading, mutationData }] = useMutation(
+    "/api/users/editProfile"
+  );
 
   const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
     usePopup("/profile");
 
-  const onValid = data => {
-    const newData = { ...data };
+  const onValid = mutationData => {
+    const newData = { ...mutationData };
     newData.id = user?.id;
     console.log(newData);
     update(newData);
@@ -40,14 +42,14 @@ const GeneralUserEdit = ({ user }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (data?.ok) {
+    if (mutationData?.ok) {
       setModalText("프로필을 업데이트 하였습니다.");
       onModalOpen();
     } else {
-      if (data?.message?.length > 0) {
+      if (mutationData?.message?.length > 0) {
       }
     }
-  }, [data, router]);
+  }, [mutationData, router]);
   return (
     <>
       <Modal open={isModalOpen} onClose={onModalClose} center>
