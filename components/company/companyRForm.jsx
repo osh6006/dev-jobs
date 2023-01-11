@@ -19,7 +19,7 @@ import { COUNTRIES, POSITIONS, TIMETYPES } from "public/options";
 import Loading from "components/common/loading";
 
 const CompanyRForm = ({ edit, companyInfo }) => {
-  console.log(edit, companyInfo);
+  console.log(companyInfo);
   const [regist, { loading, mutationData }] = useMutation(
     "/api/company/upsert"
   );
@@ -75,23 +75,20 @@ const CompanyRForm = ({ edit, companyInfo }) => {
 
   // Submit Form
   const onValid = async formdata => {
-    if (formdata.logo && formdata.logo.length > 0 && user.profile.email) {
+    if (formdata.logo && formdata.logo.length > 0 && user?.profile.email) {
       const cloudflareRequest = await fetch(`/api/files`);
       const { uploadURL } = await cloudflareRequest.json();
       const form = new FormData();
       form.append("file", logo[0], user?.profile?.email);
-      const {
-        request: { id },
-      } = await (
+      const result = await (
         await fetch(uploadURL, {
           method: "POST",
           body: form,
         })
       ).json();
-      formdata.logo = id;
-      return;
+      formdata.logo = result?.result?.id;
     } else {
-      formdata.logo = process.env.NEXT_PUBLIC_NOT_LOGO_ID;
+      formdata.logo = companyInfo?.logo || null;
     }
     // Save Company Data
     formdata.requirements = {
@@ -102,10 +99,11 @@ const CompanyRForm = ({ edit, companyInfo }) => {
       contents: formdata.roles,
       items: [...roleItems],
     };
-    console.log(formdata);
 
+    formdata.logoBgColor = colorObj.color;
     formdata.id = (companyInfo && companyInfo.id) || 0;
-    regist(formdata);
+
+    await regist(formdata);
   };
 
   // regist success
@@ -136,9 +134,11 @@ const CompanyRForm = ({ edit, companyInfo }) => {
     if (edit) {
       setRequireItems(companyInfo?.requirements.items);
       setRoleItems(companyInfo?.roles.items);
+    }
+    if (edit && companyInfo) {
       setColorObj({
         displayColorPicker: true,
-        color: companyInfo?.logoBgColor,
+        color: companyInfo.logoBgColor,
       });
     }
   }, [edit, companyInfo]);

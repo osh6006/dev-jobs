@@ -41,7 +41,6 @@ const InputItems = props => {
   };
 
   const handleDelete = idx => {
-    console.log(idx);
     const newItems = [...props.items].filter((element, i) => idx !== i);
     props.setItems([...newItems]);
   };

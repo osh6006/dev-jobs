@@ -6,7 +6,7 @@ async function handler(req, res) {
   const upload = req.body;
   const { user } = req.session;
 
-  await client.resume.upsert({
+  const result = await client.resume.upsert({
     where: {
       id: upload.id,
     },
@@ -49,6 +49,8 @@ async function handler(req, res) {
       },
     },
   });
+
+  console.log(result);
 
   res.json({
     ok: true,

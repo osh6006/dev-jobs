@@ -81,6 +81,7 @@ const Login = () => {
                   required: "⛔ 비밀번호를 입력해 주세요",
                 })}
                 type="password"
+                autoComplete="off"
                 placeholder="•••••••••"
               />
               <ErrorMessage
@@ -111,8 +112,6 @@ const Login = () => {
             <DefaultButton
               type="submit"
               className="bg-blue-600 text-sm hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 inline-block w-full rounded px-7 py-3 font-medium uppercase leading-snug text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-              mutationData-mdb-ripple="true"
-              mutationData-mdb-ripple-color="light"
               text={loading ? <Loading color="white" /> : "로그인"}
             ></DefaultButton>
 
