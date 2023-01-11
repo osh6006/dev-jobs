@@ -63,7 +63,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
   });
 
   // logo Preview
-  const [logoPreview, setLogoPreview] = useState(null);
+  const [logoPreview, setLogoPreview] = useState();
   const logo = watch("logo");
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
       ).json();
       formdata.logo = result?.result?.id;
     } else {
-      formdata.logo = companyInfo?.logo || null;
+      formdata.logo = companyInfo?.logo || undefined;
     }
     // Save Company Data
     formdata.requirements = {
@@ -195,7 +195,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
           </div>
           <div>
             <h3 className="font-bold text-violet dark:text-light_violet">
-              로고 미리보기{" "}
+              로고 미리보기
               <span className=" block text-center text-warning tablet:inline tablet:text-start">
                 * 로고는 가급적 배경이 없는 것을 넣어주세요
               </span>
@@ -209,10 +209,14 @@ const CompanyRForm = ({ edit, companyInfo }) => {
                   <img
                     src={logoPreview}
                     alt="logoPreview"
-                    className="max-h-96"
+                    className="object-scale-down"
                   />
                 ) : (
-                  <img src="/notlogo.png" alt="notlogo" className="max-h-96" />
+                  <img
+                    src={`https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${companyInfo?.logo}/public`}
+                    alt="data"
+                    className="object-scale-down"
+                  />
                 )}
               </div>
             </div>

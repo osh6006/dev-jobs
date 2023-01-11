@@ -31,7 +31,7 @@ model CompanyInfo {
   phone         String      @unique
   email         String      @unique
   name          String
-  logo          String
+  logo          String?
   logoBgColor   String
   location      String
   position      String

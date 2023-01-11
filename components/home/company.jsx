@@ -1,4 +1,5 @@
 import useDays from "libs/client/useDays";
+import notImgUrl from "public/notlogo.png";
 
 const Company = ({ companyInfo }) => {
   const days = useDays(companyInfo.createdAt);
@@ -11,7 +12,11 @@ const Company = ({ companyInfo }) => {
         >
           <img
             className="-mt-5 aspect-square rounded-xl object-scale-down text-center  tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
-            src={`https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${companyInfo?.logo}/public`}
+            src={
+              companyInfo?.logo
+                ? `https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${companyInfo?.logo}/public`
+                : `${notImgUrl?.src}`
+            }
           />
         </div>
         <div className="mt-5 font-thin text-gray">

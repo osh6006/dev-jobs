@@ -14,6 +14,7 @@ import "react-responsive-modal/styles.css";
 import ModalContents from "components/common/modalContents";
 import Modal from "react-responsive-modal";
 import usePopup from "libs/client/usePopup";
+import notImgUrl from "public/notlogo.png";
 
 const CompanyDetail = () => {
   const router = useRouter();
@@ -82,8 +83,9 @@ const CompanyDetail = () => {
                       <img
                         className="-mt-5 aspect-square  rounded-xl object-scale-down text-center tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
                         src={
-                          data &&
-                          `https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${data?.company?.logo}/public`
+                          data?.company?.logo
+                            ? `https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${data?.company?.logo}/public`
+                            : `${notImgUrl?.src}`
                         }
                       />
                     </div>
