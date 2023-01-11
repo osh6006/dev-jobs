@@ -10,7 +10,7 @@ const Company = ({ companyInfo }) => {
           className="-mt-6 aspect-square h-14 w-14 rounded-xl"
         >
           <img
-            className="-mt-5 aspect-square h-20 w-20 rounded-xl text-center tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
+            className="-mt-5 aspect-square rounded-xl object-scale-down text-center  tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
             src={`https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${companyInfo?.logo}/public`}
           />
         </div>
@@ -20,7 +20,9 @@ const Company = ({ companyInfo }) => {
         <div className="mt-3 text-h3 font-bold capitalize dark:text-white">
           {companyInfo?.position}
         </div>
-        <div className="mt-3 font-thin text-gray">{companyInfo?.name}</div>
+        <div className="mt-3 font-thin capitalize text-gray">
+          {companyInfo?.name}
+        </div>
         <div className="mt-7 font-bold text-violet">
           {companyInfo?.location}
         </div>

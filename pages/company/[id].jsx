@@ -80,7 +80,7 @@ const CompanyDetail = () => {
                       style={{ backgroundColor: data?.company?.logoBgColor }}
                     >
                       <img
-                        className="-mt-5 aspect-square h-20 w-20 rounded-xl text-center tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
+                        className="-mt-5 aspect-square  rounded-xl object-scale-down text-center tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
                         src={
                           data &&
                           `https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${data?.company?.logo}/public`
