@@ -57,7 +57,7 @@ const CVDetail = ({ resumeInfo }) => {
         </div>
       ) : (
         <div className="h-full w-full">
-          <section className="mb-10 grid w-full gap-4 rounded-3xl bg-white p-5 font-semibold text-midnight shadow-lg dark:bg-very_dark_blue dark:text-dark_grey tablet:grid-cols-2">
+          <section className="mb-10 grid w-full grid-cols-1 gap-4 rounded-3xl bg-white p-5 font-semibold text-midnight shadow-lg dark:bg-very_dark_blue dark:text-dark_grey tablet:grid-cols-2">
             <div className="w-full space-y-10">
               <div className="rounded-3xl border-2 border-violet p-5 text-center tablet:text-start">
                 <div className="flex flex-col items-center mobile:text-center desktop:flex-row desktop:space-x-11">
@@ -164,8 +164,12 @@ const CVDetail = ({ resumeInfo }) => {
                 </div>
               </div>
             </div>
-            <div className="col-span-2 space-y-3">
-              <DefaultButton onClick={handleEdit} text="수정하기" />
+            <div className="col-span-1 space-y-3 tablet:col-span-2">
+              <DefaultButton
+                onClick={handleEdit}
+                color="edit"
+                text="수정하기"
+              />
               <DefaultButton
                 onClick={onModalOpen}
                 color="warning"

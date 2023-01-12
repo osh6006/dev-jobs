@@ -24,6 +24,9 @@ model DevJobsUser {
   updatedAt   DateTime      @updatedAt
   CompanyInfo CompanyInfo[]
   Resume      Resume[]
+  UserApply   Apply[]       @relation("user_apply")
+  CEOApply    Apply[]       @relation("ceo_apply")
+  Apply       Apply[]
 }
 
 model CompanyInfo {
@@ -49,23 +52,40 @@ model CompanyInfo {
 }
 
 model Resume {
-  id            Int         @id @default(autoincrement())
-  title         String
-  name          String
-  email         String
-  phone         String
-  introduction  String      @db.LongText
-  school        String
-  ability       String
-  hope          String
-  career        Json?
-  certificate   Json?
-  skill         Json?
-  link          Json?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  user          DevJobsUser @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
-  devJobsUserId Int
+  id               Int         @id @default(autoincrement())
+  title            String
+  name             String
+  email            String
+  phone            String
+  introduction     String      @db.LongText
+  school           String
+  ability          String
+  hope             String
+  isRepresentative Boolean     @unique
+  career           Json?
+  certificate      Json?
+  skill            Json?
+  link             Json?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  user             DevJobsUser @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
+  devJobsUserId    Int
 
   @@index([devJobsUserId])
+}
+
+model Apply {
+  id        Int         @id @default(autoincrement())
+  user      DevJobsUser @relation(name: "user_apply", fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  ceo       DevJobsUser @relation(name: "ceo_apply", fields: [ceoId], references: [id], onDelete: Cascade)
+  ceoId     Int
+  resume    DevJobsUser @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  resumeId  Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([ceoId])
+  @@index([userId])
+  @@index([resumeId])
 }

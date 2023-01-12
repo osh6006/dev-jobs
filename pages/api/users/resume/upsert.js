@@ -23,6 +23,7 @@ async function handler(req, res) {
       ability: upload.ability,
       hope: upload.hope,
       title: upload.title,
+      isRepresentative: upload.isRepresentative,
       user: {
         connect: {
           id: user.id,
@@ -42,6 +43,7 @@ async function handler(req, res) {
       ability: upload.ability,
       hope: upload.hope,
       title: upload.title,
+      isRepresentative: upload.isRepresentative,
       user: {
         connect: {
           id: user.id,

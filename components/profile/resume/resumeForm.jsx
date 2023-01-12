@@ -65,7 +65,7 @@ const ResumeForm = ({ edit, resumeInfo }) => {
     };
 
     formData.id = (resumeInfo && resumeInfo.id) || 0;
-
+    formData.isRepresentative = resumeInfo?.isRepresentative ? true : false;
     regist(formData);
   };
 
@@ -83,9 +83,6 @@ const ResumeForm = ({ edit, resumeInfo }) => {
         setModalText("이력서 등록에 성공하셨습니다.");
         onModalOpen();
       }
-    } else {
-      setModalText("이력서 등록에 실패하셨습니다.");
-      onModalOpen();
     }
   }, [mutationData, router]);
 

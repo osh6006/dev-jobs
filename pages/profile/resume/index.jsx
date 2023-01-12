@@ -12,8 +12,6 @@ const Resume = () => {
   const { data, isLoading } = useSWR(
     user ? `/api/users/resume/${user?.profile?.id}` : null
   );
-  console.log(data);
-
   return (
     <section className="h-full">
       {data?.ok ? (
@@ -21,6 +19,9 @@ const Resume = () => {
           <h1 className="mb-14 text-h2 font-bold text-violet">
             내 이력서 목록
           </h1>
+          <p className="mb-14 text-h3 font-bold text-warning_light">
+            대표 이력서를 설정하세요 별표를 누르면 설정됩니다.
+          </p>
           {isLoading ? (
             <div className="h-[calc(100vh-50vh)] w-full">
               <Loading />

@@ -15,7 +15,9 @@ import usePopup from "libs/client/usePopup";
 
 const Enter = () => {
   useMove({ url: "/", isPrivate: false });
-  const [regist, { loading, data }] = useMutation("/api/users/register");
+  const [regist, { loading, mutationData }] = useMutation(
+    "/api/users/register"
+  );
   const {
     register,
     handleSubmit,
@@ -32,14 +34,15 @@ const Enter = () => {
 
   const router = useRouter();
   useEffect(() => {
-    if (data?.ok) {
+    if (mutationData?.ok) {
+      console.log("modal open");
       setModalText("가입에 성공하셨습니다.");
       onModalOpen();
     } else {
-      if (data?.message?.length > 0) {
+      if (mutationData?.message?.length > 0) {
         setError("server", {
           types: "server",
-          message: data?.message,
+          message: mutationData?.message,
         });
 
         setTimeout(() => {
@@ -47,7 +50,7 @@ const Enter = () => {
         }, 2000);
       }
     }
-  }, [data, router, setError]);
+  }, [mutationData, router, setError]);
 
   return (
     <section className="w-full pb-5">
@@ -173,6 +176,7 @@ const Enter = () => {
                 message: "⛔ 이 필드는 20자 이상 사용할 수 없습니다.",
               },
             })}
+            autoComplete="off"
             type="password"
             placeholder="•••••••••"
           />
@@ -195,6 +199,7 @@ const Enter = () => {
               },
             })}
             type="password"
+            autoComplete="off"
             placeholder="•••••••••"
           />
           <ErrorMessage
