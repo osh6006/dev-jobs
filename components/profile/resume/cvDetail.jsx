@@ -1,5 +1,5 @@
 import DefaultButton from "components/common/defaultButton";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ResumeForm from "./resumeForm";
 import useMutation from "libs/client/useMutation";
 import { useRouter } from "next/router";
@@ -8,24 +8,43 @@ import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import ModalContents from "components/common/modalContents";
 import useEdit from "libs/client/useEdit";
+import useDoubleMutation from "libs/client/useDoubleMutation";
 
 const CVDetail = ({ resumeInfo }) => {
   const [edit, setEdit] = useEdit();
-  const handleEdit = () => {
-    setEdit(true);
-  };
+  const router = useRouter();
 
   const [remove, { loading, mutationData }] = useMutation(
     "/api/users/resume/remove"
   );
-
-  const router = useRouter();
+  const [rep, { doubleData }] = useDoubleMutation(
+    resumeInfo ? `/api/users/resume/${resumeInfo?.id}/rep` : null
+  );
 
   const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
     usePopup();
 
+  const [
+    isRepModalOpen,
+    repModalText,
+    setRepModalText,
+    onRepModalOpen,
+    onRepModalClose,
+  ] = usePopup();
+
+  const handleEdit = () => {
+    setEdit(true);
+  };
+
   const handleDelete = () => {
     remove(resumeInfo?.id);
+  };
+  const handleRep = () => {
+    const repData = {
+      id: resumeInfo?.id,
+      devJobsUserId: resumeInfo?.devJobsUserId,
+    };
+    rep(repData);
   };
 
   useEffect(() => {
@@ -33,6 +52,7 @@ const CVDetail = ({ resumeInfo }) => {
       router.replace("/profile/resume");
     }
     setModalText("정말로 이력서를 삭제 하시겠습니까?");
+    setRepModalText("대표 이력서로 설정하시겠습니까?");
   }, [mutationData]);
 
   return (
@@ -45,9 +65,14 @@ const CVDetail = ({ resumeInfo }) => {
           exeFunction={handleDelete}
         />
       </Modal>
-      {/* <Modal open={isModalOpen} onClose={onModalClose} center>
-        <ModalContents text={modalText} onClose={onModalClose} />
-      </Modal> */}
+      <Modal open={isRepModalOpen} onClose={onRepModalClose} center>
+        <ModalContents
+          text={repModalText}
+          onClose={onRepModalClose}
+          isDelete={true}
+          exeFunction={handleRep}
+        />
+      </Modal>
       {edit ? (
         <div className="flex w-full flex-col">
           <h1 className="mb-10 text-center text-h2 font-bold text-violet tablet:text-start">
@@ -174,6 +199,11 @@ const CVDetail = ({ resumeInfo }) => {
                 onClick={onModalOpen}
                 color="warning"
                 text="삭제하기"
+              />
+              <DefaultButton
+                onClick={onRepModalOpen}
+                text="대표 이력서로 설정하기"
+                disabled={false}
               />
             </div>
           </section>

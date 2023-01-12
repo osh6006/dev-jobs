@@ -14,8 +14,6 @@ const ResumeItem = ({ resumeInfo, index }) => {
     event.nativeEvent.preventDefault();
   };
 
-  const [setRepresentative, { mutationData }] = useMutation("");
-
   return (
     <>
       <div

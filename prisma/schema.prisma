@@ -61,7 +61,7 @@ model Resume {
   school           String
   ability          String
   hope             String
-  isRepresentative Boolean     @unique
+  isRepresentative Boolean
   career           Json?
   certificate      Json?
   skill            Json?
