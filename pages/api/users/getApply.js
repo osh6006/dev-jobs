@@ -11,11 +11,23 @@ async function handler(req, res) {
         userId: +session.user.id,
       },
     });
-    console.log(getApplyData);
-    // res.json({
-    //   ok: true,
-    //   getApplyData,
-    // });
+
+    const getCompanyData = [];
+    const promises = getApplyData.map(async element => {
+      const companyInfo = await client.companyInfo.findUnique({
+        where: {
+          id: element.companyInfoId,
+        },
+      });
+      getCompanyData.push(companyInfo);
+    });
+    await Promise.all(promises);
+
+    res.json({
+      ok: true,
+      getApplyData,
+      getCompanyData,
+    });
   } catch (error) {
     console.log(error);
   }
