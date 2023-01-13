@@ -26,7 +26,6 @@ model DevJobsUser {
   Resume      Resume[]
   UserApply   Apply[]       @relation("user_apply")
   CEOApply    Apply[]       @relation("ceo_apply")
-  Apply       Apply[]
 }
 
 model CompanyInfo {
@@ -47,6 +46,7 @@ model CompanyInfo {
   updatedAt     DateTime    @updatedAt
   user          DevJobsUser @relation(fields: [devJobsUserId], references: [id], onDelete: Cascade)
   devJobsUserId Int
+  Apply         Apply[]
 
   @@index([devJobsUserId])
 }
@@ -75,17 +75,18 @@ model Resume {
 }
 
 model Apply {
-  id        Int         @id @default(autoincrement())
-  user      DevJobsUser @relation(name: "user_apply", fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  ceo       DevJobsUser @relation(name: "ceo_apply", fields: [ceoId], references: [id], onDelete: Cascade)
-  ceoId     Int
-  resume    DevJobsUser @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-  resumeId  Int
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id            Int         @id @default(autoincrement())
+  state         String?
+  user          DevJobsUser @relation(name: "user_apply", fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  ceo           DevJobsUser @relation(name: "ceo_apply", fields: [ceoId], references: [id], onDelete: Cascade)
+  ceoId         Int
+  companyInfo   CompanyInfo @relation(fields: [companyInfoId], references: [id], onDelete: Cascade)
+  companyInfoId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@index([ceoId])
   @@index([userId])
-  @@index([resumeId])
+  @@index([companyInfoId])
 }

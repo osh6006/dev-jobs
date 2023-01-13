@@ -52,8 +52,6 @@ async function handler(req, res) {
     },
   });
 
-  console.log(result);
-
   res.json({
     ok: true,
   });

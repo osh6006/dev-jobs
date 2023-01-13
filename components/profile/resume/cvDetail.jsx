@@ -48,12 +48,12 @@ const CVDetail = ({ resumeInfo }) => {
   };
 
   useEffect(() => {
-    if (mutationData?.ok) {
+    if (mutationData?.ok || doubleData?.ok) {
       router.replace("/profile/resume");
     }
     setModalText("정말로 이력서를 삭제 하시겠습니까?");
     setRepModalText("대표 이력서로 설정하시겠습니까?");
-  }, [mutationData]);
+  }, [mutationData, doubleData]);
 
   return (
     <>

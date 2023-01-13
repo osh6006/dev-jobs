@@ -6,9 +6,7 @@ import useSWR from "swr";
 
 const MyApplyCompany = () => {
   const user = useUser();
-  const { data } = useSWR(
-    user ? `/api/company/myCompany/${user.profile.id}` : null
-  );
+  const { data } = useSWR(`/api/users/getApply`);
 
   return (
     <>

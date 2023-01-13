@@ -15,42 +15,91 @@ import ModalContents from "components/common/modalContents";
 import Modal from "react-responsive-modal";
 import usePopup from "libs/client/usePopup";
 import notImgUrl from "public/notlogo.png";
+import useDoubleMutation from "libs/client/useDoubleMutation";
 
 const CompanyDetail = () => {
+  // router
   const router = useRouter();
 
+  // current User
+  const user = useUser();
+
+  // apis
   const { data, isLoading } = useSWR(
     router.query.id ? `/api/company/${router.query.id}` : null
   );
-  const days = useDays(data?.company?.createdAt);
-  const user = useUser();
-  const [edit, setEdit] = useEdit();
-  const [sameCEO, setSameCEO] = useState(false);
-  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
-    usePopup();
-
   const [remove, { loading, mutationData }] = useMutation(
     "/api/company/remove"
   );
+  const [apply, { doubleLoading, doubleData }] =
+    useDoubleMutation("/api/company/apply");
 
+  const isProcess = useSWR(
+    router.query.id ? `/api/company/${router.query.id}/getApply` : null
+  );
+
+  console.log(isProcess.data);
+
+  console.log(doubleLoading);
+
+  // hooks
+  const days = useDays(data?.company?.createdAt);
+  const [edit, setEdit] = useEdit();
+  const [sameCEO, setSameCEO] = useState(false);
+
+  // modal
+  const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
+    usePopup();
+
+  const [
+    applyModalOpen,
+    applyModalText,
+    setApplyModalText,
+    onApplyModalOpen,
+    onApplyModalClose,
+  ] = usePopup("/");
+
+  // functions
   const handleDelete = () => {
     remove(data?.company?.id);
   };
 
+  const handleApply = () => {
+    if (isProcess?.data?.getApplyData) {
+      setApplyModalText("이미 지원 하셨습니다.");
+      onApplyModalOpen();
+    } else {
+      const applyData = data?.company;
+      applyData.applyUserId = user?.profile?.id;
+      apply(data?.company);
+    }
+  };
+
+  // fetching data or modifying the DOM
   useEffect(() => {
-    if (user?.profile?.id === data?.company?.devJobsUserId) {
+    if (
+      user?.profile?.id === data?.company?.devJobsUserId &&
+      user?.profile?.isCEO
+    ) {
       setSameCEO(true);
+    } else {
+      setSameCEO(false);
     }
   }, [data, user, sameCEO]);
 
   useEffect(() => {
-    console.log(loading);
-    console.log(mutationData);
     if (mutationData?.ok) {
       router.replace("/company/myCompany");
     }
     setModalText("정말로 회사 정보를 삭제 하시겠습니까?");
   }, [mutationData]);
+
+  useEffect(() => {
+    if (doubleData?.ok && !doubleLoading) {
+      setApplyModalText("신청이 완료되었습니다.");
+      onApplyModalOpen();
+    }
+  }, [doubleData]);
 
   return (
     <div>
@@ -61,6 +110,9 @@ const CompanyDetail = () => {
           isDelete={true}
           exeFunction={handleDelete}
         />
+      </Modal>
+      <Modal open={applyModalOpen} onClose={onApplyModalClose} center>
+        <ModalContents text={applyModalText} onClose={onApplyModalClose} />
       </Modal>
       {isLoading ? (
         <div className="mx-auto flex h-[calc(100vh/2)] w-full items-center justify-center">
@@ -143,8 +195,11 @@ const CompanyDetail = () => {
                           </div>
                         </>
                       ) : (
-                        <div className="tablet:w-32 desktop:w-32">
-                          <DefaultButton text="지원 하기" />
+                        <div className="tablet:w-32">
+                          <DefaultButton
+                            onClick={handleApply}
+                            text="지원 하기"
+                          />
                         </div>
                       )}
                     </div>
@@ -190,9 +245,25 @@ const CompanyDetail = () => {
                       {data?.company?.name}
                     </h3>
                   </div>
-                  <div className="w-full tablet:w-32">
-                    <DefaultButton text="지원 하기" />
-                  </div>
+
+                  {sameCEO ? (
+                    <div className="flex w-full gap-5 tablet:w-32 desktop:w-64">
+                      <DefaultButton
+                        text="삭제 하기"
+                        color="warning"
+                        onClick={onModalOpen}
+                      />
+                      <DefaultButton
+                        text="수정 하기 "
+                        color="edit"
+                        onClick={setEdit}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex w-full gap-5 tablet:w-32">
+                      <DefaultButton text="지원하기" onClick={handleApply} />
+                    </div>
+                  )}
                 </div>
               </footer>
             </>

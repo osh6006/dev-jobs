@@ -20,8 +20,8 @@ const Resume = () => {
             내 이력서 목록
           </h1>
           <p className="mb-14 text-h3 font-bold text-warning_light">
-            이력서로 들어가서 대표 이력서를 설정하세요 지원시 대표 이력서로 지원
-            됩니다.
+            * 이력서로 들어가서 대표 이력서를 설정하세요 지원시 대표 이력서로
+            지원 됩니다.
           </p>
 
           {isLoading ? (
