@@ -10,33 +10,10 @@ const ApplyTable = ({ applyData, companyData }) => {
   const tabletFormatter = new Intl.DateTimeFormat("ko", options);
   const mobileFormatter = new Intl.DateTimeFormat(options);
 
-  console.log(companyData);
+  const handleDelete = () => {};
+
   return (
     <>
-      {/* <div className="grid grid-cols-4 gap-1 rounded-xl dark:bg-very_dark_blue">
-        <div className="hidden bg-edit p-3 text-center text-white tablet:block">
-          회사 이름
-        </div>
-        <div className="hidden bg-edit p-3 text-center text-white tablet:block">
-          지원 현황
-        </div>
-        <div className="hidden bg-edit p-3 text-center text-white tablet:block">
-          날짜
-        </div>
-        <div className="hidden bg-edit p-3 text-center text-white tablet:block"></div>
-        <div className="bg-edit p-3 text-center text-white tablet:hidden">
-          회사
-        </div>
-        <div className="bg-edit p-3 text-center text-white tablet:hidden">
-          상태
-        </div>
-        <div className="bg-edit p-3 text-center text-white tablet:hidden">
-          날짜
-        </div>
-        <div className="bg-edit p-3 text-center text-white tablet:hidden"></div>
-
-      </div> */}
-
       <table className="w-full border-collapse">
         <thead>
           <tr>
@@ -102,41 +79,15 @@ const ApplyTable = ({ applyData, companyData }) => {
                   <span className="absolute top-0 left-0 px-2 py-1 text-h4 font-bold text-edit tablet:hidden">
                     비고
                   </span>
-                  <button className="whitespace-pre rounded bg-purple px-2 py-2 text-h4  text-white transition-colors hover:bg-violet">
+                  <button
+                    onClick={handleDelete}
+                    className="whitespace-pre rounded bg-purple px-2 py-2 text-h4  text-white transition-colors hover:bg-violet"
+                  >
                     취소 하기
                   </button>
                 </td>
               </tr>
             ))}
-
-          {/* {applyData &&
-            applyData.map((element, index) => (
-              <>
-                <Link
-                  href={`/company/${element.companyInfoId}`}
-                  className="p-3 text-center align-middle text-violet underline shadow-lg dark:text-white "
-                >
-                  {companyData[index].name}
-                </Link>
-                <div className="p-3 text-center align-middle shadow-lg dark:text-white">
-                  {element.state === "pending" ? "검토중" : null}
-                  {element.state === "allow" ? "서류 합격" : null}
-                </div>
-                <div className="p-3 text-center align-middle text-[15px] shadow-lg dark:text-white">
-                  <span className="hidden tablet:block">
-                    {tabletFormatter.format(new Date(element.updatedAt))}
-                  </span>
-                  <span className="block tablet:hidden">
-                    {mobileFormatter.format(new Date(element.updatedAt))}
-                  </span>
-                </div>
-                <div className="p-3 text-center shadow-lg dark:text-white">
-                  <button className="rounded-md bg-warning p-1 text-white transition-colors hover:bg-warning_light">
-                    취소하기
-                  </button>
-                </div>
-              </>
-            ))} */}
         </tbody>
       </table>
     </>

@@ -56,7 +56,7 @@ const GeneralUserEdit = ({ user }) => {
         <ModalContents text={modalText} onClose={onModalClose} />
       </Modal>
       <h1 className="mb-14 text-center text-h2 font-bold text-violet tablet:text-start">
-        이력서 작성
+        프로필 수정
       </h1>
       <section>
         <form

@@ -52,6 +52,8 @@ const CompanyRForm = ({ edit, companyInfo }) => {
   const [requireItems, setRequireItems] = useState([]);
   const [roleItems, setRoleItems] = useState([]);
 
+  const [imageLoading, setImageLoading] = useState(false);
+
   // modal
   const [isModalOpen, modalText, setModalText, onModalOpen, onModalClose] =
     usePopup("/company/myCompany");
@@ -75,6 +77,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
 
   // Submit Form
   const onValid = async formdata => {
+    setImageLoading(true);
     if (formdata.logo && formdata.logo.length > 0 && user?.profile.email) {
       const cloudflareRequest = await fetch(`/api/files`);
       const { uploadURL } = await cloudflareRequest.json();
@@ -104,6 +107,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
     formdata.id = (companyInfo && companyInfo.id) || 0;
 
     await regist(formdata);
+    setImageLoading(false);
   };
 
   // regist success
@@ -476,7 +480,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
                 <DefaultButton
                   type="submit"
                   color="edit"
-                  text={loading ? <Loading color="white" /> : "수정하기"}
+                  text={imageLoading ? <Loading color="white" /> : "수정하기"}
                 />
               </div>
             </div>
@@ -484,7 +488,7 @@ const CompanyRForm = ({ edit, companyInfo }) => {
         ) : (
           <DefaultButton
             type="submit"
-            text={loading ? <Loading color="white" /> : "등록하기"}
+            text={imageLoading ? <Loading color="white" /> : "등록하기"}
           />
         )}
       </form>

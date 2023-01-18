@@ -24,6 +24,8 @@ export const POSITIONS = [
   { name: "풀 스택 개발자 경력", value: "풀 스택 경력" },
   { name: "웹 디자이너 신입", value: "웹 디자이너 신입" },
   { name: "그래픽 디자이너 경력", value: "그래픽 디자이너 경력" },
+  { name: "모바일 개발자 신입", value: "모바일 개발자 신입" },
+  { name: "모바일 개발자 경력", value: "모바일 개발자 경력" },
 ];
 
 export const REQUIREMENTS = [];
