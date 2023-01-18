@@ -3,9 +3,12 @@ import SearchBar from "components/home/searchbar";
 import Link from "next/link";
 import useSWR from "swr";
 import Loading from "components/common/loading";
+import { useState } from "react";
+import DefaultButton from "components/common/defaultButton";
 
 export default function Home() {
   const { data, isLoading } = useSWR("/api/company/getCompany");
+  const [next, setNext] = useState(6);
   return (
     <>
       {isLoading ? (
@@ -18,12 +21,18 @@ export default function Home() {
         <div className="-mt-12 w-full space-y-14 tablet:-mt-20">
           <SearchBar />
           <section className="grid w-full gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
-            {data?.companys?.map(element => (
+            {data?.companys?.slice(0, next).map(element => (
               <Link key={element?.id} href={`company/${element?.id}`}>
                 <Company companyInfo={element} />
               </Link>
             ))}
           </section>
+          <DefaultButton
+            text="Load More"
+            onClick={() => {
+              setNext(next + 6);
+            }}
+          />
         </div>
       )}
     </>
