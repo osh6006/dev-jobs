@@ -11,7 +11,7 @@ const Company = ({ companyInfo }) => {
           className="-mt-6 aspect-square h-14 w-14 rounded-xl"
         >
           <img
-            className="-mt-5 aspect-square rounded-xl object-scale-down text-center  tablet:mt-0 tablet:h-full tablet:w-24 tablet:rounded-none tablet:text-start"
+            className="aspect-square w-24 rounded-xl object-scale-down text-center  tablet:mt-0 tablet:h-full tablet:rounded-none tablet:text-start"
             src={
               companyInfo?.logo
                 ? `https://imagedelivery.net/Qb_nKB9Jwhj1mePNmxDoZg/${companyInfo?.logo}/public`

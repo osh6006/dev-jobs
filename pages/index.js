@@ -18,21 +18,23 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        <div className="-mt-12 w-full space-y-14 tablet:-mt-20">
+        <div className="-mt-12 flex w-full flex-col space-y-14 tablet:-mt-20">
           <SearchBar />
-          <section className="grid w-full gap-10 tablet:grid-cols-2 desktop:grid-cols-3">
+          <section className="grid w-full  gap-20 tablet:grid-cols-2 tablet:gap-10 desktop:grid-cols-3">
             {data?.companys?.slice(0, next).map(element => (
               <Link key={element?.id} href={`company/${element?.id}`}>
                 <Company companyInfo={element} />
               </Link>
             ))}
           </section>
-          <DefaultButton
-            text="Load More"
-            onClick={() => {
-              setNext(next + 6);
-            }}
-          />
+          <div className="w-24 self-center">
+            <DefaultButton
+              text="Load More"
+              onClick={() => {
+                setNext(next + 6);
+              }}
+            />
+          </div>
         </div>
       )}
     </>
